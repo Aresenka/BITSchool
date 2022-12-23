@@ -4,8 +4,9 @@
 #include <iostream>
 using namespace std;
 
-ifstream openFileForWordsWithLenght(int word_lenght) {
-	ifstream fin("words_" + to_string(word_lenght) + "_letters.csv");
+ifstream openFileForWordsWithLenght(int word_length) {
+
+	ifstream fin("lib/words_" + to_string(word_length) + "_letters.csv");
     return fin;
 }
 
@@ -26,6 +27,7 @@ string* readWords(int word_length) {
     string* lines = new string[linesCount];
     for (int i = 0; i < linesCount; i++) {
         getline(fin, lines[i]);
+//        cout << lines[i] << "\n";
     }
 
     return lines;

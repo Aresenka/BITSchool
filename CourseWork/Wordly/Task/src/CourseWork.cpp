@@ -3,12 +3,13 @@
 
 #include <iostream>
 #include <fstream>
-#include "words.h"
+#include "lib/words.h"
 
 using namespace std;
 int main()
 {
+//Пример использования функции
     string* words = readWords(7);
-    cout << "Hello World!\n" << words[0];
+    cout << words[0] << endl;
 }
 
