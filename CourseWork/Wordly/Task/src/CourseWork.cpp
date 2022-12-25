@@ -10,6 +10,6 @@ int main()
 {
 //Пример использования функции
     string* words = readWords(7);
-    cout << words[0] << endl;
+    cout << "test" << endl;
 }
 
