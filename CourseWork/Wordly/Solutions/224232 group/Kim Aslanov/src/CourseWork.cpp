@@ -9,7 +9,7 @@ using namespace std;
 
 void text()                                                 // Вывод текста
 {
-
+    count()
     cout << "Введите Цифру От Четырех До Семи" << endl;
     
 }      
@@ -25,7 +25,7 @@ void text()                                                 // Вывод тек
 
 
 string UserWord() {
-    cout << "Введите Слово Из Букв" << endl;
+    cout << "Введите Слово Из " << endl;
     string w;
     cin >> w;
     return w;
@@ -41,64 +41,29 @@ string howmany(int n)
     int length = countLinesInFile(openFileForWordsWithLenght(n));
     i = rand() % length;
     string* words = readWords(n);
- 
     word = words[i];
-   
-    
     return word;
 }
 
-void x() {
-    cout << howmany(6) << endl;
-   /* s = slovo();
-    h = howmany();
-
-    if (s =+ h)
-        cout << " Угадал! " << endl;
-    else
-        cout << " Не угадал" << endl;*/
 
 
-}
+/* int number()
 
-int number()
-{
-    int n;
-    cin >> n;
-    if (n < 4 || n > 7)
-    { 
-        text();
-    }
-    else {
-        
-        howmany(n);
-        UserWord();
-        string s = howmany(n);
-        string u = UserWord();
-        for (int i = 0; i < s.length()-1; i++) {
-            for (int j = 0; j < s.length() - 1; j++)
-            {
-            if (i != j && s[i] == u[i])
-                cout << u[i] <<endl;
-       }
         }
         
         
         
-        /* if (s == u)
+        if (s == u)
             cout << " Угадал!" << endl;
         else
-            cout << " Не угадал" << endl;*/
+            cout << " Не угадал" << endl;
 
     }
     return 0;
 
-}
+}*/
 
-void start() {
-    text();
-    number();
-}
+
 
 int count()
 {
@@ -106,38 +71,41 @@ int count()
     cin >> w;
 for (int i=0; i<w; i++)
 {
-    cout << "* ";
-    
+    cout << "* "; 
 }
 
 return 0;
 
 }
-
-
-//void seven()
-//{
-//    int i;
-//    srand(time(0));
-//    int length = countLinesInFile(openFileForWordsWithLenght(7));
-//    i = rand() % length;
-//    string* words = readWords(7);
-//    /*cout << words[i] << endl;*/
-//
-//}
-
-
  
 int main()
 
 {
+        text();
+        int n;
+        cin >> n;
+        if (n < 4 || n > 7)
+        {
+            text();
+        }
+        else {
 
-    text();
-    number();
-   
+            howmany(n);
+            UserWord();
+            string s = howmany(n);
+            string u = UserWord();
+            for (int i = 0; i < s.length() - 1; i++) {
+                for (int j = 0; j < s.length() - 1; j++)
+                {
+                    if (i != j && s[i] == u[j]) {
+                        cout << u[j] << endl;
+                    }
+                }
+            }
+        }
     
 
     return 0;
-
-
 }
+
+
