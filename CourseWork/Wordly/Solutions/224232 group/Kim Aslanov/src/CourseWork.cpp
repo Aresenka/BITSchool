@@ -75,10 +75,13 @@ int number()
         UserWord();
         string s = howmany(n);
         string u = UserWord();
-        for (int i = 0; i < s.length(); i++) {
-            if (s[i] == u[i])
+        for (int i = 0; i < s.length()-1; i++) {
+            for (int j = 0; j < s.length() - 1; j++)
+            {
+            if (i != j && s[i] == u[i])
                 cout << u[i] <<endl;
        }
+        }
         
         
         
