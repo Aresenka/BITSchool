@@ -15,16 +15,20 @@ int main()
     cout << "\t\t\t\t\t  \033[1;34m  Lets play the Game GALLOWS!\033[0m" << endl;
     cout << " \t\t\t\t\t \033[1;34mChoose, how much char in word(4-7): \033[0m" << endl;
     int nChar, i;
-    cin >> nChar;
     string randomWord;
-    cout << "\t\t\t\t\t     \033[1;30m    You have 10 attempts\033[0m " << endl;
+    
 
 
-
-    if (nChar < 4 || nChar > 7) {
-        cout << "\033[1;31mFail, choose from 4 to 7\033[0m" << endl;
+    while (true) {
         cin >> nChar;
-    }
+        if (nChar < 4 || nChar > 7) {
+            cout << "\033[1;31mFail, choose from 4 to 7\033[0m" << endl;
+        }
+        else {
+            break;
+        }
+        }
+    cout << "\t\t\t\t\t     \033[1;30m    You have 10 attempts\033[0m " << endl;
     if (nChar >= 4 || nChar <= 7) {
         srand(time(0));
         int length = countLinesInFile(openFileForWordsWithLenght(nChar));
@@ -43,20 +47,24 @@ int main()
     string enterWord;
     int rightChars = 0;
     for (int chance = 9; chance >= 0; chance--) {
-        cin >> enterWord;
-        if (enterWord.length() > nChar) {
-            cout << "\033[1;31mWord is too long\033[0m" << endl;
+        while (true) {
             cin >> enterWord;
-        }
-        if (enterWord.length() < nChar) {
-            cout << "\033[1;31mWord is too short\033[0m" << endl;
-            cin >> enterWord;
+            if (enterWord.length() > nChar) {
+                cout << "\033[1;31mWord is too long\033[0m" << endl;
+            }
+
+            if (enterWord.length() < nChar) {
+                cout << "\033[1;31mWord is too short\033[0m" << endl;
+            }
+            else {
+                break;
+            }
         }
         for (int i = 0; i < randomWord.length() - 1; i++) {
             for (int j = 0; j < randomWord.length() - 1; j++)
             {
                 if (i != j && randomWord[i] == enterWord[j]) {
-                    cout << enterWord[j] << "\033[1;31m in word on another place!\033[0m" << endl;
+                    cout << enterWord[j] << "\033[1;31m in the word on another place!\033[0m" << endl;
                 }
 
             }
