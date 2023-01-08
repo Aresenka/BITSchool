@@ -9,6 +9,14 @@
 #include <stdio.h> 
 using namespace std;
 
+void startGame(char y, char n) {
+    char a;
+    cin >> a;
+    if (a == 'y') {
+
+    }
+}
+
 int main()
 
 {
@@ -76,7 +84,7 @@ int main()
                 rightChars++;
             }
             else {
-                cout << " _ ";
+                cout << "_ ";
             }
         }
         if (rightChars == randomWord.length() - 1) {
