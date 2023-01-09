@@ -7,104 +7,99 @@
 
 using namespace std;
 
-void text()                                                 // Вывод текста
-{
-    count()
-    cout << "Введите Цифру От Четырех До Семи" << endl;
-    
+int enterNumber() {
+    int n;
+    cout << " \t\t\t\t\tВыберите колличество букв в угадываемом слове (от 4 до 7)" << endl;
+    cin >> n;
+    if (n < 4 || n > 7) {
+        cout << " \t\t\t\t\tWrong number, try again" << endl;
+            return enterNumber();
+    }
+    return n;
 }      
 
-
-//int num()
-//{
-//    int userNumber;
-//    cin >> userNumber;
-//    return userNumber;
-//}
-
-
-
-string UserWord() {
-    cout << "Введите Слово Из " << endl;
+string userWord() {
+    cout << " \t\t\t\t\tВведите cлово" << endl;
     string w;
     cin >> w;
     return w;
 }
 
-
-
-string howmany(int n)
-{
-    int i;
-    string word;
+int randomWordIndex(int m) {
+    
+   int number = enterNumber();
     srand(time(0));
-    int length = countLinesInFile(openFileForWordsWithLenght(n));
-    i = rand() % length;
+    int indexCount = countLinesInFile(openFileForWordsWithLenght(number)) - 1;
+    
+    return rand() % indexCount;
+}
+
+string randomWord(int n) {
     string* words = readWords(n);
-    word = words[i];
+    int i = randomWordIndex(n);
+    string word = words[i];
+
     return word;
 }
 
-
-
-/* int number()
-
+/*string comparision(string randomWord, string userWord) {
+        for (int i = 0; i < randomWord.length() - 1; i++) {
+            for (int j = 0; j < userWord.length() - 1; j++) {
+                if (i != j && randomWord[i] == userWord[j]) {
+                  cout << randomWord[j] << "Буква не на том месте";
+                }
+                else {
+                    cout << " ok";
+                }
+            }
         }
-        
-        
-        
-        if (s == u)
-            cout << " Угадал!" << endl;
-        else
-            cout << " Не угадал" << endl;
-
-    }
-    return 0;
-
+        return 0;
 }*/
 
 
 
-int count()
-{
-    int w;
-    cin >> w;
-for (int i=0; i<w; i++)
-{
-    cout << "* "; 
-}
-
-return 0;
-
-}
- 
-int main()
-
-{
-        text();
-        int n;
-        cin >> n;
-        if (n < 4 || n > 7)
+//void check() {
+//   int n = enterNumber();
+//    readWords[n].find(UserWord());
+//
+//}
+// 
+int main() {
+    // Start Game
+    
+    string randomW = randomWord(enterNumber());
+    
+    for (int i = 5; i >= 0; i--)
+    {
+     cout << "У вас " << i << " попыток(а)" << endl;
+     string userW = userWord();
+     
+    
+    
+    //comparision(random, UserWord());
+   
+        for (int i = 0; i < randomW.length() - 1; i++)
         {
-            text();
-        }
-        else {
+            if (randomW[i] == userW[i]) {
+                cout << " " << userW[i] << " ";
+                
+            }
+            else {
+                cout << " * ";
+            }
 
-            howmany(n);
-            UserWord();
-            string s = howmany(n);
-            string u = UserWord();
-            for (int i = 0; i < s.length() - 1; i++) {
-                for (int j = 0; j < s.length() - 1; j++)
-                {
-                    if (i != j && s[i] == u[j]) {
-                        cout << u[j] << endl;
-                    }
+        }
+        cout << endl;
+        for (int i = 0; i < randomW.length() - 1; i++) {
+            for (int j = 0; j < userW.length() - 1; j++) {
+                if (i != j && randomW[i] == userW[j]) {
+                    cout << " \t\t\t\t\tБуква <<" << userW[j] << ">> не на том месте" << endl;
                 }
+
             }
         }
-    
 
+    }
     return 0;
 }
 
