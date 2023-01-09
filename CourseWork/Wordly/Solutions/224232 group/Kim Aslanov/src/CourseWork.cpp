@@ -42,13 +42,13 @@ string userWord() {
     string w;
     cin >> w;
     
-    int pos = s.read(readWords(7)); // поиск
+   /* int pos = s.read(readWords(7)); // поиск
 
    
     if (pos->find(w) == -1)
     {
         cout << "Нет слова в базе";
-    }
+    }*/
         return w;
 }
 /*string comparision(string randomWord, string userWord) {
@@ -73,25 +73,26 @@ string userWord() {
 //
 //}
 // 
-int main() {
+int startGame() {
     // Start Game
-    
+
     string randomW = randomWord(enterNumber());
+       
     
     for (int i = 5; i >= 0; i--)
     {
-     cout << "У вас " << i << " попыток(а)" << endl;
-     string userW = userWord();
-     
-    
-    
-    //comparision(random, UserWord());
-   
+        cout << "У вас " << i << " попыток(а)" << endl;
+        string userW = userWord();
+
+
+
+        //comparision(random, UserWord());
+
         for (int i = 0; i < randomW.length() - 1; i++)
         {
             if (randomW[i] == userW[i]) {
                 cout << " " << userW[i] << " ";
-                
+
             }
             else {
                 cout << " * ";
@@ -109,6 +110,26 @@ int main() {
         }
 
     }
+    cout << "Спасибо за игру" << endl;
+    return -1;
+}void vonaPlay() {
+    int vona;
+    if (startGame() = -1) {
+        cout << " Желаете сыграть еще раз? Y or N" << endl;
+        cin >> vona;
+        if (vona == 'y' || vona == 'Y') {
+            startGame();
+        }
+        if (vona == 'n' || vona == 'N') {
+            return;
+        }
+        else
+            vonaPlay();
+    }
+}
+    int main() {
+        startGame();
+        vonaPlay();
     return 0;
 }
 
