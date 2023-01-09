@@ -18,12 +18,7 @@ int enterNumber() {
     return n;
 }      
 
-string userWord() {
-    cout << " \t\t\t\t\tВведите cлово" << endl;
-    string w;
-    cin >> w;
-    return w;
-}
+
 
 int randomWordIndex(int m) {
     
@@ -42,6 +37,20 @@ string randomWord(int n) {
     return word;
 }
 
+string userWord() {
+    cout << " \t\t\t\t\tВведите cлово" << endl;
+    string w;
+    cin >> w;
+    
+    int pos = s.read(readWords(7)); // поиск
+
+   
+    if (pos->find(w) == -1)
+    {
+        cout << "Нет слова в базе";
+    }
+        return w;
+}
 /*string comparision(string randomWord, string userWord) {
         for (int i = 0; i < randomWord.length() - 1; i++) {
             for (int j = 0; j < userWord.length() - 1; j++) {
