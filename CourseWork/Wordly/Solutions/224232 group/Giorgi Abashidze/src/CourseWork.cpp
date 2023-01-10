@@ -1,23 +1,21 @@
 ﻿// CourseWork.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
-//#include <list>
-//#include <cmath>
-//#include <ctime>
-//#include <vector>
-//#include <cctype>
-//#include <fstream>
-//#include <cstdlib>
+#include <list>
+#include <cmath>
+#include <ctime>
+#include <vector>
+#include <cctype>
+#include <fstream>
 //#include <conio.h>
 //#include "wtypes.h"
-//#include <limits.h>
-//#include <iostream>
-//#include <iostream>
-//#include <algorithm>
-//#include <filesystem>
+#include <limits.h>
+#include <algorithm>
+#include <filesystem>
 
 #include <string>
-#include <iostream>
 #include <fstream>
+#include <cstdlib>
+#include <iostream>
 #include "lib/words.h"
 
 using namespace std;
@@ -33,17 +31,27 @@ const int resusltStart = 62;
 const int COLUMN_WIDTH = 15;
 const int usedWordStart = 20;
 
-string level;
-int wordLenght = 0;
+string level = "0";
+int wordLenght = 6;
 
 const int titleCoord[2] = {0,  20};
 const int answerCoord[2] = { 0,  21 };
 const int usedWordTitleCoordinates[2] = { usedWordStart , step - 1 };
 
-const string green = "\033[32m"; // ANSI escape code for green text
 const string reset = "\033[0m"; // ANSI escape code to reset formatting
+const string green = "\033[32m"; // ANSI escape code for green text
+const string yellow = "\033[33m"; // ANSI escape code for yellow text
 const string magenta = "\033[45m"; // ANSI escape code for magenta background
+
+const string red = "\033[1;41m";
+const string Blue = "\033[1;34m";
 const string blue = "\033[1;44m";
+const string cyan = "\033[1;36m";
+const string white = "\033[1;37m";
+const string black = "\033[1;40m";
+const string Green = "\033[1;42m";
+const string Yellow = "\033[1;43m";
+const string Magenta = "\033[1;45m";
 
 string fileName;
 string secretWord = "";
@@ -54,10 +62,10 @@ int matchedSymbols[2] = { 0, 0 };
 bool win = false;
 bool gameOver = false;
 bool autoChooseWordLenght = true;
-
+int moves;
 int remainingMoves;
-
 int answerResultTitleCoordinates[2] = { resusltStart, step - 1 };
+
 
 
 void ClearRows()
@@ -72,90 +80,109 @@ void ClearOneRow(int row)
 
 void WriteSelectedOptions() 
 {
-    ClearRows();
     cout << "Selected Level: " << level << endl;
-}
-
-
-void SelectLevel() {
-    int userLevelAnswer = 0;
-    while (userLevelAnswer < 1 || userLevelAnswer > 3)
+    if (autoChooseWordLenght == true) {
+        cout << "Program choose word length." << endl;
+    }
+    else
     {
-        ClearRows();
-        cout << green << "SELECT GAME LEVEL:   1 - easy, 2 - medium, 3 - hard, for exit: type any symbol" << endl;
-        cin >> userLevelAnswer;
-        if (cin.fail())
+        cout << "Player choose word length." << endl;
+    }
+    cout << "Secret Word: " << wordLenght << " sym. " << "Moves left : " << remainingMoves << ". " << endl;
+    cout << endl << endl;
+    if (gameOver == false)
+    {
+        for (int i = 0; i < secretWord.length(); i++)
         {
-            userLevelAnswer = 0;
-            cout << "Not a number " << endl;
+            cout << " * ";
         }
-        else
-        {
-            switch (userLevelAnswer)
-            {
-            case 1: level = "Easy"; remainingMoves = 7; break;
-            case 2: level = "Medium"; remainingMoves = 6;   break;
-            case 3: level = "Hard"; remainingMoves = 5;   break;
-            default:
-                gameOver = true; break;
-                return;
-            }
-        }
-    } 
+    }
+    cout << endl << endl;
 }
 
-/*
+void SelectLevel() 
+{
+    ClearRows();
+    int userLevelAnswer;
+    cout << reset << "SELECT GAME LEVEL:\n\rEasy - 1\n\rMedium - 2\n\rHard - 3\n\rFor exit - any other symbol" << endl;
+    cin >> userLevelAnswer;
+
+    if (userLevelAnswer == 1)
+    {
+        level = "Easy";
+        moves = 7;
+    }
+    else if (userLevelAnswer == 2)
+    {
+        level = "Medium";
+        moves = 6;
+    }
+    else if (userLevelAnswer == 3)
+    {
+        level = "Hard";
+        moves = 5;
+    }
+    else
+    {
+        exit(0);
+    }
+    remainingMoves = moves;
+    ClearRows();
+}
+
 void WhoChooseWordLenght()
 {
-    int userAnswer = 0;
-    int cursorPoint[2] = {0, 0};
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPoint);
-    cout << "We must decide who will choose the words. \n\ryou yourself will choose the complexity of the words \n" <<
-        "or the program will randomly select the words.\n\r";
-    cout << "1 - User chooses the length of the words. \n\r2 - The program selects words randomly. \n\r";
+    ClearRows();
+    int userAnswer;
+    cout << "Who will choose the length of the words?\n\rplayer - 1\n\rprogram (random choice of word length) - 2\n\rFor exit - any other symbol" << endl;
     cin >> userAnswer;
-
-    ClearRows(5);
-
-    switch (userAnswer)
+    if (userAnswer == 1)
     {
-    case 1: autoChooseWordLenght = false; break;
-    default:
-        autoChooseWordLenght = true;  break;
+        autoChooseWordLenght = false;
     }
+    else if(userAnswer == 2)
+    {
+        autoChooseWordLenght = true;
+    }
+    else
+    {
+        exit(0);
+    }
+    ClearRows();
 }
 
 void Desctop() {
-    // Print column names
-    cout << green << blue << "Answer" << string(COLUMN_WIDTH + 1, ' ') << green << '|';
-    cout << blue << "Result" << string(COLUMN_WIDTH - 0, ' ') << green << '|';
-    cout << blue << "Bad Letters" << string(COLUMN_WIDTH - 7, ' ') << green << reset << '|' << "\n\r";
 
-    for (int i = 0; i < level; i++) {
+    // Print column names
+    cout << green << "Answer" << string(COLUMN_WIDTH + 1, ' ')  << '|';
+    cout  << "Result" << string(COLUMN_WIDTH - 0, ' ')  << '|';
+    cout  << "Bad Letters" << string(COLUMN_WIDTH - 7, ' ')  << '|' << endl;
+
+    for (int i = 0; i < wordLenght; i++) {
         // Print separator row
-        cout << green << string(COLUMN_WIDTH + 7, '-') << '|';
+        cout << string(COLUMN_WIDTH + 7, '-') << '|';
         cout << string(COLUMN_WIDTH + 6, '-') << '|';
-        cout << string(COLUMN_WIDTH + 5, '-') << "\n\r";
-        cout << reset;
+        cout << string(COLUMN_WIDTH + 5, '-') << endl;
+
 
         // Print data rows
-        cout << magenta << string(COLUMN_WIDTH + 7, ' ') << reset << '|';
-        cout << magenta << string(COLUMN_WIDTH + 6, ' ') << reset << '|';
-        cout << magenta << string(COLUMN_WIDTH + 4, ' ') << reset << '|' << "\n\r";
+        cout << string(COLUMN_WIDTH + 7, ' ') << '|';
+        cout << string(COLUMN_WIDTH + 6, ' ') << '|';
+        cout << string(COLUMN_WIDTH + 4, ' ') << '|' << endl;
     }
     // Print separator row
-    cout << green;
+
     cout << string(COLUMN_WIDTH + 7, '-') << '|';
     cout << string(COLUMN_WIDTH + 6, '-') << '|';
     cout << string(COLUMN_WIDTH + 5, '-') << "\n\r";
-    cout << reset;
+
 
     /*cout << "|" << "Answer" << string(colWidth - 4, ' ') << "| Result" << string(colWidth - 5, ' ') << "| Incorrect Symbols" << "|" << "\n\r";
     for (int i = 0; i < numRows; i++) {
         cout << "|" << string(colWidth + 2, '-') << "|" << string(colWidth + 2, '-') << "|" << string(colWidth + 3, '-') << "|" << "\n\r";
         cout << "|" << string(colWidth + 2, ' ') << "|" << string(colWidth + 2, ' ') << "|" << string(colWidth + 3, ' ') << "|" << "\n\r";
-    }*/
-/*
+    }
+    */
 }
 
 int random_int(int min, int max)
@@ -163,22 +190,8 @@ int random_int(int min, int max)
     return min + rand() % (max - min + 1);
 }
 
-void GetDesktopResolution(int& horizontal, int& vertical)
-{
-    RECT desktop;
-    // Get a handle to the desktop window
-    const HWND hDesktop = GetDesktopWindow();
-    // Get the size of screen to the variable desktop
-    GetWindowRect(hDesktop, &desktop);
-    // The top left corner will have coordinates (0,0)
-    // and the bottom right corner will have coordinates
-    // (horizontal, vertical)
-    horizontal = round(desktop.right);
-    vertical = round(desktop.bottom);
-}
-
-void ResetCoordinates() {
-    remainingMoves = level;
+void ResetGameParameters() {
+    remainingMoves = moves;
     step = 11;
     win = false;
     gameOver = false;
@@ -186,27 +199,12 @@ void ResetCoordinates() {
     answerWord = "";
 }
 
-void GetScreenSize()
-{
-    string cc;
-    cin >> cc;
-    int horizontal = 0;
-    int vertical = 0;
-    GetDesktopResolution(horizontal, vertical);
-}
-
 void WriteSecretWordToDesctop(string secretWord)
 {
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), titleCoord);
-    cout << " Secret Word:       Moves left: " << remainingMoves;
-    cout << "\n\r" << "\n\r";
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), answerCoord);
-    for (int i = 0; i < secretWord.length(); i++)
-    {
-        cout << " * ";
-    }
+    
 }
 
+/*
 void SetGameStatus()
 {
     if (remainingMoves == 0 && win != true)
@@ -239,32 +237,34 @@ bool PlayAgain()
     cin >> answer;
     return answer == "y" ? true : false;
 }
-
+*/
 void GetWordLenghtFromUser()
 {
     bool isNumeric = false;
-    while (isNumeric == false)
+    int userAnswer = 1;
+    int numberRead = 0;
+    do
     {
-        int userAnswer = 0;
-
-        ClearRows(20);
-
-        cout << green << "Select a number from 4 inclusive 7." << "\n\r";
-        cin >> userAnswer;
-
-        if (cin.fail()) {
-            ClearRows();
-            break;
+        ClearRows();
+        cout  << "enter a number from 4 inclusive 7." << "\n\r";
+        numberRead = scanf("%d", &userAnswer);
+        while (numberRead != 1)
+        {
+            cout << "That is not a number!!!" << endl;
+            scanf("%*[^\n]");
+            cout  << "enter a number from 4 inclusive 7." << "\n\r";
+            numberRead = scanf("%d", &userAnswer);
         }
-        else if (userAnswer >= 4 && userAnswer <= 7)
+        if (userAnswer >= 4 && userAnswer <= 7)
         {
             wordLenght = userAnswer;
             isNumeric = true;
-            ClearRows();
         }
-    }
+        
+    } while (isNumeric == false);
+    ClearRows();
 }
-
+/*
 void ExactMatchedComparisson()
 {
     int lenght = secretWord.size();
@@ -300,7 +300,8 @@ void ExactMatchedComparisson()
     }
     badSymbols = tempAnswerWord1;
 }
-
+*/
+/*
 void WordComparison()
 {
     ExactMatchedComparisson();
@@ -321,33 +322,8 @@ void CheckAnswer()
     }
     SetGameStatus();
 }
+*/
 
-void FakeWord()
-{
-    for (int i = 0; i <= level; i++)
-    {
-        if (i < 2)
-        {
-            secretWord += "a";
-        }
-        else if (i < 3)
-        {
-            secretWord += "s";
-        }
-        else if (i < 5)
-        {
-            secretWord += "e";
-        }
-        else if (i < 7)
-        {
-            secretWord += "b";
-        }
-        else
-        {
-            secretWord += "n";
-        }
-    }
-}
 
 void GetSecretWord() {
     if (autoChooseWordLenght == true)
@@ -365,27 +341,27 @@ void GetSecretWord() {
     secretWord = words[randomWord];
 }
 
-
 void PaintGame()
 {
     while (gameOver == false)
     {
-        if (remainingMoves == level)
+        if (remainingMoves == moves)
         {
             GetSecretWord();
-
+            WriteSelectedOptions();
             Desctop();
         }
-
+        /*
         WriteSecretWordToDesctop(secretWord);
 
-        ClearOneRow(25);
+        ClearOneRow();
+        */
 
         cout << "Enter the Word:  \n\r";
         cin >> answerWord;
-        step++;
-        remainingMoves--;
-
+        step ++;
+        remainingMoves --;
+        /*
         CheckAnswer();
 
         ClearOneRow(26);
@@ -395,20 +371,27 @@ void PaintGame()
             bool answer = PlayAgain();
             if (answer == true)
             {
-                ClearRows(50);
+                ClearRows();
                 ResetCoordinates();
             }
         }
+        */
     }
 }
-*/
-int main()
+
+
+void ChoosedAction() 
 {
     SelectLevel();
-    WriteSelectedOptions();
-    //WhoChooseWordLenght();
-    //PaintGame();
+    WhoChooseWordLenght();
+}
+
+int main()
+{
+    ChoosedAction();
+    PaintGame();
 //Пример использования функции
     //string* words = readWords(7);
     //cout << words[0] << endl;
+    
 }
