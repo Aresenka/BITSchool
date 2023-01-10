@@ -31,6 +31,7 @@ const int resusltStart = 62;
 const int COLUMN_WIDTH = 15;
 const int usedWordStart = 20;
 
+string* words;
 string level = "0";
 int wordLenght = 6;
 
@@ -88,8 +89,8 @@ void WriteSelectedOptions()
     {
         cout << "Player choose word length." << endl;
     }
-    cout << "Secret Word: " << wordLenght << " sym. " << "Moves left : " << remainingMoves << ". " << endl;
-    cout << endl << endl;
+    cout << "Secret Word: " << wordLenght << " sym. " << " Moves left : " << remainingMoves  << endl;
+    cout << endl;
     if (gameOver == false)
     {
         for (int i = 0; i < secretWord.length(); i++)
@@ -97,7 +98,7 @@ void WriteSelectedOptions()
             cout << " * ";
         }
     }
-    cout << endl << endl;
+    cout << endl;
 }
 
 void SelectLevel() 
@@ -156,7 +157,7 @@ void Desctop() {
     // Print column names
     cout << green << "Answer" << string(COLUMN_WIDTH + 1, ' ')  << '|';
     cout  << "Result" << string(COLUMN_WIDTH - 0, ' ')  << '|';
-    cout  << "Bad Letters" << string(COLUMN_WIDTH - 7, ' ')  << '|' << endl;
+    cout  << "Bad symbols" << string(COLUMN_WIDTH - 7, ' ')  << '|' << endl;
 
     for (int i = 0; i < wordLenght; i++) {
         // Print separator row
@@ -324,7 +325,6 @@ void CheckAnswer()
 }
 */
 
-
 void GetSecretWord() {
     if (autoChooseWordLenght == true)
     {
@@ -334,11 +334,68 @@ void GetSecretWord() {
     {
         GetWordLenghtFromUser();
     }
-    string* words = readWords(wordLenght);
-    //FakeWord();
+    words = readWords(6);
     int randomWord = 0;
-    randomWord = random_int(1, words->size());
+    randomWord = random_int(0, words->size()-1);
     secretWord = words[randomWord];
+
+    for (int i = 0; i < words->size(); i++)
+    {
+        cout << words[i] << endl;
+    }
+    cin >> wordLenght;
+}
+
+bool CheckWordLength()
+{
+    bool isValidLength = false;
+    if (answerWord.size() == wordLenght)
+    {
+        isValidLength = true;
+    }
+    return isValidLength;
+}
+
+bool CheckLibraryForWord()
+{
+    bool isValidForLibrary = false;
+    for (int i = 0; i < words->size(); i++) 
+    {
+        cout << words[i] << endl;
+        if (answerWord == words[i])
+        {
+            isValidForLibrary = true;
+            break;
+        }
+    }
+    return isValidForLibrary;
+}
+
+
+bool ValidateWord()
+{
+    bool isValid = false;
+    bool isValidLength = false;
+    bool isValidForLibrary = false;
+    isValidLength = CheckWordLength();
+    if (isValidLength == true) {
+        isValidForLibrary = CheckLibraryForWord();
+        if (isValidForLibrary == true)
+        {
+            isValid = true;
+        }
+        else
+        {
+            cout << "No word in library" << endl;
+            cout << "your word: " << answerWord << ".    secret word: " << secretWord << endl;
+        }
+    }
+    else
+    {
+        cout << "Incorrect length of word" << endl;
+        cout << "your word length: " << answerWord.size() << ".    secret word length: " << secretWord.size() << endl;
+    }
+    return isValid;
 }
 
 void PaintGame()
@@ -357,28 +414,43 @@ void PaintGame()
         ClearOneRow();
         */
 
-        cout << "Enter the Word:  \n\r";
-        cin >> answerWord;
-        step ++;
-        remainingMoves --;
-        /*
-        CheckAnswer();
-
-        ClearOneRow(26);
-
-        if (gameOver == true)
+       
+        bool wordIsValid = false;
+        do
         {
-            bool answer = PlayAgain();
-            if (answer == true)
+            cout << "Enter the Word:  \n\r";
+            cin >> answerWord;
+            wordIsValid = ValidateWord();
+            if (wordIsValid == true)
             {
-                ClearRows();
-                ResetCoordinates();
+                step++;
+                remainingMoves--;
+                /*
+                CheckAnswer();
+
+                ClearOneRow(26);
+
+                if (gameOver == true)
+                {
+                    bool answer = PlayAgain();
+                    if (answer == true)
+                    {
+                        ClearRows();
+                        ResetCoordinates();
+                    }
+                }
+                */
             }
-        }
-        */
+            else
+            {
+                cout << "Enter valid word. \n\r";
+            }
+        } while (wordIsValid != true);
+       
+
+       
     }
 }
-
 
 void ChoosedAction() 
 {
