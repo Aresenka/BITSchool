@@ -1,28 +1,28 @@
 ﻿// CourseWork.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
-#include <list>
-#include <cmath>
-#include <ctime>
-#include <vector>
-#include <string>
-#include <cctype>
-#include <fstream>
-#include <cstdlib>
+//#include <list>
+//#include <cmath>
+//#include <ctime>
+//#include <vector>
+//#include <cctype>
+//#include <fstream>
+//#include <cstdlib>
 //#include <conio.h>
 //#include "wtypes.h"
-#include <limits.h>
-#include <iostream>
-#include <iostream>
-#include <algorithm>
-#include <filesystem>
+//#include <limits.h>
+//#include <iostream>
+//#include <iostream>
+//#include <algorithm>
+//#include <filesystem>
 
+#include <string>
 #include <iostream>
 #include <fstream>
 #include "lib/words.h"
 
 using namespace std;
 
-HANDLE  hConsole;
+//HANDLE  hConsole;
 
 int step = 11;
 const int numCols = 3;
@@ -33,7 +33,7 @@ const int resusltStart = 62;
 const int COLUMN_WIDTH = 15;
 const int usedWordStart = 20;
 
-int level = 0;
+string level;
 int wordLenght = 0;
 
 const int titleCoord[2] = {0,  20};
@@ -45,10 +45,6 @@ const string reset = "\033[0m"; // ANSI escape code to reset formatting
 const string magenta = "\033[45m"; // ANSI escape code for magenta background
 const string blue = "\033[1;44m";
 
-
-
-
-
 string fileName;
 string secretWord = "";
 string answerWord = "";
@@ -59,48 +55,56 @@ bool win = false;
 bool gameOver = false;
 bool autoChooseWordLenght = true;
 
-int remainingMoves = level;
+int remainingMoves;
 
 int answerResultTitleCoordinates[2] = { resusltStart, step - 1 };
 
 
-void ClearRows(int end = 50)
+void ClearRows()
 {
     system("clear");
-    system("cls");
-    cout << "\n\r";
-
-    int coutCursorPoint[2] = {0, 0};
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coutCursorPoint);
 }
 
 void ClearOneRow(int row)
 {
-    int CursorPoint[2] = {0, row};
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), CursorPoint);
     printf("\33[2K\r");
-    int newCursorPoint[2] = {0, row};
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCursorPoint);
 }
+
+void WriteSelectedOptions() 
+{
+    ClearRows();
+    cout << "Selected Level: " << level << endl;
+}
+
 
 void SelectLevel() {
-
     int userLevelAnswer = 0;
-    int coutCursorPoint[2] = {0, 0};
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coutCursorPoint);
-    cout << green << "SELECT GAME LEVEL:   1 - easy, 2 - medium, 3 - hard, for exit: type any symbol" << "\n\r";
-    cin >> userLevelAnswer;
-    ClearRows(5);
-    switch (userLevelAnswer)
+    while (userLevelAnswer < 1 || userLevelAnswer > 3)
     {
-    case 1: level = 7; remainingMoves = level; break;
-    case 2: level = 6; remainingMoves = level;  break;
-    case 3: level = 5; remainingMoves = level;  break;
-    default:
-        gameOver = true; break;
-    }
+        ClearRows();
+        cout << green << "SELECT GAME LEVEL:   1 - easy, 2 - medium, 3 - hard, for exit: type any symbol" << endl;
+        cin >> userLevelAnswer;
+        if (cin.fail())
+        {
+            userLevelAnswer = 0;
+            cout << "Not a number " << endl;
+        }
+        else
+        {
+            switch (userLevelAnswer)
+            {
+            case 1: level = "Easy"; remainingMoves = 7; break;
+            case 2: level = "Medium"; remainingMoves = 6;   break;
+            case 3: level = "Hard"; remainingMoves = 5;   break;
+            default:
+                gameOver = true; break;
+                return;
+            }
+        }
+    } 
 }
 
+/*
 void WhoChooseWordLenght()
 {
     int userAnswer = 0;
@@ -151,6 +155,7 @@ void Desctop() {
         cout << "|" << string(colWidth + 2, '-') << "|" << string(colWidth + 2, '-') << "|" << string(colWidth + 3, '-') << "|" << "\n\r";
         cout << "|" << string(colWidth + 2, ' ') << "|" << string(colWidth + 2, ' ') << "|" << string(colWidth + 3, ' ') << "|" << "\n\r";
     }*/
+/*
 }
 
 int random_int(int min, int max)
@@ -396,12 +401,13 @@ void PaintGame()
         }
     }
 }
-
+*/
 int main()
 {
     SelectLevel();
-    WhoChooseWordLenght();
-    PaintGame();
+    WriteSelectedOptions();
+    //WhoChooseWordLenght();
+    //PaintGame();
 //Пример использования функции
     //string* words = readWords(7);
     //cout << words[0] << endl;
