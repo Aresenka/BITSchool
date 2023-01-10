@@ -6,17 +6,18 @@
 #include <vector>
 #include <string>
 #include <cctype>
-#include "Words.h"
 #include <fstream>
 #include <cstdlib>
-#include <conio.h>
-#include <fstream>
-#include "wtypes.h"
+//#include <conio.h>
+//#include "wtypes.h"
 #include <limits.h>
 #include <iostream>
 #include <iostream>
 #include <algorithm>
 #include <filesystem>
+
+#include <iostream>
+#include <fstream>
 #include "lib/words.h"
 
 using namespace std;
@@ -35,23 +36,18 @@ const int usedWordStart = 20;
 int level = 0;
 int wordLenght = 0;
 
-const COORD titleCoord = { 0,  20 };
-const COORD answerCoord = { 0,  21 };
-const COORD usedWordTitleCoordinates = { usedWordStart , step - 1 };
+const int titleCoord[2] = {0,  20};
+const int answerCoord[2] = { 0,  21 };
+const int usedWordTitleCoordinates[2] = { usedWordStart , step - 1 };
 
-const string reset = "\033[0m"; // ANSI escape code to reset formatting
 const string green = "\033[32m"; // ANSI escape code for green text
-const string yellow = "\033[33m"; // ANSI escape code for yellow text
+const string reset = "\033[0m"; // ANSI escape code to reset formatting
 const string magenta = "\033[45m"; // ANSI escape code for magenta background
-const string red = "\033[1;41m";
-const string Blue = "\033[1;34m";
 const string blue = "\033[1;44m";
-const string cyan = "\033[1;36m";
-const string white = "\033[1;37m";
-const string black = "\033[1;40m";
-const string Green = "\033[1;42m";
-const string Yellow = "\033[1;43m";
-const string Magenta = "\033[1;45m";
+
+
+
+
 
 string fileName;
 string secretWord = "";
@@ -65,7 +61,7 @@ bool autoChooseWordLenght = true;
 
 int remainingMoves = level;
 
-COORD answerResultTitleCoordinates = { resusltStart, step - 1 };
+int answerResultTitleCoordinates[2] = { resusltStart, step - 1 };
 
 
 void ClearRows(int end = 50)
@@ -73,29 +69,24 @@ void ClearRows(int end = 50)
     system("clear");
     system("cls");
     cout << "\n\r";
-    /*for (int i = end; i >= 0; i--)
-    {
-        COORD coutCursorPoint = { i, 0 };
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coutCursorPoint);
-        printf("\33[2K\r");
-    }*/
-    COORD coutCursorPoint = { 0, 0 };
+
+    int coutCursorPoint[2] = {0, 0};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coutCursorPoint);
 }
 
 void ClearOneRow(int row)
 {
-    COORD CursorPoint = { 0, row };
+    int CursorPoint[2] = {0, row};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), CursorPoint);
     printf("\33[2K\r");
-    COORD newCursorPoint = { 0, row };
+    int newCursorPoint[2] = {0, row};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCursorPoint);
 }
 
 void SelectLevel() {
 
     int userLevelAnswer = 0;
-    COORD coutCursorPoint = { 0, 0 };
+    int coutCursorPoint[2] = {0, 0};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coutCursorPoint);
     cout << green << "SELECT GAME LEVEL:   1 - easy, 2 - medium, 3 - hard, for exit: type any symbol" << "\n\r";
     cin >> userLevelAnswer;
@@ -113,7 +104,7 @@ void SelectLevel() {
 void WhoChooseWordLenght()
 {
     int userAnswer = 0;
-    COORD cursorPoint = { 0, 0 };
+    int cursorPoint[2] = {0, 0};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPoint);
     cout << "We must decide who will choose the words. \n\ryou yourself will choose the complexity of the words \n" <<
         "or the program will randomly select the words.\n\r";
@@ -138,8 +129,7 @@ void Desctop() {
 
     for (int i = 0; i < level; i++) {
         // Print separator row
-        cout << green;
-        cout << string(COLUMN_WIDTH + 7, '-') << '|';
+        cout << green << string(COLUMN_WIDTH + 7, '-') << '|';
         cout << string(COLUMN_WIDTH + 6, '-') << '|';
         cout << string(COLUMN_WIDTH + 5, '-') << "\n\r";
         cout << reset;
@@ -245,14 +235,6 @@ bool PlayAgain()
     return answer == "y" ? true : false;
 }
 
-void ReturnFileName(int num)
-{
-    fileName = ".//Lib//" + to_string(num) + ".csv";
-    
-
-
-}
-
 void GetWordLenghtFromUser()
 {
     bool isNumeric = false;
@@ -271,41 +253,11 @@ void GetWordLenghtFromUser()
         }
         else if (userAnswer >= 4 && userAnswer <= 7)
         {
-            ReturnFileName(wordLenght);
-            cout << fileName;
             wordLenght = userAnswer;
             isNumeric = true;
             ClearRows();
         }
     }
-}
-
-void OpenFileAndGetWord()
-{
-    //// Open the file for reading
-    //ifstream file(fileName);
-
-    //// Check if the file was successfully opened
-    //if (!file.is_open()) {
-    //    cout << "Error: unable to open file" << endl;
-    //    return;
-    //}
-
-    //// Read the words from the file into a vector
-    //vector<string> words;
-    //string word;
-    //while (file >> word) {
-    //    words.push_back(word);
-    //}
-
-    //// Close the file
-    //file.close();
-
-    //// Print the contents of the vector
-    //cout << "The words in the file are: " << endl;
-    //for (const string& w : words) {
-    //    cout << w << endl;
-    //}
 }
 
 void ExactMatchedComparisson()
@@ -365,18 +317,49 @@ void CheckAnswer()
     SetGameStatus();
 }
 
+void FakeWord()
+{
+    for (int i = 0; i <= level; i++)
+    {
+        if (i < 2)
+        {
+            secretWord += "a";
+        }
+        else if (i < 3)
+        {
+            secretWord += "s";
+        }
+        else if (i < 5)
+        {
+            secretWord += "e";
+        }
+        else if (i < 7)
+        {
+            secretWord += "b";
+        }
+        else
+        {
+            secretWord += "n";
+        }
+    }
+}
+
 void GetSecretWord() {
     if (autoChooseWordLenght == true)
     {
         wordLenght = random_int(4, 7);
-        ReturnFileName(wordLenght);
     }
     else
     {
         GetWordLenghtFromUser();
     }
-    OpenFileAndGetWord();
+    string* words = readWords(wordLenght);
+    //FakeWord();
+    int randomWord = 0;
+    randomWord = random_int(1, words->size());
+    secretWord = words[randomWord];
 }
+
 
 void PaintGame()
 {
@@ -385,32 +368,8 @@ void PaintGame()
         if (remainingMoves == level)
         {
             GetSecretWord();
-            Desctop();
 
-            // დროებითი, ფეიკ სიტყვის არჩევა. სანამ არ გადავწყვეტ ფაილის გახსნი პრობლემას
-            for (int i = 0; i <= level; i++)
-            {
-                if (i < 2)
-                {
-                    secretWord += "a";
-                }
-                else if (i < 3)
-                {
-                    secretWord += "s";
-                }
-                else if (i < 5)
-                {
-                    secretWord += "e";
-                }
-                else if (i < 7)
-                {
-                    secretWord += "b";
-                }
-                else
-                {
-                    secretWord += "n";
-                }
-            }
+            Desctop();
         }
 
         WriteSecretWordToDesctop(secretWord);
@@ -438,24 +397,12 @@ void PaintGame()
     }
 }
 
-void ChooseWordLenght()
-{
-    cout << "Void: " << "Choose Word Lenght";
-}
-
-void ReadWordFile()
-{
-    cout << "Void: " << "Read Word File";
-}
 int main()
 {
-    /*
     SelectLevel();
     WhoChooseWordLenght();
     PaintGame();
-    */
 //Пример использования функции
-    string* words = readWords(7);
-    cout << words[0] << endl;
+    //string* words = readWords(7);
+    //cout << words[0] << endl;
 }
-
