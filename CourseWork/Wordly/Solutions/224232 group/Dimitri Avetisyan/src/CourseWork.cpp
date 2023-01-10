@@ -13,16 +13,17 @@ using namespace std;
 
 void game()
 {
-    cout << "\t\t\t\t\t  \033[1;34m  Lets play the Game GALLOWS!\033[0m" << endl;
-    cout << " \t\t\t\t\t \033[1;34mChoose, how much char in word(4-7): \033[0m" << endl;
+    cout << "\t\t\t\t\t  \033[1;34m   Lets play the game 'HANGMAN'!\033[0m" << endl;
+    cout << " \t\t\t\t\t \033[1;34m Choose, how much char in word(4-7): \033[0m" << endl;
     int nChar, i;
     string randomWord;
 
     while (true) {
+        
         cin >> nChar;
-        if (nChar < 4 || nChar > 7) {
-            cout << "\t\t\t\t\t \033[1;31mFail, choose from 4 to 7\033[0m" << endl;
-            
+        if ( nChar < 4 ||  nChar > 7) {
+            cout << "\t\t\t\t\t \033[1;31m    Fail, choose from 4 to 7\033[0m" << endl;
+
         }
         else {
             break;
@@ -34,7 +35,7 @@ void game()
         int length = countLinesInFile(openFileForWordsWithLenght(nChar));
         i = rand() % length;
         string* words = readWords(nChar);
-        cout << words[i] << endl;// УДАЛИТЬ !
+        //cout << words[i] << endl;
         randomWord = words[i];
     }
 
@@ -63,7 +64,7 @@ void game()
             for (int j = 0; j < randomWord.length() - 1; j++)
             {
                 if (i != j && randomWord[i] == enterWord[j]) {
-                    cout <<"\033[1;31m" << enterWord[j] << "\033[0m"<<"\033[1;30m in the word on another place!\033[0m" << endl;
+                    cout << "\033[1;31m" << enterWord[j] << "\033[0m" << "\033[1;30m in the word on another place!\033[0m" << endl;
                     break;  //возможно удалить!
                 }
 
@@ -87,16 +88,16 @@ void game()
             rightChars = 0;
         }
 
-        cout << endl << "\t\t\t\t\t    \033[1;30m      Attempts - " << chance << "\033[0m" << endl;
+        cout << endl << "\t\t\t\t\t    \033[1;30m        Attempts - \033[0m" <<"\033[1;31m" << chance << "\033[0m" << endl;
         if (chance == 0) {
             cout << "\t\t\t\t\t     \033[1;31m      GAME OVER!\033[0m" << endl;
-            cout << "\t\t\t\t\t\t \033[1;31m Word was - \033[0m" << "\033[1; 30m"<< randomWord <<"\033[0m" << endl;
+            cout << "\t\t\t\t\t\t \033[1;31m Word was - \033[0m" << "\033[1; 30m" << randomWord << "\033[0m" << endl;
         }
     }
 }
 
 void startGame() {
-    
+
     char a;
     while (true) {
         cout << "\t\t\t\t\t  \033[1;34m  Do u want to play again?\033[0m" << endl;
