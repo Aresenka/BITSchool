@@ -30,19 +30,27 @@ string pause = "";
 string level = "0";
 int wordLenght = 6;
 
-const string red = "\033[1;41m";
-const string Blue = "\033[1;34m";
-const string blue = "\033[1;44m";
-const string cyan = "\033[1;36m";
-const string white = "\033[1;37m";
-const string black = "\033[1;40m";
+const string Red = "\033[1;41m";
+const string Blue = "\033[1;44m";
+const string Cyan = "\033[1;36m";
+const string White = "\033[1;37m";
+const string Black = "\033[1;40m";
 const string Green = "\033[1;42m";
 const string Yellow = "\033[1;43m";
 const string Magenta = "\033[1;45m";
-const string green = "\033[32m"; // ANSI escape code for green text
+
+
+const string white = "\033[37m"; // ANSI escape code for white text
+const string black = "\033[30m"; // ANSI escape code for black text
+const string red = "\033[31m"; // ANSI escape code for red text
 const string yellow = "\033[33m"; // ANSI escape code for yellow text
+const string green = "\033[32m"; // ANSI escape code for green text
+const string cyan = "\033[36m"; // ANSI escape code for cyan text
+const string blue = "\033[34m"; // ANSI escape code for blue text
+const string magenta = "\033[35m"; // ANSI escape code for magenta (purple) text
+
+const string bold = "\033[1m";
 const string reset = "\033[0m"; // ANSI escape code to reset formatting
-const string magenta = "\033[45m"; // ANSI escape code for magenta background
 
 string fileName;
 string secretWord = "";
@@ -72,7 +80,7 @@ void ClearOneRow()
 
 void Desctop() {
     // Print column names
-    cout << green << "Answer" << string(COLUMN_WIDTH + 1, ' ') << '|';
+    cout << yellow << "Answer" << string(COLUMN_WIDTH + 1, ' ') << '|';
     cout << "Result" << string(COLUMN_WIDTH - 0, ' ') << '|';
     cout << "Bad symbols" << string(COLUMN_WIDTH - 7, ' ') << '|' << endl;
 
@@ -82,29 +90,27 @@ void Desctop() {
         cout << string(COLUMN_WIDTH + 6, '-') << '|';
         cout << string(COLUMN_WIDTH + 5, '-') << endl;
 
-        //int index = 0;
         // Print data rows
         if (enteredWords[i].size() > 3)
         {
-            /*cout << correctPosition[index] << ":    " << incorrectPosition[index] << ":    " << badSymbols[index] << endl;
-            cin >> index;*/
+            cout << white << enteredWords[i] << string(COLUMN_WIDTH + 7 - enteredWords[i].size(), ' ') << yellow << '|';
 
-            cout << enteredWords[i] << string(COLUMN_WIDTH + 7 - enteredWords[i].size(), ' ') << '|';
-            cout << correctPosition[i] << "/" << incorrectPosition[i] << string(COLUMN_WIDTH + 3, ' ') << '|';
-            cout << badSymbols[i] << string(COLUMN_WIDTH + 4 - badSymbols[i].size(), ' ') << '|' << endl;
+            cout << string((COLUMN_WIDTH + 3)/2, ' ') << green << correctPosition[i] << yellow << "/" << white << incorrectPosition[i] << yellow << string((COLUMN_WIDTH + 3) / 2, ' ') << yellow << '|';
+
+            cout << red << bold << badSymbols[i] << reset << green << string(COLUMN_WIDTH + 4 - badSymbols[i].size(), ' ') << yellow << '|' << endl;
         }
         else
         {
-            cout << string(COLUMN_WIDTH + 7, ' ') << '|';
-            cout << string(COLUMN_WIDTH + 6, ' ') << '|';
-            cout << string(COLUMN_WIDTH + 4, ' ') << '|' << endl;
+            cout << string(COLUMN_WIDTH + 7, ' ') << yellow << '|';
+            cout << string(COLUMN_WIDTH + 6, ' ') << yellow << '|';
+            cout << string(COLUMN_WIDTH + 4, ' ') << yellow << '|' << endl;
         }
     }
 
     // Print separator row
-    cout << string(COLUMN_WIDTH + 7, '-') << '|';
-    cout << string(COLUMN_WIDTH + 6, '-') << '|';
-    cout << string(COLUMN_WIDTH + 5, '-') << "\n\r" << reset;
+    cout << yellow << string(COLUMN_WIDTH + 7, '-') << '|';
+    cout << yellow << string(COLUMN_WIDTH + 6, '-') << '|';
+    cout << yellow << string(COLUMN_WIDTH + 5, '-') << "\n\r" << reset;
 }
 
 void ResetGameParameters() {
@@ -322,10 +328,8 @@ void GetSecretWord() {
     int length = countLinesInFile(openFileForWordsWithLenght(wordLenght));
     randomWordIndex = random_int(0, length - 1);
     secretWord = words[randomWordIndex];
-    
 
     // this code need to know what is *words lenght, what is randomWordIndex and what is SecretWord. uncoment it, if you need to kwno it.
-
     
     /*cout << length << endl;
     cin >> pause;
@@ -335,7 +339,6 @@ void GetSecretWord() {
 
     cout << secretWord << endl;
     cin >> pause;*/
-    
 }
 
 bool CheckWordLength()
@@ -378,13 +381,11 @@ bool ValidateWord()
         else
         {
             cout << "Invalid word." << endl;
-            //cout << "your word: " << answerWord << endl;
         }
     }
     else
     {
         cout << "Incorrect length of word" << endl;
-        //cout << "your word length: " << answerWord.size() << ". secret word length: " << secretWord.size()-1  << endl;
     }
     return isValid;
 }
@@ -404,8 +405,6 @@ void PaintGame()
         {
             cout << "Enter the Word:  \n\r";
             cin >> answerWord;
-            //cout << "You Enter - " << answerWord << ", Word length: " << answerWord.size() << endl;
-            //cout << "Secret Word length: " << secretWord.size()-1 << endl;
             wordIsValid = ValidateWord();
             if (wordIsValid == true)
             {
