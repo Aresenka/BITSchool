@@ -67,15 +67,15 @@ string userWord() {
         }
         return 0;
 }*/
-void sravnit() {
-    
-    int num = enterNumber();
-    string randomW = randomWord(num);
-    int length = countLinesInFile(openFileForWordsWithLenght(num)) - 1;
-    for (int j = 0; j <= length; j++) {
-        randomW[j] = randomW[j].substr(0, 4);
-    }
-}
+//void sravnit() {
+//    
+//    int num = enterNumber();
+//    string randomW = randomWord(num);
+//    int length = countLinesInFile(openFileForWordsWithLenght(num)) - 1;
+//    for (int j = 0; j <= length; j++) {
+//        randomW[j] = randomW[j].substr(0, 4);
+//    }
+//}
 int startGame() {
     // Start Game
     int num = enterNumber();
