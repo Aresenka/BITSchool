@@ -22,6 +22,8 @@ using namespace std;
 
 //HANDLE  hConsole;
 
+
+
 int step = 11;
 const int numCols = 3;
 const int numRows = 10;
@@ -57,8 +59,6 @@ const string Magenta = "\033[1;45m";
 string fileName;
 string secretWord = "";
 string answerWord = "";
-string badSymbols = "";
-int matchedSymbols[2] = { 0, 0 };
 
 bool win = false;
 bool gameOver = false;
@@ -67,6 +67,11 @@ int moves;
 int remainingMoves;
 int answerResultTitleCoordinates[2] = { resusltStart, step - 1 };
 
+string enteredWords[7] = {};
+int correctPosition[7] = {};
+int incorrectPosition[7] = {};
+string badSymbols[7] = {};
+int matchedSymbols[2] = { 0, 0 };
 
 
 void ClearRows()
@@ -74,13 +79,79 @@ void ClearRows()
     system("clear");
 }
 
-void ClearOneRow(int row)
+void ClearOneRow()
 {
     printf("\33[2K\r");
 }
 
+void Desctop() {
+    // Print column names
+    cout << green << "Answer" << string(COLUMN_WIDTH + 1, ' ') << '|';
+    cout << "Result" << string(COLUMN_WIDTH - 0, ' ') << '|';
+    cout << "Bad symbols" << string(COLUMN_WIDTH - 7, ' ') << '|' << endl;
+
+    for (int i = 0; i < moves; i++) {
+        // Print separator row
+        cout << string(COLUMN_WIDTH + 7, '-') << '|';
+        cout << string(COLUMN_WIDTH + 6, '-') << '|';
+        cout << string(COLUMN_WIDTH + 5, '-') << endl;
+
+        //int index = 0;
+        // Print data rows
+        if (enteredWords[i].size() > 3)
+        {
+            /*cout << correctPosition[index] << ":    " << incorrectPosition[index] << ":    " << badSymbols[index] << endl;
+            cin >> index;*/
+
+            cout << enteredWords[i] << string(COLUMN_WIDTH + 7 - enteredWords[i].size(), ' ') << '|';
+            cout << correctPosition[i] << "/" << incorrectPosition[i] << string(COLUMN_WIDTH + 3, ' ') << '|';
+            cout << badSymbols[i] << string(COLUMN_WIDTH + 4 - badSymbols[i].size(), ' ') << '|' << endl;
+        }
+        else
+        {
+            cout << string(COLUMN_WIDTH + 7, ' ') << '|';
+            cout << string(COLUMN_WIDTH + 6, ' ') << '|';
+            cout << string(COLUMN_WIDTH + 4, ' ') << '|' << endl;
+        }
+    }
+
+    // Print separator row
+    cout << string(COLUMN_WIDTH + 7, '-') << '|';
+    cout << string(COLUMN_WIDTH + 6, '-') << '|';
+    cout << string(COLUMN_WIDTH + 5, '-') << "\n\r" << reset;
+}
+
+void ResetGameParameters() {
+    remainingMoves = moves;
+    step = 11;
+    win = false;
+    gameOver = false;
+    secretWord = "";
+    answerWord = "";
+
+    for (int i = 0; i < moves; i++) 
+    {
+        enteredWords[i] = "";
+        badSymbols[i] = "";
+        correctPosition[i] = 0;
+        incorrectPosition[i] = 0;
+    }
+}
+
+bool PlayAgain()
+{
+    bool playAgain = false;
+    string answer = "";
+    ClearOneRow();
+    cout << "Play Again? \n\rYes - y\n\rNo - any other symbol\n\r";
+    cin >> answer;
+    return answer == "y" ? true : false;
+}
+
 void WriteSelectedOptions() 
 {
+    ClearRows();
+
     cout << "Selected Level: " << level << endl;
     if (autoChooseWordLenght == true) {
         cout << "Program choose word length." << endl;
@@ -89,23 +160,46 @@ void WriteSelectedOptions()
     {
         cout << "Player choose word length." << endl;
     }
-    cout << "Secret Word: " << wordLenght << " sym. " << " Moves left : " << remainingMoves  << endl;
+    cout << "Secret Word: " << wordLenght << " sym. " << " Moves left : " << remainingMoves << endl;
     cout << endl;
+
+
+
     if (gameOver == false)
     {
-        for (int i = 0; i < secretWord.length(); i++)
+        for (int i = 0; i < secretWord.size() - 1; i++)
         {
             cout << " * ";
         }
     }
+    else
+    {
+        cout << secretWord;
+    }
     cout << endl;
+
+    Desctop();
+
+    if (remainingMoves == 0 && win != true)
+    {
+        string answer = "";
+        gameOver = true;
+        cout << "YOU LOSE !!!" << endl;
+        cout << "Secret word is: " << secretWord;
+    }
+    else if (win == true)
+    {
+        gameOver = true;
+        cout << "CONGRATS !!!" << "YOU WIN !!!" << endl;
+        cout << "Secret word is: " << secretWord;
+    }
 }
 
 void SelectLevel() 
 {
     ClearRows();
     int userLevelAnswer;
-    cout << reset << "SELECT GAME LEVEL:\n\rEasy - 1\n\rMedium - 2\n\rHard - 3\n\rFor exit - any other symbol" << endl;
+    cout << reset << "SELECT GAME LEVEL:\n\rEasy (7 turn) - 1\n\rMedium (6 turn)- 2\n\rHard (5 turn)- 3\n\rFor exit - any other symbol" << endl;
     cin >> userLevelAnswer;
 
     if (userLevelAnswer == 1)
@@ -152,93 +246,11 @@ void WhoChooseWordLenght()
     ClearRows();
 }
 
-void Desctop() {
-
-    // Print column names
-    cout << green << "Answer" << string(COLUMN_WIDTH + 1, ' ')  << '|';
-    cout  << "Result" << string(COLUMN_WIDTH - 0, ' ')  << '|';
-    cout  << "Bad symbols" << string(COLUMN_WIDTH - 7, ' ')  << '|' << endl;
-
-    for (int i = 0; i < wordLenght; i++) {
-        // Print separator row
-        cout << string(COLUMN_WIDTH + 7, '-') << '|';
-        cout << string(COLUMN_WIDTH + 6, '-') << '|';
-        cout << string(COLUMN_WIDTH + 5, '-') << endl;
-
-
-        // Print data rows
-        cout << string(COLUMN_WIDTH + 7, ' ') << '|';
-        cout << string(COLUMN_WIDTH + 6, ' ') << '|';
-        cout << string(COLUMN_WIDTH + 4, ' ') << '|' << endl;
-    }
-    // Print separator row
-
-    cout << string(COLUMN_WIDTH + 7, '-') << '|';
-    cout << string(COLUMN_WIDTH + 6, '-') << '|';
-    cout << string(COLUMN_WIDTH + 5, '-') << "\n\r";
-
-
-    /*cout << "|" << "Answer" << string(colWidth - 4, ' ') << "| Result" << string(colWidth - 5, ' ') << "| Incorrect Symbols" << "|" << "\n\r";
-    for (int i = 0; i < numRows; i++) {
-        cout << "|" << string(colWidth + 2, '-') << "|" << string(colWidth + 2, '-') << "|" << string(colWidth + 3, '-') << "|" << "\n\r";
-        cout << "|" << string(colWidth + 2, ' ') << "|" << string(colWidth + 2, ' ') << "|" << string(colWidth + 3, ' ') << "|" << "\n\r";
-    }
-    */
-}
-
 int random_int(int min, int max)
 {
     return min + rand() % (max - min + 1);
 }
 
-void ResetGameParameters() {
-    remainingMoves = moves;
-    step = 11;
-    win = false;
-    gameOver = false;
-    secretWord = "";
-    answerWord = "";
-}
-
-void WriteSecretWordToDesctop(string secretWord)
-{
-    
-}
-
-/*
-void SetGameStatus()
-{
-    if (remainingMoves == 0 && win != true)
-    {
-        string answer = "";
-        gameOver = true;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), answerCoord);
-        cout << secretWord << "                " << "YOU LOSE !!!";
-    }
-
-    else if (win == true)
-    {
-        gameOver = true;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), answerCoord);
-        cout << secretWord << "           CONGRATS !!!" << "YOU WIN !!!";
-    }
-}
-
-void PaintAnswerResult(int rightCount, int includeCount, string notInclude)
-{
-
-}
-
-bool PlayAgain()
-{
-    bool playAgain = false;
-    string answer = "";
-    ClearOneRow(25);
-    cout << "Play Again? 'y' OR 'n':  \n\r";
-    cin >> answer;
-    return answer == "y" ? true : false;
-}
-*/
 void GetWordLenghtFromUser()
 {
     bool isNumeric = false;
@@ -265,15 +277,12 @@ void GetWordLenghtFromUser()
     } while (isNumeric == false);
     ClearRows();
 }
-/*
+
 void ExactMatchedComparisson()
 {
     int lenght = secretWord.size();
-
     string tempSecretWord1 = secretWord;
     string tempAnswerWord1 = answerWord;
-
-
 
     for (int i = lenght - 1; i >= 0; i--)
     {
@@ -299,31 +308,24 @@ void ExactMatchedComparisson()
             }
         }
     }
-    badSymbols = tempAnswerWord1;
+
+    int index = moves - remainingMoves;
+    correctPosition[index] = matchedSymbols[0];
+    incorrectPosition[index] = matchedSymbols[1];
+    badSymbols[index] = tempAnswerWord1;
+   /* cout << badSymbols[index];
+    cin >> index;*/
+
+
+    matchedSymbols[0] = 0;
+    matchedSymbols[1] = 0;
 }
-*/
-/*
+
 void WordComparison()
 {
     ExactMatchedComparisson();
 }
 
-void CheckAnswer()
-{
-    if (answerWord == "0") {
-        gameOver = true;
-    }
-    else if (answerWord == secretWord)
-    {
-        win = true;
-    }
-    else
-    {
-        WordComparison();
-    }
-    SetGameStatus();
-}
-*/
 
 void GetSecretWord() {
     if (autoChooseWordLenght == true)
@@ -334,16 +336,11 @@ void GetSecretWord() {
     {
         GetWordLenghtFromUser();
     }
-    words = readWords(6);
+    words = readWords(wordLenght);
     int randomWord = 0;
-    randomWord = random_int(0, words->size()-1);
+    int length = countLinesInFile(openFileForWordsWithLenght(wordLenght));
+    randomWord = random_int(0, length-1);
     secretWord = words[randomWord];
-
-    for (int i = 0; i < words->size(); i++)
-    {
-        cout << words[i] << endl;
-    }
-    cin >> wordLenght;
 }
 
 bool CheckWordLength()
@@ -359,18 +356,17 @@ bool CheckWordLength()
 bool CheckLibraryForWord()
 {
     bool isValidForLibrary = false;
-    for (int i = 0; i < words->size(); i++) 
+    int length = countLinesInFile(openFileForWordsWithLenght(wordLenght));
+    for (int i = 0; i < length; i++)
     {
-        cout << words[i] << endl;
-        if (answerWord == words[i])
+        //cout << words[i] << endl;
+        if (answerWord == words[i].substr(0, words[i].size() - 1))
         {
             isValidForLibrary = true;
-            break;
         }
     }
     return isValidForLibrary;
 }
-
 
 bool ValidateWord()
 {
@@ -386,14 +382,14 @@ bool ValidateWord()
         }
         else
         {
-            cout << "No word in library" << endl;
-            cout << "your word: " << answerWord << ".    secret word: " << secretWord << endl;
+            cout << "Invalid word." << endl;
+            //cout << "your word: " << answerWord << endl;
         }
     }
     else
     {
         cout << "Incorrect length of word" << endl;
-        cout << "your word length: " << answerWord.size() << ".    secret word length: " << secretWord.size() << endl;
+        //cout << "your word length: " << answerWord.size() << ". secret word length: " << secretWord.size()-1  << endl;
     }
     return isValid;
 }
@@ -406,49 +402,54 @@ void PaintGame()
         {
             GetSecretWord();
             WriteSelectedOptions();
-            Desctop();
         }
-        /*
-        WriteSecretWordToDesctop(secretWord);
-
-        ClearOneRow();
-        */
-
        
         bool wordIsValid = false;
         do
         {
             cout << "Enter the Word:  \n\r";
             cin >> answerWord;
+            //cout << "You Enter - " << answerWord << ", Word length: " << answerWord.size() << endl;
+            //cout << "Secret Word length: " << secretWord.size()-1 << endl;
             wordIsValid = ValidateWord();
             if (wordIsValid == true)
             {
-                step++;
+                int index = moves - remainingMoves;
+                enteredWords[index] = answerWord;
                 remainingMoves--;
-                /*
-                CheckAnswer();
-
-                ClearOneRow(26);
-
+                WordComparison();
+                if (answerWord == secretWord)
+                {
+                    gameOver = true;
+                    win = true;
+                    WriteSelectedOptions();
+                }
+                else if (remainingMoves == 0)
+                {
+                    gameOver = true;
+                    win = false;
+                    WriteSelectedOptions();
+                }
+                else
+                {
+                    WriteSelectedOptions();
+                }
                 if (gameOver == true)
                 {
                     bool answer = PlayAgain();
                     if (answer == true)
                     {
                         ClearRows();
-                        ResetCoordinates();
+                        ResetGameParameters();
+                        gameOver = false;
                     }
                 }
-                */
             }
             else
             {
                 cout << "Enter valid word. \n\r";
             }
         } while (wordIsValid != true);
-       
-
-       
     }
 }
 
