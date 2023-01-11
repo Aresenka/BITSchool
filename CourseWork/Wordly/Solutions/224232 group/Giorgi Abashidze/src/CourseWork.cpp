@@ -5,9 +5,6 @@
 #include <ctime>
 #include <vector>
 #include <cctype>
-#include <fstream>
-//#include <conio.h>
-//#include "wtypes.h"
 #include <limits.h>
 #include <algorithm>
 #include <filesystem>
@@ -20,11 +17,7 @@
 
 using namespace std;
 
-//HANDLE  hConsole;
-
-
-
-int step = 11;
+int step = 0;
 const int numCols = 3;
 const int numRows = 10;
 const int colWidth = 15;
@@ -33,19 +26,15 @@ const int resusltStart = 62;
 const int COLUMN_WIDTH = 15;
 const int usedWordStart = 20;
 
+string pause = "";
 string* words;
 string level = "0";
 int wordLenght = 6;
-
-const int titleCoord[2] = {0,  20};
-const int answerCoord[2] = { 0,  21 };
-const int usedWordTitleCoordinates[2] = { usedWordStart , step - 1 };
 
 const string reset = "\033[0m"; // ANSI escape code to reset formatting
 const string green = "\033[32m"; // ANSI escape code for green text
 const string yellow = "\033[33m"; // ANSI escape code for yellow text
 const string magenta = "\033[45m"; // ANSI escape code for magenta background
-
 const string red = "\033[1;41m";
 const string Blue = "\033[1;34m";
 const string blue = "\033[1;44m";
@@ -65,14 +54,12 @@ bool gameOver = false;
 bool autoChooseWordLenght = true;
 int moves;
 int remainingMoves;
-int answerResultTitleCoordinates[2] = { resusltStart, step - 1 };
 
 string enteredWords[7] = {};
 int correctPosition[7] = {};
 int incorrectPosition[7] = {};
 string badSymbols[7] = {};
 int matchedSymbols[2] = { 0, 0 };
-
 
 void ClearRows()
 {
@@ -123,13 +110,13 @@ void Desctop() {
 
 void ResetGameParameters() {
     remainingMoves = moves;
-    step = 11;
+    step = 0;
     win = false;
     gameOver = false;
     secretWord = "";
     answerWord = "";
 
-    for (int i = 0; i < moves; i++) 
+    for (int i = 0; i < moves; i++)
     {
         enteredWords[i] = "";
         badSymbols[i] = "";
@@ -148,7 +135,7 @@ bool PlayAgain()
     return answer == "y" ? true : false;
 }
 
-void WriteSelectedOptions() 
+void WriteSelectedOptions()
 {
     ClearRows();
 
@@ -195,7 +182,7 @@ void WriteSelectedOptions()
     }
 }
 
-void SelectLevel() 
+void SelectLevel()
 {
     ClearRows();
     int userLevelAnswer;
@@ -235,7 +222,7 @@ void WhoChooseWordLenght()
     {
         autoChooseWordLenght = false;
     }
-    else if(userAnswer == 2)
+    else if (userAnswer == 2)
     {
         autoChooseWordLenght = true;
     }
@@ -259,13 +246,13 @@ void GetWordLenghtFromUser()
     do
     {
         ClearRows();
-        cout  << "enter a number from 4 inclusive 7." << "\n\r";
+        cout << "enter a number from 4 inclusive 7." << "\n\r";
         numberRead = scanf("%d", &userAnswer);
         while (numberRead != 1)
         {
             cout << "That is not a number!!!" << endl;
             scanf("%*[^\n]");
-            cout  << "enter a number from 4 inclusive 7." << "\n\r";
+            cout << "enter a number from 4 inclusive 7." << "\n\r";
             numberRead = scanf("%d", &userAnswer);
         }
         if (userAnswer >= 4 && userAnswer <= 7)
@@ -273,7 +260,7 @@ void GetWordLenghtFromUser()
             wordLenght = userAnswer;
             isNumeric = true;
         }
-        
+
     } while (isNumeric == false);
     ClearRows();
 }
@@ -281,6 +268,7 @@ void GetWordLenghtFromUser()
 void ExactMatchedComparisson()
 {
     int lenght = secretWord.size();
+
     string tempSecretWord1 = secretWord;
     string tempAnswerWord1 = answerWord;
 
@@ -304,18 +292,13 @@ void ExactMatchedComparisson()
                 tempSecretWord1 = tempSecretWord1.erase(i, 1);
 
                 matchedSymbols[1]++;
-                break;
             }
         }
     }
 
-    int index = moves - remainingMoves;
-    correctPosition[index] = matchedSymbols[0];
-    incorrectPosition[index] = matchedSymbols[1];
-    badSymbols[index] = tempAnswerWord1;
-   /* cout << badSymbols[index];
-    cin >> index;*/
-
+    correctPosition[step] = matchedSymbols[0];
+    incorrectPosition[step] = matchedSymbols[1];
+    badSymbols[step] = tempAnswerWord1;
 
     matchedSymbols[0] = 0;
     matchedSymbols[1] = 0;
@@ -325,7 +308,6 @@ void WordComparison()
 {
     ExactMatchedComparisson();
 }
-
 
 void GetSecretWord() {
     if (autoChooseWordLenght == true)
@@ -337,10 +319,24 @@ void GetSecretWord() {
         GetWordLenghtFromUser();
     }
     words = readWords(wordLenght);
-    int randomWord = 0;
+    int randomWordIndex = 0;
     int length = countLinesInFile(openFileForWordsWithLenght(wordLenght));
-    randomWord = random_int(0, length-1);
-    secretWord = words[randomWord];
+    randomWordIndex = random_int(0, length - 1);
+    secretWord = words[randomWordIndex];
+    
+
+    // this code need to know what is *words lenght, what is randomWordIndex and what is SecretWord. uncoment it, if you need to kwno it.
+
+    /*
+    cout << length << endl;
+    cin >> pause;
+
+    cout << randomWordIndex << endl;
+    cin >> pause;
+
+    cout << secretWord << endl;
+    cin >> pause;
+    */
 }
 
 bool CheckWordLength()
@@ -403,7 +399,7 @@ void PaintGame()
             GetSecretWord();
             WriteSelectedOptions();
         }
-       
+
         bool wordIsValid = false;
         do
         {
@@ -414,11 +410,12 @@ void PaintGame()
             wordIsValid = ValidateWord();
             if (wordIsValid == true)
             {
-                int index = moves - remainingMoves;
-                enteredWords[index] = answerWord;
+                enteredWords[step] = answerWord;
                 remainingMoves--;
                 WordComparison();
-                if (answerWord == secretWord)
+                int index = moves - remainingMoves;
+                step++;
+                if (answerWord == secretWord.substr(0, secretWord.size() - 1))
                 {
                     gameOver = true;
                     win = true;
@@ -453,7 +450,7 @@ void PaintGame()
     }
 }
 
-void ChoosedAction() 
+void ChoosedAction()
 {
     SelectLevel();
     WhoChooseWordLenght();
@@ -463,8 +460,4 @@ int main()
 {
     ChoosedAction();
     PaintGame();
-//Пример использования функции
-    //string* words = readWords(7);
-    //cout << words[0] << endl;
-    
 }
