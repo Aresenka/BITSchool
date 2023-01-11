@@ -14,6 +14,8 @@
 #include <cstdlib>
 #include <iostream>
 #include "lib/words.h"
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -233,10 +235,11 @@ void WhoChooseWordLenght()
     ClearRows();
 }
 
-int random_int(int min, int max)
-{
+int random_int(int min, int max) {
+    srand(time(NULL));
     return min + rand() % (max - min + 1);
 }
+
 
 void GetWordLenghtFromUser()
 {
@@ -327,7 +330,7 @@ void GetSecretWord() {
 
     // this code need to know what is *words lenght, what is randomWordIndex and what is SecretWord. uncoment it, if you need to kwno it.
 
-    /*
+    
     cout << length << endl;
     cin >> pause;
 
@@ -336,7 +339,7 @@ void GetSecretWord() {
 
     cout << secretWord << endl;
     cin >> pause;
-    */
+    
 }
 
 bool CheckWordLength()
