@@ -3,19 +3,16 @@
 #include <list>
 #include <cmath>
 #include <ctime>
+#include <string>
 #include <vector>
 #include <cctype>
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
 #include <limits.h>
 #include <algorithm>
 #include <filesystem>
-
-#include <string>
-#include <fstream>
-#include <cstdlib>
-#include <iostream>
 #include "lib/words.h"
-#include <cstdlib>
-#include <ctime>
 
 using namespace std;
 
@@ -28,15 +25,11 @@ const int resusltStart = 62;
 const int COLUMN_WIDTH = 15;
 const int usedWordStart = 20;
 
-string pause = "";
 string* words;
+string pause = "";
 string level = "0";
 int wordLenght = 6;
 
-const string reset = "\033[0m"; // ANSI escape code to reset formatting
-const string green = "\033[32m"; // ANSI escape code for green text
-const string yellow = "\033[33m"; // ANSI escape code for yellow text
-const string magenta = "\033[45m"; // ANSI escape code for magenta background
 const string red = "\033[1;41m";
 const string Blue = "\033[1;34m";
 const string blue = "\033[1;44m";
@@ -46,21 +39,25 @@ const string black = "\033[1;40m";
 const string Green = "\033[1;42m";
 const string Yellow = "\033[1;43m";
 const string Magenta = "\033[1;45m";
+const string green = "\033[32m"; // ANSI escape code for green text
+const string yellow = "\033[33m"; // ANSI escape code for yellow text
+const string reset = "\033[0m"; // ANSI escape code to reset formatting
+const string magenta = "\033[45m"; // ANSI escape code for magenta background
 
 string fileName;
 string secretWord = "";
 string answerWord = "";
 
+int moves;
 bool win = false;
+int remainingMoves;
 bool gameOver = false;
 bool autoChooseWordLenght = true;
-int moves;
-int remainingMoves;
 
-string enteredWords[7] = {};
-int correctPosition[7] = {};
-int incorrectPosition[7] = {};
 string badSymbols[7] = {};
+int correctPosition[7] = {};
+string enteredWords[7] = {};
+int incorrectPosition[7] = {};
 int matchedSymbols[2] = { 0, 0 };
 
 void ClearRows()
@@ -239,7 +236,6 @@ int random_int(int min, int max) {
     srand(time(NULL));
     return min + rand() % (max - min + 1);
 }
-
 
 void GetWordLenghtFromUser()
 {
