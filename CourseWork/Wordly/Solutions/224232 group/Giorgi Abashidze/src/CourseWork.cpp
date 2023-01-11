@@ -331,14 +331,14 @@ void GetSecretWord() {
     // this code need to know what is *words lenght, what is randomWordIndex and what is SecretWord. uncoment it, if you need to kwno it.
 
     
-    cout << length << endl;
+    /*cout << length << endl;
     cin >> pause;
 
     cout << randomWordIndex << endl;
     cin >> pause;
 
     cout << secretWord << endl;
-    cin >> pause;
+    cin >> pause;*/
     
 }
 
