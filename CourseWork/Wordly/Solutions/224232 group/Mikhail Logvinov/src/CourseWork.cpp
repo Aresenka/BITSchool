@@ -27,25 +27,58 @@ int numberOne() //рекурсия, чтобы пользователь ввел
 		return number;
 	}
 }
-//второй метод, вы
-void getRandomWord(int number)
-{
-	
-		string s1;
-		ifstream in ("C:\\Users\\demo\\Pupsik\\BITSchool\\CourseWork\\Wordly\\Solutions\\224232 group\\Mikhail Logvinov\\src\\lib\\words_4_letters.csv");
-		getline(in, s1);
-		in.close();
-		cout << s1 << endl;
-	
+//второй метод хз пока  реализовать лучше в мейне или до, а в мейне просто сослаться
+// 
+//
+//void game (int number) {
+//	string* rangeHiddenWord = readWords(number);
+//	srand(unsigned(time(NULL)));
+//	int length = countLinesInFile(openFileForWordsWithLenght(number));
+//	int numberOfWord = rand() % length;
+//
+//	string hiddenWord = rangeHiddenWord[numberOfWord - 1];
+//	string word;
+//
+//	for (int i = 0; i < attempts; i++)
 
-}
+
 
 int main()
 {
 	int number = numberOne();
-	getRandomWord(number);
 
-	
-	
-	return 0;
+	void game(int number) { // ругается на эту скобку 
+		string* rangeHiddenWord = readWords(number); // до конца не понял как эти ваши Астериксы работают, но вроде как так можно
+		srand(unsigned(time(NULL)));
+		int length = countLinesInFile(openFileForWordsWithLenght(number));
+		int numberOfWord = rand() % length;
+
+		string hiddenWord = rangeHiddenWord[numberOfWord - 1];
+		string word;
+
+		for (int i = 0; i < attempts; i++)
+		{
+			cout << "Введите слово из " << number << "букв" << endl;
+			for (int i = 0; i < attempts; i++)
+			{
+				cout << "*";
+			}
+			cin >> word;
+			for (i = 0; i < hiddenWord.lenght(); i++) {
+				if (hiddenWord[i] = word[i]) {
+					cout << word[i];
+				}
+				else { cout << "*"; }
+				cout << endl;
+			}
+			if (hiddenWord == word)
+			{
+				cout << "YOU ARE WINNER!";
+				break;
+			}
+		} // подскажите поджаста, почему не работает)))))00)
+
+
+	}
 }
+	return 0;
