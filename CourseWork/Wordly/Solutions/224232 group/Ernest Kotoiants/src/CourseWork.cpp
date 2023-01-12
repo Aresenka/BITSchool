@@ -18,7 +18,7 @@ void game()
     int nChar, i;
     string randomWord;
 
-    while (true) {
+    while (true) {g
 
         cin >> nChar;
         if (nChar < 4  && nChar > 7) {
