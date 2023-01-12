@@ -2,6 +2,7 @@
 #include "words.h"
 #include <string> 
 #include <iostream>
+
 using namespace std;
 
 ifstream openFileForWordsWithLenght(int word_length) {

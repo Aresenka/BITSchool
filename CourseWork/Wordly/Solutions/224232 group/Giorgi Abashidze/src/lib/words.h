@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+
+
 using namespace std;
 
 ifstream openFileForWordsWithLenght(int word_lenght);

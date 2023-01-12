@@ -24,6 +24,7 @@ const int NUM_COLUMNS = 3;
 const int resusltStart = 62;
 const int COLUMN_WIDTH = 15;
 const int usedWordStart = 20;
+bool cheat = false;
 
 string* words;
 string pause = "";
@@ -120,6 +121,7 @@ void ResetGameParameters() {
     gameOver = false;
     secretWord = "";
     answerWord = "";
+    cheat = false;
 
     for (int i = 0; i < moves; i++)
     {
@@ -143,7 +145,10 @@ bool PlayAgain()
 void WriteSelectedOptions()
 {
     ClearRows();
-
+    if (cheat == true) 
+    {
+        cout << red << "Cheat Active" << reset << endl;
+    }
     cout << "Selected Level: " << level << endl;
     if (autoChooseWordLenght == true) {
         cout << "Program choose word length." << endl;
@@ -155,20 +160,25 @@ void WriteSelectedOptions()
     cout << "Secret Word: " << wordLenght << " sym. " << " Moves left : " << remainingMoves << endl;
     cout << endl;
 
-
-
     if (gameOver == false)
     {
-        for (int i = 0; i < secretWord.size() - 1; i++)
+        if (cheat == true)
         {
-            cout << " * ";
+            cout << secretWord;
+        }
+        else
+        {
+            for (int i = 0; i < secretWord.size() - 1; i++)
+            {
+                cout << " * ";
+            }
         }
     }
     else
     {
         cout << secretWord;
     }
-    cout << endl;
+    cout << endl << endl;
 
     Desctop();
 
@@ -328,17 +338,6 @@ void GetSecretWord() {
     int length = countLinesInFile(openFileForWordsWithLenght(wordLenght));
     randomWordIndex = random_int(0, length - 1);
     secretWord = words[randomWordIndex];
-
-    // this code need to know what is *words lenght, what is randomWordIndex and what is SecretWord. uncoment it, if you need to kwno it.
-    
-    /*cout << length << endl;
-    cin >> pause;
-
-    cout << randomWordIndex << endl;
-    cin >> pause;
-
-    cout << secretWord << endl;
-    cin >> pause;*/
 }
 
 bool CheckWordLength()
@@ -357,7 +356,6 @@ bool CheckLibraryForWord()
     int length = countLinesInFile(openFileForWordsWithLenght(wordLenght));
     for (int i = 0; i < length; i++)
     {
-        //cout << words[i] << endl;
         if (answerWord == words[i].substr(0, words[i].size() - 1))
         {
             isValidForLibrary = true;
@@ -394,7 +392,7 @@ void PaintGame()
 {
     while (gameOver == false)
     {
-        if (remainingMoves == moves)
+        if (remainingMoves == moves && cheat == false)
         {
             GetSecretWord();
             WriteSelectedOptions();
@@ -405,44 +403,54 @@ void PaintGame()
         {
             cout << "Enter the Word:  \n\r";
             cin >> answerWord;
-            wordIsValid = ValidateWord();
-            if (wordIsValid == true)
+
+            if (answerWord == "ch")
             {
-                enteredWords[step] = answerWord;
-                remainingMoves--;
-                WordComparison();
-                int index = moves - remainingMoves;
-                step++;
-                if (answerWord == secretWord.substr(0, secretWord.size() - 1))
-                {
-                    gameOver = true;
-                    win = true;
-                    WriteSelectedOptions();
-                }
-                else if (remainingMoves == 0)
-                {
-                    gameOver = true;
-                    win = false;
-                    WriteSelectedOptions();
-                }
-                else
-                {
-                    WriteSelectedOptions();
-                }
-                if (gameOver == true)
-                {
-                    bool answer = PlayAgain();
-                    if (answer == true)
-                    {
-                        ClearRows();
-                        ResetGameParameters();
-                        gameOver = false;
-                    }
-                }
+                cheat = !cheat;
+                
+                WriteSelectedOptions();
             }
             else
             {
-                cout << "Enter valid word. \n\r";
+                wordIsValid = ValidateWord();
+                if (wordIsValid == true)
+                {
+                    enteredWords[step] = answerWord;
+                    remainingMoves--;
+                    WordComparison();
+                    int index = moves - remainingMoves;
+                    step++;
+                    if (answerWord == secretWord.substr(0, secretWord.size() - 1))
+                    {
+                        gameOver = true;
+                        win = true;
+                        WriteSelectedOptions();
+                    }
+                    else if (remainingMoves == 0)
+                    {
+                        gameOver = true;
+                        win = false;
+                        WriteSelectedOptions();
+                    }
+                    else
+                    {
+                        WriteSelectedOptions();
+                    }
+                    if (gameOver == true)
+                    {
+                        bool answer = PlayAgain();
+                        if (answer == true)
+                        {
+                            ClearRows();
+                            ResetGameParameters();
+                            gameOver = false;
+                        }
+                    }
+                }
+                else
+                {
+                    cout << "Enter valid word. \n\r";
+                }
             }
         } while (wordIsValid != true);
     }
