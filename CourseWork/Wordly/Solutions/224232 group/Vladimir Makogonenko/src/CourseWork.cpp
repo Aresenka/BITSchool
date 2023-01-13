@@ -17,23 +17,9 @@ const int PARITAL_MATCHED = 1;
 const int MATCHED = 2;
 const int NUMBER_OF_GUESSES = 5;
 
-void toUpperCase(string &input)
+void toUpperCase(string input)
 {
     transform(input.begin(), input.end(), input.begin(), [](unsigned char c) { return toupper(c); });
-}
-
-int newGame(){  // Запуск/перезапуск
-    int wordLength;   
-    cout << "Введите длину слова (от " << START_RANGE << " до " <<  END_RANGE <<") " <<endl;
-    cin >> wordLength;
-
-    if (wordLength < START_RANGE || wordLength > END_RANGE){
-        cout << " Ты дурак ? Введи от " << START_RANGE << " до " << END_RANGE << endl;
-        cin >> wordLength;
-        cout << endl; 
-    }
-
-    return wordLength;
 }
 
 string getRandomWord(int wordLength)
@@ -43,14 +29,13 @@ string getRandomWord(int wordLength)
     int length = countLinesInFile(openFileForWordsWithLenght(wordLength));
     int numberOfWord = rand()%length;
 
-    string secretWord = rangeSecretWord[numberOfWord-1];
-    cout << secretWord << endl;
-    return secretWord;
+    string targetWord = rangeSecretWord[numberOfWord-1];
+    cout << targetWord << endl;
+    return targetWord;
 }
 
-bool isValidWord(string word)
+bool isValidWord(string word, int wordLength)
 {
-    int wordLength = newGame();
     return word.length() == wordLength && word.find_first_not_of("abcdefghijklmnopqrstuvwxyz") == string::npos;
 }
 
@@ -74,12 +59,15 @@ void markMatches(vector<vector<int>> &matches, int currentTry, string targetWord
     }
 }
 
-bool isAllMatched(string targetWord, string guessWord)
+bool isAllMatched(string targetWord, string input)
 {
-    for (int i = 0; i < targetWord.length(); i++){
-        if (targetWord[i] = guessWord[i]) return false;
-    }
-
+    for (int i = 0; i < input.length(); i++){
+            if (targetWord[i] != input[i]) {
+            return false; 
+        }
+            // if (targetWord[i] = input[i]) {
+            // return true; 
+        }   
     return true;
 }
 
@@ -95,7 +83,7 @@ void print(vector<vector<int>> matches, vector<string> guesses, int currentGuess
             padding += "     |";
             char value = toupper(guesses[i][j]);
             text += "   ";
-            cout << matches[i][j] << endl;
+            // cout << matches[i][j] << endl;
             if (matches[i][j] == PARITAL_MATCHED){
                 text += "\033[33m";
             } else if (matches[i][j] == MATCHED) {
@@ -124,31 +112,40 @@ void print(vector<vector<int>> matches, vector<string> guesses, int currentGuess
 
 int main()
 {
-    int newGame();
-    int wordLength;
-    // int wordLength;
+    int wordLength;   
+    cout << "Введите длину слова (от " << START_RANGE << " до " <<  END_RANGE <<") " <<endl;
+    cin >> wordLength;
+
+    while (wordLength < START_RANGE || wordLength > END_RANGE){
+        cout << " Ты дурак ? Введи от " << START_RANGE << " до " << END_RANGE << endl;
+        cin >> wordLength;
+        cout << endl; 
+    }
+
     vector<string> guesses(NUMBER_OF_GUESSES);
-    vector<vector<int>> matches(NUMBER_OF_GUESSES, vector<int>(WORD_LENGTH));
+    vector<vector<int>> matches(NUMBER_OF_GUESSES, vector<int>(wordLength));
     string targetWord = getRandomWord(wordLength);
     
     string input;
     
-    print(matches, guesses, -1);
+    // print(matches, guesses, -1);
 
     int currentTry = 0;
 
     while (currentTry < NUMBER_OF_GUESSES)
     {
+        string chekInput = input;
         do
         {
-            cout << "Please enter your guess (word length must be " + to_string(wordLength) + ") or type 'q' to quit: ";
-            getline(cin, input);
+            cout << "Введи предроложение (слово должно быть из " + to_string(wordLength) + " букв) или жми 'q' для выхода: ";
+            // getline(cin, input);
+            cin >> input;
 
-        } while (input != "q" && !isValidWord(input));
+        } while (input != "q" && !isValidWord(input ,wordLength));
 
         if (input == "q")
         {
-            cout << "Quit game" << endl;
+            cout << "Слабак )" << endl;
             break;
         }
         
@@ -159,12 +156,18 @@ int main()
         print(matches, guesses, currentTry);
 
         if (isAllMatched(targetWord, input)) {
-            cout << "!!!!!!!!" << endl;
+            cout << "Скинь данные кредитки , хочу денюжку за победу скинуть!" << endl;
             break;
         }
+        
+        if (chekInput != input){
+            currentTry ++;
+        }
 
-
-        currentTry ++;
+        if (currentTry == NUMBER_OF_GUESSES){
+            cout << " Ты не отгадал слово : " << targetWord << endl;
+        }
+        // currentTry ++;
     }
     
 }
