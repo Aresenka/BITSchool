@@ -11,13 +11,17 @@ using namespace std;
 
 int enterCountOfLetters() {
     int countOfLetters;
-
-    do {
-        cout << "\t\t\t\t\t  \033[1;34m   Lets play the game 'HANGMAN'!\033[0m" << endl;
-        cout << " \t\t\t\t\t \033[1;34m Choose, how many letters in the word(4-7): \033[0m" << endl;
-        cin >> countOfLetters;
+    while (true) {
+        cout << "\t\t\t\t\t \033[1;34m Enter the NUMBER from 4 to 7 \033[0m" << endl;
+        while (!(cin >> countOfLetters)) {
+            cout << "\t\t\t\t\t \033[1;34m Enter the NUMBER from 4 to 7 \033[0m" << endl;
+            cin.clear();                
+            fflush(stdin);              
+        }
+        if (countOfLetters < 4 || countOfLetters > 7)
+        cout << " \t\t\t\t\t \033[1;34m Wrong numbers of letters: \033[0m" << endl;
+        else break;
     }
-        while (countOfLetters < 4 || countOfLetters > 7);
        
      return countOfLetters;          
     }
@@ -45,6 +49,7 @@ string getRandomWord(int countOfLetters) {
     int indexOfWord = rand() % length;
     string* words = readWords(countOfLetters);
     randomWord = words[indexOfWord];
+    cout << randomWord << endl;
     
     for (int i = 0; i < countOfLetters; i++)
     {
@@ -87,7 +92,10 @@ void checkLetterInTheWord(string enterWord, string randomWord, int countOfLetter
 
 
 void game()
-{   
+{
+    cout << "\t\t\t\t\t  \033[1;34m   Lets play the game 'HANGMAN'!\033[0m" << endl;
+    cout << " \t\t\t\t\t \033[1;34m Choose, how many letters in the word(4-7): \033[0m"<<endl;
+
     int countOfLetters = enterCountOfLetters();
     string randomWord = getRandomWord(countOfLetters);
     cout << "\t\t\t\t\t     \033[1;30m    You have 10 attempts\033[0m " << endl;
@@ -125,12 +133,12 @@ void game()
 
 void startGame() {
 
-    char a;
+    char restartGame;
     while (true) {
         cout << "\t\t\t\t\t  \033[1;34m  Do u want to play again?\033[0m" << endl;
         cout << "\t\t\t\t\t  \033[1;34m     Enter Y/y if u want.\033[0m" << endl;
-        cin >> a;
-        if (a == 'y' || a == 'Y') {
+        cin >> restartGame;
+        if (restartGame == 'y' || restartGame == 'Y') {
 
             game();
 
