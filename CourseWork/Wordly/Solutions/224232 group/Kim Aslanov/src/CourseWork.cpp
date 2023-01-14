@@ -16,11 +16,15 @@
 
 int enterNumber() {
     int n;
-    cout << " \t\t\t\t\tВыберите колличество букв в угадываемом слове (от 4 до 7)" << endl;
+    cout << "\t\t\t\tChoose the number of letters in the guessed word (from 4 to 7)" << endl;
     while (true) {
-        cin >> n;
+        while (!(cin >> n)) {        //пока не будет введено нормальное число, выполняем цикл
+            cout << "\t\t\t\t\tEnter the NUMBER from 4 to 7 " << endl;         //сообщаем об ошибке ввода
+            cin.clear();                //сбрасываем коматозное состояние cin
+            fflush(stdin);              //очищаем поток ввода
+        }
         if (n < 4 || n > 7) {
-            cout << " \t\t\t\t\tНеверное колличество букв" << endl;
+            cout << " \t\t\t\t\tWrong number of letters" << endl;
         }
         else {
             break;
@@ -47,7 +51,7 @@ string randomWord(int n) {
 }
 
 string userWord() {
-    cout << " \t\t\t\t\tВведите cлово" << endl;
+    cout << " \t\t\t\t\tEnter the word" << endl;
     string w;
     cin >> w;
     return w;
@@ -75,7 +79,7 @@ void sravnit() {
     for (int j = 0; j <= length; j++) {
         words[j] = words[j].substr(0, 4);
         if (userW != words[j]) {
-            cout << " \t\t\t\t\tНет в словаре" << endl;
+            cout << " \t\t\t\t\tWord is not in the dictionary" << endl;
         }
         else {
             cout << " \t\t\t\t\tЕсть в словаре" << endl;
@@ -93,7 +97,7 @@ int startGame() {
     for (int chance = 5; chance >= 0; chance--)
     {    
         string userW = userWord();
-        cout << "У вас " << chance << " попыток(а)" << endl; 
+        cout << "You have " << chance << "attempts" << endl; 
 
         for (int i = 0; i < randomW.length() - 1; i++)
         {
@@ -109,7 +113,7 @@ int startGame() {
         cout << endl;
 
         if (ok == randomW.length() - 1) {
-            cout << "\t\t\t\t\t\t   Супер! Вы выиграли!" << endl;
+            cout << "\t\t\t\t\t\t   Exellent, you WON!" << endl;
             break;
         }
         else {
@@ -119,7 +123,7 @@ int startGame() {
         for (int i = 0; i < randomW.length() - 1; i++) {
             for (int j = 0; j < userW.length() - 1; j++) {
                 if (i != j && randomW[i] == userW[j]) {
-                    cout << " \t\t\t\t\tБуква <<" << userW[j] << ">> не на том месте" << endl;
+                    cout << " \t\t\t\t\tThe letter <<" << userW[j] << ">> is in the wrong place" << endl;
                 }
 
             }
@@ -131,16 +135,16 @@ int startGame() {
 void vonaPlay() {
     char vona;
     while (true) {
-        cout << "\t\t\t\t\tЖелаете сыграть еще раз? Y or N" << endl;
+        cout << "\t\t\t\t\tDo you like to play againe? Y or N" << endl;
         cin >> vona;
         if (vona == 'y' || vona == 'Y') {
             cout << "\t\t\t     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
-            cout << "\t\t\t\t\t\t   Супер! Давайте сыграем еще раз =)" << endl;
+            cout << "\t\t\t\t\t\t   Great! Lets play again =)" << endl;
             cout << endl;
             startGame();
         }
         if (vona == 'n' || vona == 'N') {
-            cout << "\t\t\t\t\tЖаль, до скорых встреч!" << endl;
+            cout << "\t\t\t\t\tWhat a pity. See you soon!" << endl;
             break;
         }   
         else
@@ -150,7 +154,7 @@ void vonaPlay() {
 
 int main() {
     cout << "\t\t\t     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
-    cout << "\t\t\t\t\t\t   Добро пожаловать в игру ВИСЕЛИЦА" << endl;
+    cout << "\t\t\t\t\t\t   WELCOME to HANGMAN!" << endl;
     startGame();
     vonaPlay();
     //sravnit();
