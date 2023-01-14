@@ -3,7 +3,7 @@
 #include <fstream>
 using namespace std;
 
-ifstream openFileForWordsWithLenght(int word_lenght);
+ifstream openFileForWordsWithLength(int word_length);
 
 int countLinesInFile(ifstream file);
 
