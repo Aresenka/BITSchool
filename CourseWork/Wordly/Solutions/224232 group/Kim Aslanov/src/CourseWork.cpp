@@ -12,7 +12,7 @@
 #include <stdio.h> 
 
 
-using namespace std;
+
 
 int enterNumber() {
     int n;
@@ -31,11 +31,10 @@ int enterNumber() {
     }
 
 int randomWordIndex(int m) {
-
-    int number = enterNumber();
+    
+    int number = m;
     srand(time(0));
     int indexCount = countLinesInFile(openFileForWordsWithLenght(number)) - 1;
-
     return rand() % indexCount;
 }
 
@@ -46,7 +45,6 @@ string randomWord(int n) {
     cout << word << endl;
     return word;
 }
-
 
 string userWord() {
     cout << " \t\t\t\t\tВведите cлово" << endl;
@@ -67,15 +65,25 @@ string userWord() {
         }
         return 0;
 }*/
-//void sravnit() {
-//    
-//    int num = enterNumber();
-//    string randomW = randomWord(num);
-//    int length = countLinesInFile(openFileForWordsWithLenght(num)) - 1;
-//    for (int j = 0; j <= length; j++) {
-//        randomW[j] = randomW[j].substr(0, 4);
-//    }
-//}
+void sravnit() {
+    
+    
+    
+    int length = countLinesInFile(openFileForWordsWithLenght(4)) - 1;
+    string* words = readWords(length);
+    string userW = userWord();
+    for (int j = 0; j <= length; j++) {
+        words[j] = words[j].substr(0, 4);
+        if (userW != words[j]) {
+            cout << " \t\t\t\t\tНет в словаре" << endl;
+        }
+        else {
+            cout << " \t\t\t\t\tЕсть в словаре" << endl;
+        }
+
+    }
+}
+
 int startGame() {
     // Start Game
     int num = enterNumber();
@@ -83,14 +91,13 @@ int startGame() {
     
     int ok=0;
     for (int chance = 5; chance >= 0; chance--)
-    {
-        
+    {    
         string userW = userWord();
-        cout << "У вас " << chance << " попыток(а)" << endl;
-      
+        cout << "У вас " << chance << " попыток(а)" << endl; 
+
         for (int i = 0; i < randomW.length() - 1; i++)
         {
-            
+            int ok = 0;
             if (randomW[i] == userW[i]) {
                 cout << " " << userW[i] << " ";
                 ok++;
@@ -105,7 +112,9 @@ int startGame() {
             cout << "\t\t\t\t\t\t   Супер! Вы выиграли!" << endl;
             break;
         }
-
+        else {
+             ok = 0; 
+        }
 
         for (int i = 0; i < randomW.length() - 1; i++) {
             for (int j = 0; j < userW.length() - 1; j++) {
@@ -136,9 +145,7 @@ void vonaPlay() {
         }   
         else
             vonaPlay();
-    }
-
-      
+    }   
 }
 
 int main() {
@@ -146,6 +153,7 @@ int main() {
     cout << "\t\t\t\t\t\t   Добро пожаловать в игру ВИСЕЛИЦА" << endl;
     startGame();
     vonaPlay();
+    //sravnit();
     return 0;
 }
 
