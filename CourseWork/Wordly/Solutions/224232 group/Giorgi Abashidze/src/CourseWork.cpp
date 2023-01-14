@@ -168,7 +168,12 @@ void WriteSelectedOptions()
         }
         else
         {
-            for (int i = 0; i < secretWord.size() - 1; i++)
+            int currentWordSize = secretWord.size(); // wordLenght;
+            if (currentWordSize > wordLenght)
+            {
+                currentWordSize -= 1;
+            }
+            for (int i = 0; i < currentWordSize; i++)
             {
                 cout << " * ";
             }
@@ -284,6 +289,9 @@ void ExactMatchedComparisson()
 {
     int lenght = secretWord.size();
 
+
+
+
     string tempSecretWord1 = secretWord;
     string tempAnswerWord1 = answerWord;
 
@@ -338,6 +346,14 @@ void GetSecretWord() {
     int length = countLinesInFile(openFileForWordsWithLenght(wordLenght));
     randomWordIndex = random_int(0, length - 1);
     secretWord = words[randomWordIndex];
+
+
+    int currentWordSize = secretWord.size();
+
+    if (currentWordSize > wordLenght)
+    {
+        secretWord = secretWord.substr(0, secretWord.size() - 1);
+    }
 }
 
 bool CheckWordLength()
@@ -356,7 +372,14 @@ bool CheckLibraryForWord()
     int length = countLinesInFile(openFileForWordsWithLenght(wordLenght));
     for (int i = 0; i < length; i++)
     {
-        if (answerWord == words[i].substr(0, words[i].size() - 1))
+        int currentWordSize = secretWord.size();
+
+        if (currentWordSize < words[i].size())
+        {
+            words[i] = words[i].substr(0, words[i].size() - 1);
+        }
+        
+        if (answerWord == words[i])
         {
             isValidForLibrary = true;
         }
@@ -420,7 +443,12 @@ void PaintGame()
                     WordComparison();
                     int index = moves - remainingMoves;
                     step++;
-                    if (answerWord == secretWord.substr(0, secretWord.size() - 1))
+                    int currentWordSize = secretWord.size();
+                    if (currentWordSize > secretWord.size())
+                    {
+                        secretWord = secretWord.substr(0, secretWord.size() - 1);
+                    }
+                    if (answerWord == secretWord)
                     {
                         gameOver = true;
                         win = true;
