@@ -30,55 +30,45 @@ int numberOne() //рекурсия, чтобы пользователь ввел
 //второй метод хз пока  реализовать лучше в мейне или до, а в мейне просто сослаться
 // 
 //
-//void game (int number) {
-//	string* rangeHiddenWord = readWords(number);
-//	srand(unsigned(time(NULL)));
-//	int length = countLinesInFile(openFileForWordsWithLenght(number));
-//	int numberOfWord = rand() % length;
-//
-//	string hiddenWord = rangeHiddenWord[numberOfWord - 1];
-//	string word;
-//
-//	for (int i = 0; i < attempts; i++)
+void game(int number) { // вынести эту функцию из мейна 
+	string* rangeHiddenWord = readWords(number);
+	srand(unsigned(time(NULL)));
+	int length = countLinesInFile(openFileForWordsWithLenght(number));
+	int numberOfWord = rand() % length;
+
+	string hiddenWord = rangeHiddenWord[numberOfWord - 1];
+	string word;
+
+	for (int i = 0; i < attempts; i++)
+	{
+		cout << "Введите слово из " << number << "букв" << endl;
+		for (int i = 0; i < number; i++)
+		{
+			cout << "*";
+		}
+		cin >> word;
+		for (i = 0; i < hiddenWord.length(); i++) {
+			if (hiddenWord[i] == word[i]) {//прописать функцию сравнивания длины слов 
+				cout << word[i];
+			}
+			else { cout << "*"; }
+			cout << endl;
+		}
+		if (hiddenWord == word)
+		{
+			cout << "YOU ARE WINNER!";
+			break;
+		}
+	} // подскажите поджаста, почему не работает)))))00)
+}
 
 
 
 int main()
 {
 	int number = numberOne();
+	game(number);
 
-	void game(int number) { // ругается на эту скобку 
-		string* rangeHiddenWord = readWords(number); // до конца не понял как эти ваши Астериксы работают, но вроде как так можно
-		srand(unsigned(time(NULL)));
-		int length = countLinesInFile(openFileForWordsWithLenght(number));
-		int numberOfWord = rand() % length;
-
-		string hiddenWord = rangeHiddenWord[numberOfWord - 1];
-		string word;
-
-		for (int i = 0; i < attempts; i++)
-		{
-			cout << "Введите слово из " << number << "букв" << endl;
-			for (int i = 0; i < attempts; i++)
-			{
-				cout << "*";
-			}
-			cin >> word;
-			for (i = 0; i < hiddenWord.lenght(); i++) {
-				if (hiddenWord[i] = word[i]) {
-					cout << word[i];
-				}
-				else { cout << "*"; }
-				cout << endl;
-			}
-			if (hiddenWord == word)
-			{
-				cout << "YOU ARE WINNER!";
-				break;
-			}
-		} // подскажите поджаста, почему не работает)))))00)
-
-
-	}
-}
 	return 0;
+}
+	
