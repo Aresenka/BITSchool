@@ -34,8 +34,10 @@ void getWordLength() {
         if (input.length() > 1 || input[0] > MAX_WORD_LENGTH_ASCII || input[0] < MIN_WORD_LENGTH_ASCII)
             cout << "    Wrong value! Enter the number in range from 4 to 7" << endl;
         else
+        {
             wordLength = charToInt(input[0]);
             break;
+        }
     }
 }
 
@@ -208,4 +210,3 @@ int main()
     wordsCount = countLinesInFile(openFileForWordsWithLength(wordLength)) - 1;
     playGame();
 }
-
