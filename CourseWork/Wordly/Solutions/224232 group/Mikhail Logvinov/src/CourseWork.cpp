@@ -32,31 +32,24 @@ int numberOne() //рекурсия, чтобы пользователь ввел
 	}
 }
 
-bool charInWord(string word, string hiddenWord, int number) {
+bool charInWord(string word, string hiddenWord, int number) { // функция проверки вхождения символа в загаданное слово
 	for (int i = 0; i < hiddenWord.length() - 1; i++) {
-		int rightChars = 0;
-		if (hiddenWord[i] == word[i]) {
-			cout << word[i] << endl;
-			rightChars++;
-		}
-		else {
-			cout << "*";
-		}
-
+	
+		if (hiddenWord[i] == word[i]);
+		return true;
 	}
-	return false;
+	    
 }
 
-bool charInRightPosition(string word, string hiddenWord, int number) {
+bool charInRightPosition(string word, string hiddenWord, int number) { // функция проверки того, стоит ли символ на прпавильной позиции
 	for (int i = 0; i < hiddenWord.length() - 1; i++) {
 		for (int j = 0; j < hiddenWord.length() - 1; i++)
 		{
-			if (i != j && hiddenWord[i] != hiddenWord[j]) {
-				cout << "Буква не на своем месте!" << endl;
-			}
+			if (i != j && hiddenWord[i] != hiddenWord[j]) 
+				return true;
 		}
 	}
-	return false;
+	
 }
 
 void game(int number) { // функция выбора рандомного слова из библиотеки
@@ -115,52 +108,6 @@ void game(int number) { // функция выбора рандомного сл
 		}
 	} 
 }
-//void wrongNumberOfSymbols(string word, int number) {
-//	if (word.length() > number || word.length() < number) {
-//		game(number); //  могу ли я так вызывать функцию
-//		cout << endl;
-//		cin >> word;
-//	}
-//}
-
-//void dashesInWord(string hiddenWord, string word) {   //функция сравнения слов 
-//	
-//	vector <char> wrongWords;
-//	for (int i = 0; i < hiddenWord.length(); i++) {
-//		if (hiddenWord[i] == word[i]) {
-//			cout << word[i];
-//		}
-//		else {
-//			cout << "_";
-//			wrongWords.push_back(word[i]);
-//		}
-//	}
-//	cout << endl << "БУКВЫ НЕ НА СВОЕМ МЕСТЕ" << endl;
-//
-//	for (int i = 0; i <= wrongWords.size(); i++) {
-//		for (int y = 0; y <= hiddenWord.length(); y++) {
-//			if (wrongWords[i] == hiddenWord[y]) {
-//				cout << wrongWords[i];
-//			}
-//		}
-//	}
-//}
-
-
-//*string enterWord(string hiddenWord, int number) {   // другая функция сравнения длинны слова
-//	string enterWord;
-//	while (true) {
-//		cin >> enterWord;
-//		if (enterWord.length() > number || enterWord.length() < number) {
-//			cout << " неправельная длинна слова " << endl;
-//		}
-//		else {
-//			break;
-//		}
-//	}
-//	return enterWord;
-//}
-
 
 
 int main()
