@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-// ошибка, если в слове две одинаковые буквы
+// единственная ошибка, если в слове две одинаковые буквы
 
 
 const int attempts = 7;
@@ -41,10 +41,10 @@ void game(int attempts)
     cout << " \t\t\t\t\t \033[1;34m            4,5,6 or 7?\033[0m" << endl;
 
     int countOfChars;
-    
+
     while (true) {
         while (!(cin >> countOfChars)) {        //пока не будет введено нормальное число, выполняем цикл 
-            cout << "\t\t\t\t\t  \033[1;31m    Enter NUMBER from 4 to 7\033[0m " << endl;        
+            cout << "\t\t\t\t\t  \033[1;31m    Enter NUMBER from 4 to 7\033[0m " << endl;
             cin.clear();                //сбрасываем коматозное состояние cin
             fflush(stdin);              //очищаем поток ввода
         }
@@ -56,13 +56,7 @@ void game(int attempts)
             break;
         }
     }
-    cout << "\t\t\t\t\t     \033[1;30m    You have " << "\033[1;31m" << attempts << "\033[0m" << "\033[1;30m attempts\033[0m " << endl;
-    cout << "\t\t\t\t\t     \033[1;30m           +---+\033[0m " << endl;
-    cout << "\t\t\t\t\t     \033[1;30m           |   |\033[0m " << endl;
-    cout << "\t\t\t\t\t     \033[1;30m           O   |\033[0m " << endl;
-    cout << "\t\t\t\t\t     \033[1;30m   o/          |\033[0m " << endl;
-    cout << "\t\t\t\t\t     \033[1;30m  /0           |\033[0m " << endl;
-    cout << "\t\t\t\t\t     \033[1;30m   Л         ====\033[0m " << endl;
+   
     srand(time(0));
     int length = countLinesInFile(openFileForWordsWithLenght(countOfChars));
     int i = rand() % length;
@@ -76,10 +70,17 @@ void game(int attempts)
         cout << " _ ";
     }
     cout << endl;
+    cout << "\t\t\t\t\t     \033[1;30m    You have " << "\033[1;31m" << attempts << "\033[0m" << "\033[1;30m attempts\033[0m " << endl;
+    cout << "\t\t\t\t\t     \033[1;30m           +---+\033[0m " << endl;
+    cout << "\t\t\t\t\t     \033[1;30m           |   |\033[0m " << endl;
+    cout << "\t\t\t\t\t     \033[1;30m           O   |\033[0m " << endl;
+    cout << "\t\t\t\t\t     \033[1;30m   o/          |\033[0m " << endl;
+    cout << "\t\t\t\t\t     \033[1;30m  /0           |\033[0m " << endl;
+    cout << "\t\t\t\t\t     \033[1;30m   Л       П  ====\033[0m " << endl;
 
     string enterWord;
     int rightChars = 0;
-    for ( attempts=attempts-1; attempts >= 0; attempts--) {
+    for (attempts = attempts - 1; attempts >= 0; attempts--) {
         while (true) {
             cin >> enterWord;
             if (ifWordIsValid(length, words, enterWord, countOfChars))
@@ -117,7 +118,7 @@ void game(int attempts)
             cout << "\t\t\t\t\t     \033[1;30m           O   |\033[0m " << endl;
             cout << "\t\t\t\t\t     \033[1;30m   o/          |\033[0m " << endl;
             cout << "\t\t\t\t\t     \033[1;30m  /0           |\033[0m " << endl;
-            cout << "\t\t\t\t\t     \033[1;30m   Л         ====\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m   Л       П  ====\033[0m " << endl;
             break;
         }
         else {
@@ -131,10 +132,64 @@ void game(int attempts)
             cout << "\t\t\t\t\t     \033[1;30m          o|   |\033[0m " << endl;
             cout << "\t\t\t\t\t     \033[1;30m         //0   |\033[0m " << endl;
             cout << "\t\t\t\t\t     \033[1;30m          //   |\033[0m " << endl;
-            cout << "\t\t\t\t\t     \033[1;30m             ====\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m      u      ====\033[0m " << endl;
             cout << "\t\t\t\t\t     \033[1;31m          GAME OVER!\033[0m" << endl;
             cout << "\t\t\t\t\t     \033[1;31m     You were HANGED! Loser!\033[0m" << endl;
             cout << "\t\t\t\t\t\t \033[1;31m   Word was - \033[0m" << "\033[1;30m" << randomWord << "\033[0m" << endl;
+        }
+        if (attempts == 1) {
+            cout << "\t\t\t\t\t     \033[1;30m           +---+\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           |   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m          o|   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m         //0   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m          ||   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           П ====\033[0m " << endl;
+            
+        }
+        if (attempts == 2) {
+            cout << "\t\t\t\t\t     \033[1;30m           +---+\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           |   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m          o|   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m         //0   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           |   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           П ====\033[0m " << endl;
+
+        }
+        if (attempts == 3) {
+            cout << "\t\t\t\t\t     \033[1;30m           +---+\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           |   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m          o|   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m         //0   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m               |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           П  ====\033[0m " << endl;
+
+        } 
+        if (attempts == 4) {
+            cout << "\t\t\t\t\t     \033[1;30m           +---+\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           |   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m          o|   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m         //    |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m               |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           П  ====\033[0m " << endl;
+
+        }
+        if (attempts == 5) {
+            cout << "\t\t\t\t\t     \033[1;30m           +---+\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           |   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m          o|   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m         /     |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m               |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           П  ====\033[0m " << endl;
+
+        }
+        if (attempts == 6) {
+            cout << "\t\t\t\t\t     \033[1;30m           +---+\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           |   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m          o|   |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m               |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m               |\033[0m " << endl;
+            cout << "\t\t\t\t\t     \033[1;30m           П  ====\033[0m " << endl;
+
         }
     }
 }
@@ -156,7 +211,7 @@ void startGame() {
         cout << "\t\t\t\t\t     \033[1;30m   Л         ====\033[0m " << endl;
         cout << endl;
         cout << endl;
-        
+
         cout << "\t\t\t\t\t  \033[1;34m        Enter Y/y if u want.\033[0m" << endl;
         cin >> a;
         if (a == 'y' || a == 'Y') {
