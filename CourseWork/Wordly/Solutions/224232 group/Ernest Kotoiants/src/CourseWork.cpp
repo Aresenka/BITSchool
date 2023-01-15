@@ -49,7 +49,7 @@ string getRandomWord(int countOfLetters) {
     int indexOfWord = rand() % length;
     string* words = readWords(countOfLetters);
     randomWord = words[indexOfWord];
-    cout << randomWord << endl;
+   
     
     for (int i = 0; i < countOfLetters; i++)
     {
