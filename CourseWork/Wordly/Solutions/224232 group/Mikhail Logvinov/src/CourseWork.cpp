@@ -82,8 +82,8 @@ void game(int number) { // функция выбора рандомного сл
 		cin >> word;
 		int h;
 		for (h = 0; h < hiddenWord.length() -1; h++) {
-			if (charInWord()) { // проверка вхождения символа в загаданное слово
-				if (charInRightPosition()) { // проверка того, стоит ли символ на прпавильной позиции
+			if (charInWord(word, hiddenWord, number)) { // проверка вхождения символа в загаданное слово
+				if (charInRightPosition(word, hiddenWord, number)) { // проверка того, стоит ли символ на прпавильной позиции
 					cout << hiddenWord[h];
 					guessedWord[h] = hiddenWord[h];
 				}
