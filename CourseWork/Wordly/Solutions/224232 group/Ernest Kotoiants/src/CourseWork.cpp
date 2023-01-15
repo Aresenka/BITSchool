@@ -29,25 +29,20 @@ int enterCountOfLetters() {
 
 bool ifWordIsValid(int length, string* words, string enterWord, int countOfLetters)
 {
-    bool validWord = false;
-    length = countLinesInFile(openFileForWordsWithLenght(countOfLetters));
-
     for (int i = 0; i < length; i++)
     {
-        if (enterWord == words[i].substr(0, words[i].size() - 1))
+        if (enterWord == words[i].substr(0, countOfLetters))
         {
-            validWord = true;
+            return true;
         }
     }
-    return validWord;
+    return false;
 }
 
-string getRandomWord(int countOfLetters) {
+string getRandomWord(int countOfLetters, int length, string* words) {
     string randomWord;
     srand(time(0));
-    int length = countLinesInFile(openFileForWordsWithLenght(countOfLetters));
     int indexOfWord = rand() % length;
-    string* words = readWords(countOfLetters);
     randomWord = words[indexOfWord];
    
     
@@ -59,10 +54,10 @@ string getRandomWord(int countOfLetters) {
     return randomWord;
 }
 
-string enterTheWord(string randomWord, int countOfLetters) {
+string enterTheWord(string randomWord, int countOfLetters, int length, string* words)
+{
     string enterWord;
-    int length = countLinesInFile(openFileForWordsWithLenght(countOfLetters));
-    string* words = readWords(countOfLetters);
+    
 
     while (true) {
         cin >> enterWord;
@@ -71,7 +66,7 @@ string enterTheWord(string randomWord, int countOfLetters) {
             break;
         }
         else {
-            cout << "This Word is not in directory" << endl;
+            cout << "This Word is not in library of words"<<endl;
         }
     }
     return enterWord;
@@ -94,15 +89,17 @@ void checkLetterInTheWord(string enterWord, string randomWord, int countOfLetter
 void game()
 {
     cout << "\t\t\t\t\t  \033[1;34m   Lets play the game 'HANGMAN'!\033[0m" << endl;
-    cout << " \t\t\t\t\t \033[1;34m Choose, how many letters in the word(4-7): \033[0m"<<endl;
-
+    cout << " \t\t\t\t\t \033[1;34m Choose, how many letters in the word(4-7): \033[0m" << endl;
     int countOfLetters = enterCountOfLetters();
-    string randomWord = getRandomWord(countOfLetters);
+    int length = countLinesInFile(openFileForWordsWithLenght(countOfLetters));
+    string* words = readWords(countOfLetters);
+    string randomWord = getRandomWord(countOfLetters,length,words);
     cout << "\t\t\t\t\t     \033[1;30m    You have 10 attempts\033[0m " << endl;
+
 
     string enterWord;
     for (int chance = 9; chance >= 0; chance--) {
-        enterWord = enterTheWord(randomWord, countOfLetters);
+        enterWord = enterTheWord(randomWord, countOfLetters,length,words);
         int  rightChars = 0;
         for (int i = 0; i < countOfLetters; i++)
         {
