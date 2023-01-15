@@ -26,18 +26,37 @@ int numberOne() //рекурсия, чтобы пользователь ввел
 		return numberOne();
 	}
 	else {
-		number >= firstNumb || number <= lastNumb;
-		cout << "продолжаем игру" << endl;
+		number >= firstNumb && number <= lastNumb;
+		cout << "Да начнется ирга! " << endl;
 		return number;
 	}
 }
 
-bool charInWord() {
+bool charInWord(string word, string hiddenWord, int number) {
+	for (int i = 0; i < hiddenWord.length() - 1; i++) {
+		int rightChars = 0;
+		if (hiddenWord[i] == word[i]) {
+			cout << word[i] << endl;
+			rightChars++;
+		}
+		else {
+			cout << "*";
+		}
 
+	}
+	return false;
 }
 
-bool charInRightPosition() {
-
+bool charInRightPosition(string word, string hiddenWord, int number) {
+	for (int i = 0; i < hiddenWord.length() - 1; i++) {
+		for (int j = 0; j < hiddenWord.length() - 1; i++)
+		{
+			if (i != j && hiddenWord[i] != hiddenWord[j]) {
+				cout << "Буква не на своем месте!" << endl;
+			}
+		}
+	}
+	return false;
 }
 
 void game(int number) { // функция выбора рандомного слова из библиотеки
@@ -96,13 +115,13 @@ void game(int number) { // функция выбора рандомного сл
 		}
 	} 
 }
-void wrongNumberOfSymbols(string word, int number) {
-	if (word.length() > number || word.length() < number) {
-		game(number); //  могу ли я так вызывать функцию
-		cout << endl;
-		cin >> word;
-	}
-}
+//void wrongNumberOfSymbols(string word, int number) {
+//	if (word.length() > number || word.length() < number) {
+//		game(number); //  могу ли я так вызывать функцию
+//		cout << endl;
+//		cin >> word;
+//	}
+//}
 
 //void dashesInWord(string hiddenWord, string word) {   //функция сравнения слов 
 //	
