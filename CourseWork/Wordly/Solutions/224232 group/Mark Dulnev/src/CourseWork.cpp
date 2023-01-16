@@ -3,7 +3,7 @@
 //  jon
 //
 //  Created by Mark Maistrenko on 10.01.23.
-//
+// rewritten according to Leon`s recomendations
 
 #include <iostream>
 #include <string>
@@ -12,333 +12,320 @@
 #include <array>
 #include <iterator>
 #include <vector>
+#include <cctype>
 
 using namespace std;
 
 void clearing();
-void nachalo (int av);
-
-void seredina (string i);
-void konec (int kl);
+void beginningOfDrawning(int rr);
+void middleOfDrawning(string tt);
+void endOfDrawning(int uu);
 
 int main(int argc, const char *argv[])
 {
-    int endStart = 0;
+    cout << "The game has started , you will need to guess the word." << endl;
+    int counterOfBegginingTheGame = 0; // Возобновляет игру при желании
     do
     {
         int numberOfLetter;
-        int schetchikPomenishe = 0;
+        int checkForCorrectNumber = 0; // Проверяет правильность введенного числа
         do
         {
-            cout << "How many letters? You can enter 4 / 7" << endl;
+            cout << "Choose a number of letters from 4 to 7 " << endl;
             cin >> numberOfLetter;
             if (numberOfLetter >= 4 && numberOfLetter <= 7)
             {
-                schetchikPomenishe++;
+                checkForCorrectNumber++;
             }
             else
             {
                 clearing();
             }
-        } while (schetchikPomenishe < 1);
+        } while (checkForCorrectNumber < 1);
 
         string nameTXT;
 
-        switch (numberOfLetter)
-        {
-        case 4:
-            nameTXT = "4.txt";
-            break;
-        case 5:
-            nameTXT = "5.txt";
-            break;
-        case 6:
-            nameTXT = "6.txt";
-            break;
-        case 7:
-            nameTXT = "7.txt";
-            break;
-        }
+        nameTXT = to_string(numberOfLetter) + ".txt"; // Название нужного нам файла
 
-        const string fileName = nameTXT;
+        vector<string> allWords;
+
         ifstream inFile(nameTXT);
         if (!inFile.is_open())
         {
 
-            cout << "Can't open the file " << fileName << '\n';
+            cout << "Can't open the file " << nameTXT << '\n';
         }
         else
         {
 
-            // сколько строк
-            int i = 0;
+            // Считает сколько строк и вынимает файлы из файла в вектор allWords
+            int numberOfStrings = 0;
             char *str = new char[numberOfLetter];
 
             while (!inFile.eof())
             {
                 inFile.getline(str, numberOfLetter + 1, '\n');
-                i++;
+
+                allWords.push_back(str);
+                numberOfStrings++;
             }
             inFile.close();
             delete[] str;
 
-            // рандомная строка в файле
+            // Рандомный номер
 
-            int randomNum = 1 + rand() % i;
+            int randomNum = 1 + rand() % numberOfStrings;
 
-            // нахождение этой строки
-            ifstream inFile(nameTXT);
-            char *randStr = new char[numberOfLetter];
-            int b = 0;
-            while (b < randomNum - 1)
-            {
-                inFile.getline(randStr, numberOfLetter + 1, '\n');
-                b++;
-            }
-            inFile.close();
+            // Нахождение этой строки в векторе
 
-            string s = randStr;
-            
-            //преобразование строки в массив
+            string hiddenWord = allWords[randomNum];
+
+            // Преобразование строки в массив строк по буквам
 
             string normalChar[numberOfLetter];
-            char *chars = new char[s.length() + 1];
-            s.copy(chars, s.length());
-            chars[s.length()] = '\0';
-            for (int g = 0; g < s.length(); g++)
+            char *chars = new char[hiddenWord.length() + 1];
+            hiddenWord.copy(chars, hiddenWord.length());
+            chars[hiddenWord.length()] = '\0';
+            for (int aa = 0; aa < hiddenWord.length(); aa++)
             {
-                char o1 = chars[g];
+                char o1 = chars[aa];
                 string o2;
                 o2.push_back(o1);
-                normalChar[g] = o2;
+                normalChar[aa] = o2;
             }
 
-            //вступление
+            // Вступление
 
-            int schetchik = 0;
-            int chance = numberOfLetter + 3;
-            string dest[numberOfLetter];
-            for (int qw = 0; qw < numberOfLetter; qw++)
+            int counterOfWin = 0;                    // Cчитает моментальное угадывание слова
+            int attempts = numberOfLetter + 3;       // Счетчик попыток угадать слово
+            string invisibleLetters[numberOfLetter]; // Отображает слово, заменяя букры чертами _
+            for (int bb = 0; bb < numberOfLetter; bb++)
             {
-                dest[qw] = "_";
+                invisibleLetters[bb] = "_";
             }
-            
-            // массив с уже введенными словами
-            
-            string allWords[numberOfLetter + 4];
-            string normalWord;
+
+            vector<string> enteredWords = {""}; // Вектор с уже введенными словами
+            string verifiedWord;                // Cтрока , введенная пользователем, после прохождения проверок
 
             do
             {
-                int firstSchetchik = 0;
+                int counterOfRequestTheWord = 0;
                 do
                 {
                     cout << '\n'
-                         << "Your word. you have: " << chance << " chance/s" << endl;
-                    
-                    // выводит подчеркивания по одному на экран
-                    
-                    for (string &i : dest)
+                         << "Here is your word , you have " << attempts << " attempts to guess it " << endl;
+
+                    // Выводит подчеркивания по одному на экран
+
+                    for (string &сс : invisibleLetters)
                     {
-                        cout << i << ' ';
+                        cout << сс << ' ';
                     };
-                    
-                    // запрос слова
-                    
+
+                    // Запрос слова
+
                     cout << '\n'
                          << '\n'
-                         << "Write your world here" << endl;
+                         << "Insert your word here" << endl;
                     string newWord;
                     cin >> newWord;
 
-                    // механизм поиска в файле необходимого слова
-                    
-                    ifstream inFile(nameTXT);
-                    using input_it = istream_iterator<string>;
-                    bool g = (find(input_it(inFile), input_it(), newWord) != input_it());
+                    transform(newWord.begin(), newWord.end(), newWord.begin(), static_cast<int (*)(int)>(std::tolower)); // Нижний регистр
 
-                    // преобразование и сверка
-                    
+                    // Механизм поиска необходимого слова в словаре
+
+                    bool fileSearchingInVector = false;
+                    for (int dd = 0; dd < numberOfStrings; dd++)
+                    {
+                        if (newWord == allWords[dd])
+                        {
+                            fileSearchingInVector = true;
+                            break;
+                        }
+                    };
+
+                    // Преобразование и сверка
+
                     if (newWord.length() != numberOfLetter)
                     {
-                        cout << "Lenth of your word sould be equal: " << numberOfLetter << endl;
+                        cout << "Lenth of your word sould be equal to: " << numberOfLetter << endl;
                         clearing();
                     }
-                    else if (g != true)
+                    else if (fileSearchingInVector == false)
                     {
-                        cout << "This word didnt included in our dictionary" << endl;
+                        cout << "This word is not included in our dictionary" << endl;
                         clearing();
                     }
                     else
                     {
-                        normalWord = newWord;
-                        firstSchetchik++;
+                        verifiedWord = newWord;
+                        counterOfRequestTheWord++;
                     };
-                } while (firstSchetchik < 1);
-                
+                } while (counterOfRequestTheWord < 1);
+
                 // проверки закончены
-                
-                int check = 0;
-                for (int st = 0; st < numberOfLetter + 4; st++)
+
+                int checkOfUsedWord = 0; // Проверка на повторяющийся ввод идентичного слова
+                for (int ff = 0; ff < numberOfLetter + 4; ff++)
                 {
-                    if (allWords[st] == normalWord)
+                    if (enteredWords[ff] == verifiedWord)
                     {
-                        check++;
+                        checkOfUsedWord++;
                     }
                 }
 
-                if (normalWord == s)
+                if (verifiedWord == hiddenWord)
                 {
-                    cout << "You win! You chances: " << chance << endl;
-                    schetchik++;
+                    cout << "Congratulations! You won with " << attempts << " attemps remaining!" << endl;
+                    counterOfWin++;
                     break;
                 }
                 else
                 {
-                    if (check > 0)
+                    if (checkOfUsedWord > 0)
                     {
-                        cout << "This word u writed erlier " << endl;
+                        cout << "This word you have already used. Please, insert another one." << endl;
                         continue;
                     }
                     else
                     {
-
-                        string normalWordArr[numberOfLetter];
-                        char *yourWordArr = new char[normalWord.length() + 1];
-                        normalWord.copy(yourWordArr, normalWord.length());
-                        yourWordArr[normalWord.length()] = '\0';
-                        for (int g = 0; g < normalWord.length(); g++)
+                        // Создание массива со строчками для введенного слова
+                        string verifiedWordArr[numberOfLetter];
+                        char *yourWordArr = new char[verifiedWord.length() + 1];
+                        verifiedWord.copy(yourWordArr, verifiedWord.length());
+                        yourWordArr[verifiedWord.length()] = '\0';
+                        for (int gg = 0; gg < verifiedWord.length(); gg++)
                         {
-                            char i1 = yourWordArr[g];
+                            char i1 = yourWordArr[gg];
                             string i2;
                             i2.push_back(i1);
-                            normalWordArr[g] = i2;
+                            verifiedWordArr[gg] = i2;
                         }
 
-                        // массивы на все три случая
+                        // Массивы на все три случая
 
                         string goodExp[numberOfLetter];
                         string normalExp[numberOfLetter];
                         string badExp[numberOfLetter];
-                        for (int bn = 0; bn < numberOfLetter; bn++)
+                        for (int hh = 0; hh < numberOfLetter; hh++)
                         {
-                            badExp[bn] = normalWordArr[bn];
+                            badExp[hh] = verifiedWordArr[hh];
                         };
 
-                        int schetchikKletok = 0; // нужен для рисования
+                        int linesCounter = 0; // Нужен для рисования
 
-                        // распихиваем строки букв по массивам
-                        
-                        for (int v = 0; v < numberOfLetter; v++)
+                        // Распихиваем строки букв по соответствующим массивам
+
+                        for (int jj = 0; jj < numberOfLetter; jj++)
                         {
-                            for (int x = 0; x < numberOfLetter; x++)
+                            for (int kk = 0; kk < numberOfLetter; kk++)
                             {
-                                if (normalWordArr[v] == normalChar[x] && v == x)
+                                if (verifiedWordArr[jj] == normalChar[kk] && jj == kk)
                                 {
-                                    goodExp[v] = normalChar[x];
-                                    badExp[v] = "";
-                                    dest[v] = normalWord[x];
+                                    goodExp[jj] = normalChar[kk];
+                                    badExp[jj] = "";
+                                    invisibleLetters[jj] = verifiedWord[kk];
                                 }
-                                else if (normalWordArr[v] == normalChar[x])
+                                else if (verifiedWordArr[jj] == normalChar[kk])
                                 {
-                                    int schetchikArr = 0;
-                                    for (int jk = 0; jk < numberOfLetter; jk++)
+                                    int normalLettersInWordCounter = 0;
+                                    for (int ll = 0; ll < numberOfLetter; ll++)
                                     {
-                                        if (normalExp[jk] == normalWordArr[v])
+                                        if (normalExp[ll] == verifiedWordArr[jj])
                                         {
-                                            schetchikArr++;
+                                            normalLettersInWordCounter++;
                                         }
                                     };
-                                    if (schetchikArr == 0)
+                                    if (normalLettersInWordCounter == 0)
                                     {
-                                        schetchikKletok++;
-                                        for (int ki = 0; ki < numberOfLetter; ki++)
+                                        linesCounter++;
+                                        for (int mm = 0; mm < numberOfLetter; mm++)
                                         {
-                                            if (normalExp[ki] == "")
+                                            if (normalExp[mm] == "")
                                             {
-                                                normalExp[ki] = normalChar[x];
+                                                normalExp[mm] = normalChar[kk];
                                                 break;
                                             }
                                         };
                                     };
 
-                                    badExp[v] = "";
+                                    badExp[jj] = "";
                                 }
                             }
                         }
 
                         //                         _ _ _ _
-                        //                        | | |i|j|
+                        //                        |s|o|m|e|
                         //                         - - - -
                         //
+                        // Рисование ответа программы
 
-                        cout << '\n' << "right char and place: " << endl;
-                        
-                        
-                        
-                        nachalo(numberOfLetter);
-                        for (auto i : goodExp)
+                        cout << '\n'
+                             << "Right char and place: " << endl;
+
+                        beginningOfDrawning(numberOfLetter);
+                        for (auto nn : goodExp)
                         {
-                            if (i == "")
+                            if (nn == "")
                             {
-                                cout << i << " |";
+                                cout << nn << " |";
                             }
                             else
                             {
-                                cout << i << "|";
+                                cout << nn << "|";
                             }
                         }
- 
-                        konec (numberOfLetter);
 
-                        
-                        cout << '\n' << "right char: " << endl;
-                        nachalo(schetchikKletok);
-                    
-                      
-                        for (auto i : normalExp)
+                        endOfDrawning(numberOfLetter);
+
+                        cout << '\n'
+                             << "right char: " << endl;
+                        beginningOfDrawning(linesCounter);
+
+                        for (auto oo : normalExp)
                         {
-                            seredina(i);
-                            
+                            middleOfDrawning(oo);
                         }
-                        
-                        konec (schetchikKletok);
 
-                        cout << '\n' << "wrong char and place: " << endl;
+                        endOfDrawning(linesCounter);
+
+                        cout << '\n'
+                             << "wrong char and place: " << endl;
                         int schetchikWrongChar = 0;
-                        for (int hu = 0; hu < numberOfLetter; hu++)
+                        for (int pp = 0; pp < numberOfLetter; pp++)
                         {
-                            if (badExp[hu] != "")
+                            if (badExp[pp] != "")
                             {
                                 schetchikWrongChar++;
                             }
                         };
-                        
-                        nachalo(schetchikWrongChar);
-                        for (auto i : badExp)
-                       {
-                           seredina(i);
 
+                        beginningOfDrawning(schetchikWrongChar);
+                        for (auto qq : badExp)
+                        {
+                            middleOfDrawning(qq);
                         }
-                        konec (schetchikWrongChar);
+                        endOfDrawning(schetchikWrongChar);
 
-                        allWords[(numberOfLetter + 4) - chance - 1] = normalWord;
-                        chance--;
+                        enteredWords[(numberOfLetter + 4) - attempts - 1] = verifiedWord;
+                        attempts--;
                     }
                 }
-            } while (schetchik < 1 && chance > 0);
+            } while (counterOfWin < 1 && attempts > 0);
 
-            if (chance == 0)
+            if (attempts == 0)
             {
-                cout << '\n' << "You died" << endl;
-                cout << '\n' << "You word was: " << s << endl;
+                cout << '\n'
+                     << "You died" << endl;
+                cout << '\n'
+                     << "You word was: " << hiddenWord << endl;
             }
 
-            cout << "Zapros na sled igru: 1-stop, 0-start new " << endl;
-            cin >> endStart;
+            cout << "Would you like to play again? Press 1 to finish the game or 0 to restart " << endl;
+            cin >> counterOfBegginingTheGame;
         }
 
-    } while (endStart != 1);
+    } while (counterOfBegginingTheGame != 1);
     cin.get();
     return 0;
 };
@@ -349,31 +336,33 @@ void clearing()
     fflush(stdin);
 }
 
-void nachalo (int av){
-    for (int ty = 0; ty <av ; ty++)
+void beginningOfDrawning(int rr)
+{
+    for (int ss = 0; ss < rr; ss++)
     {
         cout << " _";
     };
-    cout << '\n' << "|";
-
-    
+    cout << '\n'
+         << "|";
 };
 
-void seredina (string i){ if (i == "")
+void middleOfDrawning(string tt)
 {
-    cout << i << "";
-}
-else
-{
-    cout << i << "|";
-}};
+    if (tt == "")
+    {
+        cout << tt << "";
+    }
+    else
+    {
+        cout << tt << "|";
+    }
+};
 
-void konec (int kl){
+void endOfDrawning(int uu)
+{
     cout << '\n';
-    for (int ty = 0; ty < kl; ty++)
+    for (int ww = 0; ww < uu; ww++)
     {
         cout << " -";
     };
-    
 };
-
