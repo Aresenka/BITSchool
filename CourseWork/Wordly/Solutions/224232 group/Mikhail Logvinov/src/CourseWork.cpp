@@ -46,7 +46,11 @@ bool charInRightPosition(string hiddenWord,char ch, int number) { // функц�
 	for (int i = 0; i < hiddenWord.length() - 1; i++) {
 		if (hiddenWord[i] == ch) {
 			truePosition = i;
-			return true;
+		}
+		for (int j = 0; j < hiddenWord.length() - 1; i++)
+		{
+			if (i != j && hiddenWord[i] != hiddenWord[j])
+				return true;
 		}
 		return false;
 		//for (int j = 0; j < hiddenWord.length() - 1; i++)
