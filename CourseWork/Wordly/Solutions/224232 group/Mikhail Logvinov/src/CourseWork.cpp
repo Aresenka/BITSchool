@@ -32,22 +32,28 @@ int numberOne() //рекурсия, чтобы пользователь ввел
 	}
 }
 
-bool charInWord(string word, string hiddenWord, int number) { // функция проверки вхождения символа в загаданное слово
+bool charInWord( string hiddenWord, char ch, int number) { // функция проверки вхождения символа в загаданное слово
 	for (int i = 0; i < hiddenWord.length() - 1; i++) {
 	
-		if (hiddenWord[i] == word[i]);
-		return true;
+		if (hiddenWord[i] == ch);
+		return true;// решил вот так попробовать
 	}
-	    
+	return false;
 }
 
-bool charInRightPosition(string word, string hiddenWord, int number) { // функция проверки того, стоит ли символ на прпавильной позиции
+bool charInRightPosition(string hiddenWord,char ch, int number) { // функция проверки того, стоит ли символ на прпавильной позиции
+	int truePosition = -1;
 	for (int i = 0; i < hiddenWord.length() - 1; i++) {
-		for (int j = 0; j < hiddenWord.length() - 1; i++)
-		{
-			if (i != j && hiddenWord[i] != hiddenWord[j]) 
-				return true;
+		if (hiddenWord[i] == ch) {
+			truePosition = i;
+			return true;
 		}
+		return false;
+		//for (int j = 0; j < hiddenWord.length() - 1; i++)
+		//{
+		//	if (i != j && hiddenWord[i] != hiddenWord[j]) 
+		//		return true;// ну как эти булевые функции правильно строить-то ёобана..
+		//}
 	}
 	
 }
@@ -75,8 +81,8 @@ void game(int number) { // функция выбора рандомного сл
 		cin >> word;
 		int h;
 		for (h = 0; h < hiddenWord.length() -1; h++) {
-			if (charInWord(word, hiddenWord, number)) { // проверка вхождения символа в загаданное слово
-				if (charInRightPosition(word, hiddenWord, number)) { // проверка того, стоит ли символ на прпавильной позиции
+			if (charInWord(string hiddenWord, char ch, int number)) { // проверка вхождения символа в загаданное слово
+				if (charInRightPosition(string hiddenWord, char ch, int number)) { // проверка того, стоит ли символ на прпавильной позиции
 					cout << hiddenWord[h];
 					guessedWord[h] = hiddenWord[h];
 				}
