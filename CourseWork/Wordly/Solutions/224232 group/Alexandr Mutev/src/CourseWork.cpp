@@ -25,11 +25,19 @@ int startGame(){ //функция проверяет количество сим
     
     return numberOfHiddenSymbols;
 }
+string randomWord(int numberOfHiddenSymbols){
+    string* rangeHiddenWord = readWords(numberOfHiddenSymbols);
+    srand(unsigned(time(NULL)));
+    int length = countLinesInFile(openFileForWordsWithLenght(numberOfHiddenSymbols));
+    int numberOfWord = rand()%length;
+    string hiddenWord = rangeHiddenWord[numberOfWord];
+    return hiddenWord;
+}
 void question(int numberOfHiddenSymbols){ //предложение ввести слово + нижние черточки по количеству букв
     cout << "Введите слово из " << numberOfHiddenSymbols << " букв" << endl;
     for (int i = 0; i < numberOfHiddenSymbols; i++)
         {
-            cout << "_";
+            cout << "*";
         }
 }
 void wrongNumberOfSymbols(string word, int numberOfHiddenSymbols){
@@ -40,27 +48,28 @@ void wrongNumberOfSymbols(string word, int numberOfHiddenSymbols){
             cin >> word;
         }
 }
-// dashesInWord(string hiddenWord, string word){
-    //сравнение слов. Если буква совпадает, пишем ее, если нет:
-    //1. ставим "_"
+vector <char> dashesInWord(string hiddenWord, string word){//сравнение слов. Если буква совпадает, пишем ее, если нет:
+    //1. ставим "*"
     //2. сохраняем несовпадения в вектор
-    //3. ищем буквы не на своем месте. Циклом ишем совпадения из вектора в загаданном слове
-    vector <char> wrongWords;
-    for(int i = 0; i < hiddenWord.length(); i++){
+    vector <char> wrongWords; 
+    for(int i = 0; i < hiddenWord.length() - 1; i++){
         if(hiddenWord[i] == word[i]){
             cout << word[i];
         }
         else{
-            cout << "_";
+            cout << "*";
             wrongWords.push_back(word[i]);
         } 
     }
-    cout << endl << "БУКВЫ НЕ НА СВОЕМ МЕСТЕ" << endl;
-        
+    return wrongWords;
+}
+void wordsOutOfPlace(vector <char> wrongWords, string hiddenWord, string word){ //ищем буквы не на своем месте. Циклом ишем совп-я из вектора в загаданном слове
+    cout << endl << "The letters are out of place" << endl;
+    
     for(int i = 0; i <= wrongWords.size(); i++){
         for(int y = 0; y <= hiddenWord.length(); y++){
             if(wrongWords[i] == hiddenWord[y]){
-                cout << wrongWords[i];
+                cout<< wrongWords[i];
             }
         }
     }
@@ -69,16 +78,13 @@ void wrongNumberOfSymbols(string word, int numberOfHiddenSymbols){
 int main()
 {
     int numberOfHiddenSymbols = startGame();
-    string* rangeHiddenWord = readWords(numberOfHiddenSymbols);
-    srand(unsigned(time(NULL)));
-    int length = countLinesInFile(openFileForWordsWithLenght(numberOfHiddenSymbols));
-    int numberOfWord = rand()%length;
-    string hiddenWord = rangeHiddenWord[numberOfWord];
+    string hiddenWord = randomWord(numberOfHiddenSymbols);
     string word;
     
     
     for (int i = 0; i <= numberOfAttempts; i++){
         question(numberOfHiddenSymbols);
+        cout << endl << hiddenWord;
         cout << endl;
         cin >> word;
         if(hiddenWord == word){
@@ -88,7 +94,7 @@ int main()
         wrongNumberOfSymbols(word, numberOfHiddenSymbols);
         dashesInWord(hiddenWord, word);
         cout << endl;
-        wordsOutPlace(hiddenWord, word);
+        wordsOutOfPlace(dashesInWord(hiddenWord, word), hiddenWord, word);
         cout << endl << endl;
         if(hiddenWord != word && i == numberOfAttempts){
             cout << "Вы проиграли:(" << endl;
