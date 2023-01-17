@@ -37,7 +37,6 @@ string randomWord(int n) {
     string* words = readWords(n);
     int i = randomWordIndex(n);
     string word = words[i];
-    cout << word << endl;
     return word;
 }
 
@@ -73,7 +72,6 @@ string userWord(int number) {
 //}
 
 int startGame() {
-    // Start Game
     int num = enterNumber();
     string randomW = randomWord(num);
     int ok = 0;  
@@ -94,7 +92,7 @@ int startGame() {
             for (int i = 0; i < randomW.length() - 1; i++) {
                 for (int j = 0; j < userW.length() - 1; j++) {
                     if (i != j && randomW[i] == userW[j]) {
-                        cout << " \t\t\t\t\tThe letter <<" << userW[j] << ">> is in the wrong place" << endl;
+                        cout <<endl <<" \t\t\t\t\tThe letter <<" << userW[j] << ">> is in the wrong place" << endl;
                     }
                 }
             }
@@ -107,6 +105,7 @@ int startGame() {
             }
             cout << endl;
     }
+    cout << "Word was " << randomW << endl;
     return 0;
 }
 
