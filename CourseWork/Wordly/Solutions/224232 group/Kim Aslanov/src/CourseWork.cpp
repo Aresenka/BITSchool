@@ -52,26 +52,26 @@ string randomWord(int n) {
     return word;
 }
 
-string userWord() {
+string userWord(int number) {
     cout << " \t\t\t\t\tEnter the word" << endl;
-    string w;
-    cin >> w;
-    return w;
+    string userW;
+    cin >> userW;
+    int length = countLinesInFile(openFileForWordsWithLenght(number)) - 1;
+    string* words = readWords(number);
+    //TODO: Delete cout
+    cout << length << endl;
+  /*  for (int i = 0; i <= length; i++) {
+        if (userW == words[i].substr(0, number))
+        {
+            return userW;
+        }
+        else {
+            cout << " \t\t\t\t\tWord is not in the dictionary" << endl;
+        }
+    }*/
+    return userW;
 }
 
-/*string comparision(string randomWord, string userWord) {
-        for (int i = 0; i < randomWord.length() - 1; i++) {
-            for (int j = 0; j < userWord.length() - 1; j++) {
-                if (i != j && randomWord[i] == userWord[j]) {
-                  cout << randomWord[j] << "Буква не на том месте";
-                }
-                else {
-                    cout << " ok";
-                }
-            }
-        }
-        return 0;
-}*/
 
 bool fromDictionary(int number, string userW)
 {
@@ -85,40 +85,22 @@ bool fromDictionary(int number, string userW)
             return true;
         }
     }
-
-    return false;
+  return false;
 }
 
-//void sravnit() {
-//    int length = countLinesInFile(openFileForWordsWithLenght(4)) - 1;
-//    string* words = readWords(length);
-//    string userW = userWord();
-//    for (int j = 0; j <= length; j++) 
-//    {
-//        words[j] = words[j].substr(0, 4);
-//        if (userW != words[j]) {
-//            cout << " \t\t\t\t\tWord is not in the dictionary" << endl;
-//        }
-//        else {
-//            cout << " \t\t\t\t\tЕсть в словаре" << endl;
-//        }
-//    }
-//}
+
 int startGame() {
     // Start Game
     int num = enterNumber();
     string randomW = randomWord(num);
     int ok = 0;
-    string userW = userWord();
+   
     for (int chance = 5; chance >= 0; chance--)
-    {
-        if (fromDictionary(num, userW)) {
-
-            cout << "You have " << chance << " attempts" << endl;
-
+    {       
+        cout << "You have " << chance << " attempts" << endl;
+        string userW = userWord(num);
             for (int i = 0; i < randomW.length() - 1; i++)
             {
-                int ok = 0;
                 if (randomW[i] == userW[i]) {
                     cout << " " << userW[i] << " ";
                     ok++;
@@ -127,16 +109,7 @@ int startGame() {
                     cout << " * ";
                 }
             }
-            cout << endl;
-
-            if (ok == randomW.length() - 1) {
-                cout << "\t\t\t\t\t\t   Exellent, you WON!" << endl;
-                break;
-            }
-            else {
-                ok = 0;
-            }
-
+ 
             for (int i = 0; i < randomW.length() - 1; i++) {
                 for (int j = 0; j < userW.length() - 1; j++) {
                     if (i != j && randomW[i] == userW[j]) {
@@ -145,10 +118,14 @@ int startGame() {
 
                 }
             }
-        }
-        else {
-            cout << " \t\t\t\t\tWord is not in the dictionary" << endl;
-        }
+            if (ok == num) {
+                cout << "\t\t\t\t\t\t   Exellent, you WON!" << endl;
+                break;
+            }
+            else {
+                ok = 0;
+            }
+            cout << endl;
     }
     return 0;
 }
