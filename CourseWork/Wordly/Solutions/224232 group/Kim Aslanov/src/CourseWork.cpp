@@ -2,17 +2,8 @@
 //
 
 #include <iostream>
-#include <fstream>
-#include <array>
 #include "lib/words.h"
-#include <string>
-#include <ctime>
-#include <cstdlib>
-#include <algorithm>
 #include <stdio.h> 
-
-
-
 
 int enterNumber() {
     int n;
@@ -34,8 +25,6 @@ int enterNumber() {
 
 }
 
-
-
 int randomWordIndex(int m) {
 
     int number = m;
@@ -55,50 +44,43 @@ string randomWord(int n) {
 string userWord(int number) {
     cout << " \t\t\t\t\tEnter the word" << endl;
     string userW;
-    cin >> userW;
-    int length = countLinesInFile(openFileForWordsWithLenght(number)) - 1;
-    string* words = readWords(number);
-    //TODO: Delete cout
-    cout << length << endl;
-  /*  for (int i = 0; i <= length; i++) {
-        if (userW == words[i].substr(0, number))
-        {
-            return userW;
-        }
-        else {
-            cout << " \t\t\t\t\tWord is not in the dictionary" << endl;
-        }
-    }*/
-    return userW;
-}
-
-
-bool fromDictionary(int number, string userW)
-{
-    int length = countLinesInFile(openFileForWordsWithLenght(number)) - 1;
-    string* words = readWords(number);
-    cout << length << endl;
-    for (int i = 0; i <= length; i++)
-    {
-        if (userW == words[i].substr(0, number))
-        {
-            return true;
-        }
+    while (true) {
+        cin >> userW;
+            if (userW.length() != number) 
+                {
+                cout << "\t\t\t\t\t\t   Word is too short or too long" << endl;
+                }
+            else {
+                break;
+            }
     }
-  return false;
+  return userW;
 }
 
+//bool fromDictionary(int number, string userW)
+//{
+//    int length = countLinesInFile(openFileForWordsWithLenght(number)) - 1;
+//    string* words = readWords(number);
+//    cout << length << endl;
+//    for (int i = 0; i <= length; i++)
+//    {
+//        if (userW == words[i].substr(0, number))
+//        {
+//            return true;
+//        }
+//    }
+//  return false;
+//}
 
 int startGame() {
     // Start Game
     int num = enterNumber();
     string randomW = randomWord(num);
-    int ok = 0;
-   
+    int ok = 0;  
     for (int chance = 5; chance >= 0; chance--)
     {       
         cout << "You have " << chance << " attempts" << endl;
-        string userW = userWord(num);
+            string userW = userWord(num);
             for (int i = 0; i < randomW.length() - 1; i++)
             {
                 if (randomW[i] == userW[i]) {
@@ -109,13 +91,11 @@ int startGame() {
                     cout << " * ";
                 }
             }
- 
             for (int i = 0; i < randomW.length() - 1; i++) {
                 for (int j = 0; j < userW.length() - 1; j++) {
                     if (i != j && randomW[i] == userW[j]) {
                         cout << " \t\t\t\t\tThe letter <<" << userW[j] << ">> is in the wrong place" << endl;
                     }
-
                 }
             }
             if (ok == num) {
@@ -155,8 +135,5 @@ int main() {
     cout << "\t\t\t\t\t\t   WELCOME to HANGMAN!" << endl;
     startGame();
     vonaPlay();
-    //sravnit();
     return 0;
 }
-
-
