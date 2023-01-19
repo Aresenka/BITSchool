@@ -15,16 +15,16 @@ int enterCountOfLetters() {
         cout << "\t\t\t\t\t \033[1;34m Enter the NUMBER from 4 to 7 \033[0m" << endl;
         while (!(cin >> countOfLetters)) {
             cout << "\t\t\t\t\t \033[1;34m Enter the NUMBER from 4 to 7 \033[0m" << endl;
-            cin.clear();                
-            fflush(stdin);              
+            cin.clear();
+            fflush(stdin);
         }
         if (countOfLetters < 4 || countOfLetters > 7)
-        cout << " \t\t\t\t\t \033[1;34m Wrong numbers of letters: \033[0m" << endl;
+            cout << " \t\t\t\t\t \033[1;34m Wrong numbers of letters: \033[0m" << endl;
         else break;
     }
-       
-     return countOfLetters;          
-    }
+
+    return countOfLetters;
+}
 
 
 bool ifWordIsValid(int length, string* words, string enterWord, int countOfLetters)
@@ -44,8 +44,9 @@ string getRandomWord(int countOfLetters, int length, string* words) {
     srand(time(0));
     int indexOfWord = rand() % length;
     randomWord = words[indexOfWord];
-   
-    
+    cout << randomWord << endl;
+
+
     for (int i = 0; i < countOfLetters; i++)
     {
         cout << " _ ";
@@ -57,7 +58,7 @@ string getRandomWord(int countOfLetters, int length, string* words) {
 string enterTheWord(string randomWord, int countOfLetters, int length, string* words)
 {
     string enterWord;
-    
+
 
     while (true) {
         cin >> enterWord;
@@ -66,24 +67,12 @@ string enterTheWord(string randomWord, int countOfLetters, int length, string* w
             break;
         }
         else {
-            cout << "This Word is not in library of words"<<endl;
+            cout << "This Word is not in library of words" << endl;
         }
     }
     return enterWord;
 }
 
-void checkLetterInTheWord(string enterWord, string randomWord, int countOfLetters) {
-    for (int i = 0; i < countOfLetters; i++) {
-        for (int j = 0; j < countOfLetters; j++)
-        {
-            if (i != j && randomWord[j] == enterWord[i]) {
-                cout << endl << "\033[1;31m" << enterWord[i] << "\033[0m" << "\033[1;30m in the word on another place!\033[0m" ;
-                break;
-            }
-
-        }
-    }
-}
 
 
 void game()
@@ -93,18 +82,21 @@ void game()
     int countOfLetters = enterCountOfLetters();
     int length = countLinesInFile(openFileForWordsWithLenght(countOfLetters));
     string* words = readWords(countOfLetters);
-    string randomWord = getRandomWord(countOfLetters,length,words);
+    string randomWord = getRandomWord(countOfLetters, length, words);
     cout << "\t\t\t\t\t     \033[1;30m    You have 10 attempts\033[0m " << endl;
 
 
     string enterWord;
     for (int chance = 9; chance >= 0; chance--) {
-        enterWord = enterTheWord(randomWord, countOfLetters,length,words);
+        enterWord = enterTheWord(randomWord, countOfLetters, length, words);
         int  rightChars = 0;
+        string wordForChecking = randomWord;
         for (int i = 0; i < countOfLetters; i++)
         {
-            if (randomWord[i] == enterWord[i]) {
-                cout << "\033[1;32m" << enterWord[i] << "\033[0m";
+            if (wordForChecking[i] == enterWord[i]) {
+                cout << "\033[1;32m" << randomWord[i] << "\033[0m";
+                wordForChecking[i] = '1';
+                enterWord[i] = '0';
                 rightChars++;
             }
             else {
@@ -115,10 +107,22 @@ void game()
             cout << "\t\t\t\t\t \033[1;32m   You won the Game! Congrats!\033[0m" << endl;
             break;
         }
-            checkLetterInTheWord(enterWord, randomWord, countOfLetters);
+        
+        for (int i = 0; i < countOfLetters; i++) {
+            for (int j = 0; j < countOfLetters; j++)
+            {
+                if (i != j && wordForChecking[i] == enterWord[j]) {
+                    cout << endl << "\033[1;31m" << randomWord[i] << "\033[0m" << "\033[1;30m in the word on another place!\033[0m";
+                    wordForChecking[i] = '1';
+                    enterWord[j] = '0';
+                    break;
+                }
 
-        
-        
+            }
+        }
+
+
+
 
         cout << endl << "\t\t\t\t\t    \033[1;30m        Attempts - \033[0m" << "\033[1;31m" << chance << "\033[0m" << endl;
         if (chance == 0) {
