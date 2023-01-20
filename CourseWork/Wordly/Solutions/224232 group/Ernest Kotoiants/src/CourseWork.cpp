@@ -44,8 +44,6 @@ string getRandomWord(int countOfLetters, int length, string* words) {
     srand(time(0));
     int indexOfWord = rand() % length;
     randomWord = words[indexOfWord];
-    cout << randomWord << endl;
-
 
     for (int i = 0; i < countOfLetters; i++)
     {
@@ -111,18 +109,15 @@ void game()
         for (int i = 0; i < countOfLetters; i++) {
             for (int j = 0; j < countOfLetters; j++)
             {
-                if (i != j && wordForChecking[i] == enterWord[j]) {
-                    cout << endl << "\033[1;31m" << randomWord[i] << "\033[0m" << "\033[1;30m in the word on another place!\033[0m";
-                    wordForChecking[i] = '1';
-                    enterWord[j] = '0';
+                if (i != j && wordForChecking[j] == enterWord[i]) {
+                    cout << endl << "\033[1;31m" << randomWord[j] << "\033[0m" << "\033[1;30m in the word on another place!\033[0m";
+                    wordForChecking[j] = '1';
+                    enterWord[i] = '0';
                     break;
                 }
 
             }
         }
-
-
-
 
         cout << endl << "\t\t\t\t\t    \033[1;30m        Attempts - \033[0m" << "\033[1;31m" << chance << "\033[0m" << endl;
         if (chance == 0) {
