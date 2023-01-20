@@ -40,38 +40,36 @@ string randomWord(int numberOfHiddenSymbols){ //функция выбирает 
     string hiddenWord = rangeHiddenWord[numberOfWord];
     return hiddenWord;
 }
-void dictionaryСheck(int numberOfHiddenSymbols, string word){
-    string* dictionary = readWords(numberOfHiddenSymbols);
-    int length = countLinesInFile(openFileForWordsWithLenght(numberOfHiddenSymbols));
-    string temp;
-    bool check = false;
-
-    do
+void dictionaryСheck(int numberOfHiddenSymbols, string word){ 
+    bool check = false; 
+    string* dictionary = readWords(numberOfHiddenSymbols); 
+    int length = countLinesInFile(openFileForWordsWithLenght(numberOfHiddenSymbols)); 
+    string temp; 
+ 
+    do 
     {
-        for (int i = 0; i <= length; i++){
-            temp = dictionary[i];
-            temp.pop_back();
-
-            if (word == temp){
-                check = true;
-                break;
-            }
-            else{
-                cout << endl << "Enter an existing word" << endl;
-                cin >> word;
-            }
-        cin.clear();
-        fflush(stdin);
-        } 
-    } while (check == false);
-    
-
+        for (int i = 0; i <= length; i++){ 
+            temp = dictionary[i]; 
+            temp.pop_back(); 
+ 
+            if (word == temp){ 
+                check = true; 
+                break; 
+            } 
+        }
+        if (!check) {
+              cout << endl << "Enter an existing word" << endl;
+              cin >> word;
+              cout << endl;
+        }  
+    } while (check == false); 
 }
 void question(int numberOfHiddenSymbols){ //предложение ввести слово + "*" по количеству букв
     cout << "Type a " << numberOfHiddenSymbols << " letter word" << endl;
     for (int i = 0; i < numberOfHiddenSymbols; i++){
         cout << "*";
-        }
+    }
+    cout << endl;
 }
 void wrongNumberOfCharacters(string word, int numberOfHiddenSymbols){
     while (word.length() != numberOfHiddenSymbols){
@@ -133,16 +131,16 @@ int main()
     hiddenWord.pop_back();
     for (int i = 0; i <= numberOfAttempts; i++){
         question(numberOfHiddenSymbols);
-        cout << endl << hiddenWord << endl;
+        //cout << endl << hiddenWord << endl;
         cin >> word;
+        cout << endl;
         wrongNumberOfCharacters(word, numberOfHiddenSymbols);
-
-        if(hiddenWord == word){
-            cout << endl << "You win!!!" << endl;
-            break;
-        }
-
-        // dashesInWord(hiddenWord, word);
+        dictionaryСheck(numberOfHiddenSymbols, word);
+                if(hiddenWord == word){
+                cout << endl << "You win!!!" << endl;
+                break;
+                }
+        dashesInWord(hiddenWord, word);
         cout << endl;
         wordsOutOfPlace(dashesInWord(hiddenWord, word), hiddenWord, word);
         cout << endl << endl;
