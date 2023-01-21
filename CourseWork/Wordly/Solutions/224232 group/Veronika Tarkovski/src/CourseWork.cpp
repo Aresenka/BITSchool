@@ -214,13 +214,7 @@ bool stingInArray(std::string str, int wordLength){
    int max = countLinesInFile(openFileForWordsWithLenght(wordLength));
    std::string* last = words + max;
 
-   #ifdef _WIN32
-      
-   #else
-      str += (char)13;
-   #endif
-
-   return (find(words, last, str) != last);
+    return (find(words, last, str) != last);
 
 
 }
