@@ -32,35 +32,42 @@ int numberOne() //рекурсия, чтобы пользователь ввел
 	}
 }
 
-int charInWord( string hiddenWord, char ch) { // функция проверки вхождения символа в загаданное слово
+
+bool charInWord(string hiddenWord, char symb) { // функция проверки вхождения символа в загаданное слово
 	for (int i = 0; i < hiddenWord.length() - 1; i++) {
-	
-		if (hiddenWord[i] == ch);
-		return i;
+		if (hiddenWord[i] == symb) return true;
 	}
-	return -1;
+	return false;
 }
 
-int charInRightPosition(string hiddenWord,string word, char ch) {
-	for (int i = 0; i < word.length(); i++) {
-		int wordIdx = charInWord( string hiddenWord, char ch);
-		if (wordIdx == -1) {
-			cout << "совпадений не выявлено, попробуй снова" << endl;
-		}
-		else if (wordIdx == i) {
-			cout << i;
-		} 
-		else { 
-			int position = -1;
-			for (int i = 0; i < hiddenWord.length(); i++) {
-				if (hiddenWord[i] == ch);
-				position = i;
-				break;
-			}
-			return position;
-		}
+//charInRightPosition(string hiddenWord,string word, char symb) { ---- изучить потом, потому что не логично
+//	for (int i = 0; i < word.length(); i++) {
+//		int wordIdx = charInWord( hiddenWord, symb);
+//		if (wordIdx == -1) {
+//			cout << "совпадений не выявлено, попробуй снова" << endl;
+//		}
+//		else if (wordIdx == i) {
+//			cout << word[i];
+//		} 
+//		else { 
+//			int position = -1;
+//			for (int i = 0; i < hiddenWord.length(); i++) {
+//				if (hiddenWord[i] == symb);
+//				position = i;
+//				break;
+//			}
+//			return position;
+//		}
+//	}
+//	return -1;
+//	
+//}
+
+bool charInRightPosition(string hiddenWord, string word, int pos) { // вернуться к этому
+	for (int i = 0; i < hiddenWord.length() - 1; i++) {
+		if (hiddenWord[i] == word[pos] && i == pos) return true;
 	}
-	
+	return false;
 }
 
 void game(int number) { // функция выбора рандомного слова из библиотеки
@@ -75,8 +82,9 @@ void game(int number) { // функция выбора рандомного сл
 	string guessedWord;
 	for (int n = 0; n < number; n++)
 	{
-		guessedWord[n] = '*';
+		guessedWord += "*";
 	}
+
 
 	for (int i = 1; i <= attempts; i++)
 	{
@@ -85,9 +93,10 @@ void game(int number) { // функция выбора рандомного сл
 		
 		cin >> word;
 		int h;
-		for (h = 0; h < hiddenWord.length() -1; h++) {
-			if (charInWord(string hiddenWord, char ch)) { // проверка вхождения символа в загаданное слово
-				if (charInRightPosition(string hiddenWord, string word, char ch)) { // проверка того, стоит ли символ на прпавильной позиции
+		char symb;
+		for (h = 0; h < hiddenWord.length() - 1; h++) {
+			if (charInWord(hiddenWord, word[h])) { // проверка вхождения символа в загаданное слово
+				if (charInRightPosition( hiddenWord, word, h)) { // проверка того, стоит ли символ на прпавильной позиции
 					cout << hiddenWord[h];
 					guessedWord[h] = hiddenWord[h];
 				}
@@ -100,9 +109,19 @@ void game(int number) { // функция выбора рандомного сл
 				cout << "*";
 			}
 		}
+		for (int i = 0; i < hiddenWord.length() - 1; i++) {
+			for (int j = 0; j < hiddenWord.length() - 1; j++)
+			{
+				if (i != j && hiddenWord[i] == word[j]) {
+					cout << "\033[1;31m" << word[j] << "\033[0m" << "\033[1;30m in the word on another place!\033[0m" << endl;
+					break;
+				}
+
+			}
+		}
 		// Вывод букв с неправильной позицией
-		cout << endl;
-		if (hiddenWord == guessedWord)
+		if (hiddenWord.substr(0, number) == word)
+			
 		{
 			cout << "YOU ARE WINNER!";
 			break;
