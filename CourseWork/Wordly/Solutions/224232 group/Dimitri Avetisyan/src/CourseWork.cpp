@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-// единственная ошибка, если в слове две одинаковые буквы
+
 
 
 const int attempts = 7;
@@ -62,7 +62,6 @@ void game(int attempts)
     string* words = readWords(countOfChars);
     string randomWord;
     randomWord = words[i];
-    cout << randomWord << endl;
 
 
     for (int i = 0; i < countOfChars; i++)
@@ -81,7 +80,7 @@ void game(int attempts)
     string enterWord;
     int rightChars = 0;
     for (attempts = attempts - 1; attempts >= 0; attempts--) {
-        
+
         while (true) {
             cin >> enterWord;
             if (ifWordIsValid(length, words, enterWord, countOfChars))
@@ -119,9 +118,9 @@ void game(int attempts)
                 }
             }
         }
-      
-        
-        
+
+
+
         if (rightChars == countOfChars) {
             cout << endl;
             cout << endl;
