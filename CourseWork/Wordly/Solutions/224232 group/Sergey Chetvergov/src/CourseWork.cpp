@@ -59,8 +59,7 @@ void game(int number) {
         {
             cout << " _ ";
         }
-        while (true)
-        {
+       
             int a = 0;
             cin >> word;
             if (ifWordIsValid(length, rangeHiddenWord, word, number))
@@ -83,17 +82,18 @@ void game(int number) {
             }
             if (a == number)
             {
-                cout << "ТЫ ЧЕМПИОН !!!" << endl;
+                cout << "ТЫ ЧЕМПИОН !!!"<< endl;
+                break;
                   
             }
             currentTry++;
             if (currentTry == ATTEMPTS)
             {
                 cout << "ТЫ НЕ ЧЕМПИОН, ЛУЗЕР !!!"<< endl;
-                cout << "Загаданое слово было :   " << hiddenWord << endl;
+                cout << "Загаданое слово было :  " << hiddenWord << endl;
                 break;
             }
-        }  
+          
     }
 }
 
