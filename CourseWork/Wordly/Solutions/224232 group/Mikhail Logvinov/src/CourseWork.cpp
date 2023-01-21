@@ -63,7 +63,7 @@ bool charInWord(string hiddenWord, char symb) { // функция проверк
 //	
 //}
 
-bool charInRightPosition(string hiddenWord, string word, int pos) { // вернуться к этому
+bool charInRightPosition(string hiddenWord, string word, int pos) { //
 	for (int i = 0; i < hiddenWord.length() - 1; i++) {
 		if (hiddenWord[i] == word[pos] && i == pos) return true;
 	}
@@ -88,20 +88,20 @@ void game(int number) { // функция выбора рандомного сл
 
 	for (int i = 1; i <= attempts; i++)
 	{
-		cout << guessedWord << endl;
+		cout << endl << guessedWord << endl;
 		cout << "Введите слово из " << number << " букв " << endl;
 		
 		cin >> word;
 		int h;
 		char symb;
-		for (h = 0; h < hiddenWord.length() - 1; h++) {
+		for (h = 0; h < number; h++) {
 			if (charInWord(hiddenWord, word[h])) { // проверка вхождения символа в загаданное слово
+
 				if (charInRightPosition( hiddenWord, word, h)) { // проверка того, стоит ли символ на прпавильной позиции
 					cout << hiddenWord[h];
 					guessedWord[h] = hiddenWord[h];
 				}
 				else {
-					// Добавление символа в массив отгаданных на неправильной позиции
 					cout << "*";
 				}
 			}
@@ -109,6 +109,7 @@ void game(int number) { // функция выбора рандомного сл
 				cout << "*";
 			}
 		}
+		cout << endl;
 		for (int i = 0; i < hiddenWord.length() - 1; i++) {
 			for (int j = 0; j < hiddenWord.length() - 1; j++)
 			{
@@ -120,6 +121,7 @@ void game(int number) { // функция выбора рандомного сл
 			}
 		}
 		// Вывод букв с неправильной позицией
+
 		if (hiddenWord.substr(0, number) == word)
 			
 		{
