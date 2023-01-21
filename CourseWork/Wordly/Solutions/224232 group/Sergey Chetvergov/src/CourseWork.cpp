@@ -75,10 +75,12 @@ void game(int number) {
                     {
                         cout << " * ";
                     }
-                    cout << endl;}
+                    cout << endl;
+                }
             else
             {
-                cout << " Вбей слово из списка чел !!!" << endl;}
+                cout << " Вбей слово из списка чел !!!" << endl;
+            }
             if (a == number)
             {
                 cout << "ТЫ ЧЕМПИОН !!!" << endl;
@@ -87,11 +89,14 @@ void game(int number) {
             currentTry++;
             if (currentTry == ATTEMPTS)
             {
-                cout << "ТЫ НЕ ЧЕМПИОН, ЛУЗЕР !!!";
-                break;}
+                cout << "ТЫ НЕ ЧЕМПИОН, ЛУЗЕР !!!"<< endl;
+                cout << "Загаданое слово было :   " << hiddenWord << endl;
+                break;
+            }
         }  
     }
 }
+
 
 int main()
 {
