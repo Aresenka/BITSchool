@@ -145,6 +145,8 @@ void game(int number) { // функция выбора рандомного сл
 int main()
 {
 	int number = numberOne();
+	string word;
+	trueWord(word, number);
 	game(number);
 
 	return 0;
