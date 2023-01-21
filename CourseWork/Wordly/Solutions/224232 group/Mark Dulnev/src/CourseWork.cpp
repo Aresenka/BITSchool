@@ -165,14 +165,14 @@ int main(int argc, const char *argv[])
 
                 // проверки закончены
 
-                int checkOfUsedWord = 0; // Проверка на повторяющийся ввод идентичного слова
-                for (int ff = 0; ff < numberOfLetter + 4; ff++)
-                {
-                    if (enteredWords[ff] == verifiedWord)
-                    {
-                        checkOfUsedWord++;
-                    }
-                }
+                // int checkOfUsedWord = 0; // Проверка на повторяющийся ввод идентичного слова
+                // for (int ff = 0; ff < numberOfLetter + 4; ff++)
+                // {
+                //     if (enteredWords[ff] == verifiedWord)
+                //     {
+                //         checkOfUsedWord++;
+                //     }
+                // }
 
                 if (verifiedWord == hiddenWord)
                 {
@@ -182,13 +182,13 @@ int main(int argc, const char *argv[])
                 }
                 else
                 {
-                    if (checkOfUsedWord > 0)
-                    {
-                        cout << "This word you have already used. Please, insert another one." << endl;
-                        continue;
-                    }
-                    else
-                    {
+                    // if (checkOfUsedWord > 0)
+                    // {
+                    //     cout << "This word you have already used. Please, insert another one." << endl;
+                    //     continue;
+                    // }
+                    // else
+                   //{
                         // Создание массива со строчками для введенного слова
                         string verifiedWordArr[numberOfLetter];
                         char *yourWordArr = new char[verifiedWord.length() + 1];
@@ -309,7 +309,7 @@ int main(int argc, const char *argv[])
 
                         enteredWords[(numberOfLetter + 4) - attempts - 1] = verifiedWord;
                         attempts--;
-                    }
+                   // }
                 }
             } while (counterOfWin < 1 && attempts > 0);
 
