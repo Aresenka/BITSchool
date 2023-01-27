@@ -26,13 +26,13 @@ int charToInt(char charToConvert) {
 
 void getWordLength() {
     string input;
-    cout << "    Enter the word length in range 4-7..." << endl;
+    cout << "\tEnter the word length in range 4-7..." << endl;
 
     while (true) {
         getline(cin,input);
 
         if (input.length() > 1 || input[0] > MAX_WORD_LENGTH_ASCII || input[0] < MIN_WORD_LENGTH_ASCII)
-            cout << "    Wrong value! Enter the number in range from 4 to 7" << endl;
+            cout << "\tWrong value! Enter the number in range from 4 to 7" << endl;
         else
         {
             wordLength = charToInt(input[0]);
@@ -84,13 +84,13 @@ string stringToLower(string stringToChange) {
 string getGuess(string* allWords) {
     string userGuess;
     while (true) {
-        cout << "    Enter your guess..." << endl;
+        cout << "\tEnter your guess..." << endl;
         getline(cin,userGuess);
 
         if (!validateGuess(userGuess))
-            cout << "    You entered a wrong word! Word must be " << wordLength << " letters long and contain letters only!" << endl;
+            cout << "\tYou entered a wrong word! Word must be " << wordLength << " letters long and contain letters only!" << endl;
         else if (!wordInDictionary(userGuess, allWords))
-            cout << "    You entered a nonexistent word! Don't cheat!" << endl;
+            cout << "\tYou entered a nonexistent word! Don't cheat!" << endl;
         else
             return stringToLower(userGuess);
     }
@@ -176,10 +176,10 @@ bool checkGuess(string guess, string randomWord) {
 
     filterWrongPlacedChars(wrongPlacedChars, charsToGuess);
 
-    cout << "    You guessed " << guessedCharsCount << " letters: " << getHiddenWord(guessedChars) << endl;
+    cout << "\tYou guessed " << guessedCharsCount << " letters: " << getHiddenWord(guessedChars) << endl;
 
     if (wrongPlacedCharsFound(wrongPlacedChars))
-        cout << "    These letters are in word but on the other places: " << formatWrongPlacedLetters(wrongPlacedChars) << endl;
+        cout << "\tThese letters are in word but on the other places: " << formatWrongPlacedLetters(wrongPlacedChars) << endl;
 
     return false;
 }
@@ -189,19 +189,19 @@ void playGame() {
     string randomWord = getRandomWord(allWords);
     int tries = ceil(wordLength * MAX_TRIES_COEFF);
 
-    cout << "    I am thinking about... " << wordLength << " letters long word! Guess what word I riddled?" << endl;
+    cout << "\tI am thinking about... " << wordLength << " letters long word! Guess what word I riddled?" << endl;
 
     for (tries; tries > 0; tries--) {
         string guess = getGuess(allWords);
         bool wordGuessed = checkGuess(guess, randomWord);
 
         if (wordGuessed) {
-            cout << "    YOU WON! The word was: " << randomWord << endl;
+            cout << "\tYOU WON! The word was: " << randomWord << endl;
             return;
         }
     }
 
-    cout << "    YOU LOSE! Word was: " << randomWord << endl;
+    cout << "\tYOU LOSE! Word was: " << randomWord << endl;
 }
 
 int main()
