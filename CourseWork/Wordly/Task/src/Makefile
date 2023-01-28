@@ -1,8 +1,8 @@
 compile:
-	@g++ CourseWork.cpp lib/words.cpp -o game.out >> /dev/null
+	@g++ CourseWork.cpp lib/*.cpp -o game.out >> /dev/null
 
 compile-oop:
-	@g++ CourseWorkOOP.cpp lib/words.cpp -o game-oop.out >> /dev/null
+	@g++ CourseWorkOOP.cpp lib/*.cpp -o game-oop.out >> /dev/null
 
 run:
 	@./game.out
