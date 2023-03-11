@@ -8,7 +8,8 @@ RUN apk update &&     \
       build-base         \
       cmake         \
       bash         \
-      libstdc++ &&     \
+      libstdc++  \
+      ncurses-dev &&     \
     rm -rf /var/cache/apk/*
 
 VOLUME ["/app"]
