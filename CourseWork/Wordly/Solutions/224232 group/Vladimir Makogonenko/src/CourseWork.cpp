@@ -7,6 +7,7 @@
 #include <string>       // Строка
 #include <algorithm>    // Алгоритмы 
 #include <cctype>       // 
+#include <ctime>
 using namespace std;
 
 const int START_RANGE = 4;   // Мин значение  
@@ -62,11 +63,7 @@ void markMatches(vector<vector<int>> &matches, int currentTry, string targetWord
 bool isAllMatched(string targetWord, string input)
 {
     for (int i = 0; i < input.length(); i++){
-            if (targetWord[i] != input[i]) {
-            return false; 
-        }
-            // if (targetWord[i] = input[i]) {
-            // return true; 
+            if (targetWord[i] != input[i]) { return false; }
         }   
     return true;
 }
@@ -83,7 +80,6 @@ void print(vector<vector<int>> matches, vector<string> guesses, int currentGuess
             padding += "     |";
             char value = toupper(guesses[i][j]);
             text += "   ";
-            // cout << matches[i][j] << endl;
             if (matches[i][j] == PARITAL_MATCHED){
                 text += "\033[33m";
             } else if (matches[i][j] == MATCHED) {
