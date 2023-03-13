@@ -5,6 +5,15 @@
 #include <fstream>
 #include <ncurses.h>
 #include "lib/screen.h"
+#include "lib/body.h"
+#include "lib/character.h"
+#include "lib/enemy.h"
+#include "lib/fantomas.h"
+#include "lib/freddie.h"
+#include "lib/head.h"
+#include "lib/hero.h"
+#include "lib/joker.h"
+#include "lib/legs.h"
 
 using namespace std;
 int main()

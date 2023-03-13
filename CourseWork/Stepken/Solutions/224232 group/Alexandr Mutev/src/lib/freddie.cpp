@@ -1,7 +1,7 @@
 #include <iostream>
-#include <character.h>
-#include <enemy.h>
-#include <freddie.h>
+#include "character.h"
+#include "enemy.h"
+#include "freddie.h"
 
 using namespace std;
 

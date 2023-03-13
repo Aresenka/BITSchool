@@ -1,7 +1,7 @@
 #include <iostream>
-#include <character.h>
-#include <enemy.h>
-#include <fantomas.h>
+#include "character.h"
+#include "enemy.h"
+#include "fantomas.h"
 
 using namespace std;
 

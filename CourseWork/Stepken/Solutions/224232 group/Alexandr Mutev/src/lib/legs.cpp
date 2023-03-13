@@ -1,5 +1,5 @@
 #include <iostream>
-#include <legs.h>
+#include "legs.h"
 
 using namespace std;
 

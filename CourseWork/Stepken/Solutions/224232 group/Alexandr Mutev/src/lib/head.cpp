@@ -1,5 +1,5 @@
 #include <iostream>
-#include <head.h>
+#include "head.h"
 
 using namespace std;
 
