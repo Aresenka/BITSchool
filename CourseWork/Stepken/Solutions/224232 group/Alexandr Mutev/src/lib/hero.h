@@ -1,17 +1,19 @@
+#pragma once
 #include <iostream>
+#include "character.h"
+#include "head.h"
+#include "body.h"
+#include "legs.h"
 
 using namespace std;
 
 class Hero: public Character{
     private:
-        Head head;
-        Body body;
-        Legs legs;
         int health;
     
     public:
         Hero();
-        ~Hero();
+        virtual ~Hero();
         virtual void fight() = 0;
         virtual void defend() = 0;
 };

@@ -1,6 +1,9 @@
 #include <iostream>
 #include "character.h"
 #include "hero.h"
+#include "head.h"
+#include "body.h"
+#include "legs.h"
 
 using namespace std;
 

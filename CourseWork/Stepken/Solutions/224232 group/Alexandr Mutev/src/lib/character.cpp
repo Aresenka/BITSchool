@@ -1,14 +1,14 @@
-#include <iostream>>
+#include <iostream>
 #include "character.h"
+#include "head.h"
+#include "body.h"
+#include "legs.h"
 
 using namespace std;
 
 Character::Character(){
     this->health = health;
-    // Head head = Head();
-    // Body body = Body();
-    // Legs legs = Legs();
 }
-Character::virtual ~Character(){
+Character::~Character(){
 
 }
