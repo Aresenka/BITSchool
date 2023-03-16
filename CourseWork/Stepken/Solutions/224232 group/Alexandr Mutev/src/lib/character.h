@@ -1,8 +1,4 @@
 #pragma once
-#include <iostream>
-#include "head.h"
-#include "body.h"
-#include "legs.h"
 
 using namespace std;
 
