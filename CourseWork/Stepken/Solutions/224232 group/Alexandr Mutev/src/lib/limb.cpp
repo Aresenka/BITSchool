@@ -1,18 +1,18 @@
 #include <iostream>
 #include "limb.h"
-#include "legs.h"
 #include "character.h"
 #include "enemy.h"
 #include "fantomas.h"
 #include "freddie.h"
 #include "joker.h"
 #include "hero.h"
+#include "weapon.h"
 
 using namespace std;
 
-Legs::Legs(){
-    
+Limb::Limb(){
+
 }
-Legs::~Legs(){
-    
+Limb::~Limb(){
+
 }

@@ -1,5 +1,8 @@
 #include <iostream>
+#include "weapon.h"
 #include "limb.h"
+#include "head.h"
+#include "body.h"
 #include "legs.h"
 #include "character.h"
 #include "enemy.h"
@@ -10,9 +13,9 @@
 
 using namespace std;
 
-Legs::Legs(){
-    
+Weapon::Weapon(){
+
 }
-Legs::~Legs(){
-    
+Weapon::~Weapon(){
+
 }

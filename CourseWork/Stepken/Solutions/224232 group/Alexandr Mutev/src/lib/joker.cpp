@@ -2,6 +2,7 @@
 #include "character.h"
 #include "enemy.h"
 #include "joker.h"
+#include "limb.h"
 #include "head.h"
 #include "body.h"
 #include "legs.h"

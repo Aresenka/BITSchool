@@ -1,6 +1,7 @@
 #include <iostream>
 #include "character.h"
 #include "enemy.h"
+#include "limb.h"
 #include "head.h"
 #include "body.h"
 #include "legs.h"

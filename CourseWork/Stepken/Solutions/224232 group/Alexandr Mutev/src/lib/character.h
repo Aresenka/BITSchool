@@ -4,7 +4,6 @@ using namespace std;
 
 class Character{
     public:
-
         Character();
         virtual ~Character();
         virtual void fight() = 0;
