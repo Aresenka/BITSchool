@@ -4,7 +4,11 @@
 using namespace std;
 
 class Weapon{
+    protected:
+        int power;
+
     public:
         Weapon();
         virtual ~Weapon();
+
 };

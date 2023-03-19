@@ -6,7 +6,7 @@ using namespace std;
 
 class Joker: public Enemy{
     private:
-        int health;
+        int health_joker = health + 15;
     
     public:
         Joker();

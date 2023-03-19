@@ -6,10 +6,8 @@ using namespace std;
 
 class Freddie: public Enemy{
     private:
-        int health;
-    
-    public:
-    
+        int health_freddie = health + 10;
+
     public:
         Freddie();
         virtual ~Freddie();

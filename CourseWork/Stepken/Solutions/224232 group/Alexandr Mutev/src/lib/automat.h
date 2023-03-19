@@ -5,6 +5,9 @@
 using namespace std;
 
 class Automat: public Weapon{
+    private:
+        int power_automat = power + 3;
+
     public:
         Automat();
         virtual ~Automat();

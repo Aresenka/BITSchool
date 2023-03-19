@@ -17,8 +17,9 @@
 
 using namespace std;
 
+
 Fantomas::Fantomas(){
-    this->health = health;
+    this->health = health + 3;
 }
 Fantomas::~Fantomas(){
     
