@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class Head: public Limb{
+class Head: public Extremity{
     public:
         Head();
         virtual ~Head();

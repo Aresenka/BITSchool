@@ -3,8 +3,8 @@
 
 using namespace std;
 
-class Limb{
+class Gun: public Weapon{
     public:
-        Limb();
-        virtual ~Limb();
+        Gun();
+        virtual ~Gun();
 };

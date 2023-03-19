@@ -3,8 +3,8 @@
 
 using namespace std;
 
-class Legs: public Limb{
-    Legs();
-    virtual ~Legs();
-
+class Legs: public Extremity{
+    public:
+        Legs();
+        virtual ~Legs();
 };
