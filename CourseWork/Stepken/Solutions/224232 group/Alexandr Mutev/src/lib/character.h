@@ -1,4 +1,5 @@
 #pragma once
+#include "weapon.h"
 
 using namespace std;
 
