@@ -23,6 +23,6 @@ Gun::Gun(){
 Gun::~Gun(){
 
 }
-void Gun::attack(int power){
+void Gun::attack(){
     cout << "PIU" << endl;
 }

@@ -23,3 +23,6 @@ Extremity::Extremity(){
 Extremity::~Extremity(){
 
 }
+void Extremity::defense(){
+    cout << "YO" << endl;
+}

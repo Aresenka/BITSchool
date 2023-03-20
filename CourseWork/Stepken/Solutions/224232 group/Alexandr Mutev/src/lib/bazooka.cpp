@@ -23,6 +23,7 @@ Bazooka::Bazooka(){
 Bazooka::~Bazooka(){
 
 }
-void Bazooka::attack(int power){
+
+void Bazooka::attack(){
     cout << "BABAH" << endl;
 }

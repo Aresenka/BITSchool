@@ -51,7 +51,24 @@ int main()
     test.clear();//Можно очистить экран!
     printf("First screen menu selected item index: %3d;\nSecond screen returned value after enter: %3d\n", selectedMenuItem, valueEmptyMenu);//Вывод отформатированной строки, ничего необычного
 
-    Game event;
+    Hero hero;
+    Fantomas fantomas_1;
+
+    Knife knife;
+    Bazooka bazooka;
+
+    Extremity extremity;
+    Head head;
+    Body body;
+    Legs legs;
+
+    hero.attack(&knife);
+    hero.defense(&head);
+
+    cout << fantomas_1.get_health() << endl;
+    cout << hero.get_health() << endl;
+
+    
 
 }
 

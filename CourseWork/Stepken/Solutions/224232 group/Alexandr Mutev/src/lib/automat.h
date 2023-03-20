@@ -10,5 +10,5 @@ class Automat: public Weapon{
     public:
         Automat();
         virtual ~Automat();
-        void attack(int power) override;
+        void attack() override;
 };

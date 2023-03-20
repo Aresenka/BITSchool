@@ -23,11 +23,11 @@
 using namespace std;
 
 Game::Game(){
-    Hero hero;
-    Fantomas fantomas_1;
+
 }
 Game::~Game(){
 
 }
 
+    
 

@@ -25,5 +25,5 @@ Legs::~Legs(){
 
 }
 void Legs::defense(){
-    cout << "BOOM" << endl;
+    cout << "legs punch" << endl;
 }

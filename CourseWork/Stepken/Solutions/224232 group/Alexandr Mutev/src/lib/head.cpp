@@ -25,5 +25,5 @@ Head::~Head(){
 
 }
 void Head::defense(){
-    cout << "BOOM" << endl;
+    cout << "head punch" << endl;
 }

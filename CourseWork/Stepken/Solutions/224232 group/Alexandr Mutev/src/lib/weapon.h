@@ -5,11 +5,11 @@ using namespace std;
 
 class Weapon{
     protected:
-        int power = 1;
+        int power;
 
     public:
         Weapon();
         virtual ~Weapon();
-        virtual void attack(int power) = 0;
+        virtual void attack();
 
 };

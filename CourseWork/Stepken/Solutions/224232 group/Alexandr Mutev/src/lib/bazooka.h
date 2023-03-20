@@ -10,5 +10,5 @@ class Bazooka: public Weapon{
     public:
         Bazooka();
         virtual ~Bazooka();
-        void attack(int power) override;
+        void attack() override;
 };

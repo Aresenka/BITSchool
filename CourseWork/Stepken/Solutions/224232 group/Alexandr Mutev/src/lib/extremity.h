@@ -7,5 +7,5 @@ class Extremity{
     public:
         Extremity();
         virtual ~Extremity();
-        virtual void defense() = 0;
+        virtual void defense();
 };

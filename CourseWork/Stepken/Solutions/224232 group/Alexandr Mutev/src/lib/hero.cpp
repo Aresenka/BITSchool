@@ -17,8 +17,18 @@
 using namespace std;
 
 Hero::Hero(){
-    this->health = health;
+    this->health = health = 30;
 }
 Hero::~Hero(){
     
+}
+
+int Hero::get_health(){
+    return health;
+}
+void Hero::attack(Weapon *weapon){
+    weapon->attack();
+}
+void Hero::defense(Extremity *extremity){
+    extremity->defense();
 }

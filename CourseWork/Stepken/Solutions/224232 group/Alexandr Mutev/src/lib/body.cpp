@@ -25,5 +25,5 @@ Body::~Body(){
 
 }
 void Body::defense(){
-    cout << "BOOM" << endl;
+    cout << "body punch" << endl;
 }

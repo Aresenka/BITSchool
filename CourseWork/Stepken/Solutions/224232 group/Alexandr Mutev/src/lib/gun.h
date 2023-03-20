@@ -10,5 +10,5 @@ class Gun: public Weapon{
     public:
         Gun();
         virtual ~Gun();
-        void attack(int power) override;
+        void attack() override;
 };

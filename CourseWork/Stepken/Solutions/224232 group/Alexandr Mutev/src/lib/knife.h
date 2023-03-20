@@ -10,5 +10,5 @@ class Knife: public Weapon{
     public:
         Knife();
         virtual ~Knife();
-        void attack(int power) override;
+        void attack() override;
 };

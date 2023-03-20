@@ -23,6 +23,6 @@ Automat::Automat(){
 Automat::~Automat(){
 
 }
-void Automat::attack(int power){
+void Automat::attack(){
     cout << "TRA-TA-TA" << endl;
 }

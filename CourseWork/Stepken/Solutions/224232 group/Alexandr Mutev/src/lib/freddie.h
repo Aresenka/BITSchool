@@ -10,5 +10,7 @@ class Freddie: public Enemy{
     public:
         Freddie();
         virtual ~Freddie();
-        
+        int get_health() override;
+        void attack(Weapon *weapon) override;
+        void defense(Extremity *extremity) override;
 };

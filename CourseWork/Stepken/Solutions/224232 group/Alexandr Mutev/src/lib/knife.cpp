@@ -23,6 +23,7 @@ Knife::Knife(){
 Knife::~Knife(){
 
 }
-void Knife::attack(int power){
-    cout << "VZZOH" << endl;
+
+void Knife::attack(){
+    cout << "VZZOOH" << endl;
 }
