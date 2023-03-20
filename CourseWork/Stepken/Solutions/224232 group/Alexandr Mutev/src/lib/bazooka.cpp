@@ -18,8 +18,11 @@
 using namespace std;
 
 Bazooka::Bazooka(){
-
+    this->power = power = 5;
 }
 Bazooka::~Bazooka(){
 
+}
+void Bazooka::attack(int power){
+    cout << "BABAH" << endl;
 }

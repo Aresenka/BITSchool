@@ -10,6 +10,5 @@ class Hero: public Character{
     public:
         Hero();
         virtual ~Hero();
-        virtual void fight() = 0;
-        virtual void defend() = 0;
+        
 };

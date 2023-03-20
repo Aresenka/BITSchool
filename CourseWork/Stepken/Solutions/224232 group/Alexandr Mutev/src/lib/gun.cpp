@@ -18,8 +18,11 @@
 using namespace std;
 
 Gun::Gun(){
-
+    this->power = power = 3;
 }
 Gun::~Gun(){
 
+}
+void Gun::attack(int power){
+    cout << "PIU" << endl;
 }

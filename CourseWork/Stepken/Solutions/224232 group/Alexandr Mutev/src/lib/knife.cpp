@@ -18,8 +18,11 @@
 using namespace std;
 
 Knife::Knife(){
-
+    this->power = power = 2;
 }
 Knife::~Knife(){
 
+}
+void Knife::attack(int power){
+    cout << "VZZOH" << endl;
 }

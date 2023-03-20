@@ -18,7 +18,7 @@
 using namespace std;
 
 Joker::Joker(){
-    this->health = health;
+    this->health = health = 40;
 }
 Joker::~Joker(){
     

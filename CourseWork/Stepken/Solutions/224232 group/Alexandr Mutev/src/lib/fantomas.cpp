@@ -19,8 +19,12 @@ using namespace std;
 
 
 Fantomas::Fantomas(){
-    this->health = health + 3;
+    this->health = health;
+    this->weapon = weapon;
 }
 Fantomas::~Fantomas(){
     
+}
+void Fantomas::attack(Weapon *weapon){
+    weapon->attack();
 }

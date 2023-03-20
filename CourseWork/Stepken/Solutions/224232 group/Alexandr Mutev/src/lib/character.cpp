@@ -17,6 +17,7 @@ using namespace std;
 
 Character::Character(){
     this->health = health;
+    this->weapon = weapon;
 }
 Character::~Character(){
 

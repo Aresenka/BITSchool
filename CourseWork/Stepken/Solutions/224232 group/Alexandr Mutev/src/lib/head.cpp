@@ -24,3 +24,6 @@ Head::Head(){
 Head::~Head(){
 
 }
+void Head::defense(){
+    cout << "BOOM" << endl;
+}

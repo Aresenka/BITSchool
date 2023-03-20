@@ -18,7 +18,7 @@
 using namespace std;
 
 Freddie::Freddie(){
-
+    this->health = health = 35;
 }
 Freddie::~Freddie(){
     

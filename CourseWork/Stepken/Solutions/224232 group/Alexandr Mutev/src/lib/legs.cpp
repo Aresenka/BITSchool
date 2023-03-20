@@ -24,3 +24,6 @@ Legs::Legs(){
 Legs::~Legs(){
 
 }
+void Legs::defense(){
+    cout << "BOOM" << endl;
+}

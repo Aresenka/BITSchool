@@ -18,8 +18,11 @@
 using namespace std;
 
 Automat::Automat(){
-
+    this->power = power = 4;
 }
 Automat::~Automat(){
 
+}
+void Automat::attack(int power){
+    cout << "TRA-TA-TA" << endl;
 }

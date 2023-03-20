@@ -6,9 +6,9 @@ using namespace std;
 
 class Knife: public Weapon{
     private:
-        int power_knife = power + 1;
 
     public:
         Knife();
         virtual ~Knife();
+        void attack(int power) override;
 };

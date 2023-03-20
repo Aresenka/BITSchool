@@ -24,3 +24,6 @@ Body::Body(){
 Body::~Body(){
 
 }
+void Body::defense(){
+    cout << "BOOM" << endl;
+}

@@ -8,4 +8,5 @@ class Head: public Extremity{
     public:
         Head();
         virtual ~Head();
+        void defense() override;
 };

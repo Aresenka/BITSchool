@@ -4,22 +4,34 @@
 #include <iostream>
 #include <fstream>
 #include <ncurses.h>
+
 #include "lib/screen.h"
-#include "lib/body.h"
+
 #include "lib/character.h"
 #include "lib/enemy.h"
+#include "lib/joker.h"
 #include "lib/fantomas.h"
 #include "lib/freddie.h"
-#include "lib/head.h"
 #include "lib/hero.h"
-#include "lib/joker.h"
+
+#include "lib/extremity.h"
+#include "lib/head.h"
+#include "lib/body.h"
 #include "lib/legs.h"
+
+#include "lib/weapon.h"
+#include "lib/knife.h"
+#include "lib/gun.h"
+#include "lib/automat.h"
+#include "lib/bazooka.h"
+
+#include "lib/game.h"
 
 using namespace std;
 int main()
 {
-    string testText = "Hello! I am the text for the menu!\nSecond line"; //Текст может быть с любым количеством строк
-    vector<string> testOptions = {"first", "second", "third"};//Пунктов меню может и не быть вовсе!
+    string testText = "Stepken\nAlexander Mutev's production"; //Текст может быть с любым количеством строк
+    vector<string> testOptions = {"New game", "Exit"};//Пунктов меню может и не быть вовсе!
     Screen test(testOptions, 30);//Инициализируем экран для отрисовки игры
 
     test.setText(testText);//Добавляем в него текст (если требуется)
@@ -38,5 +50,8 @@ int main()
 
     test.clear();//Можно очистить экран!
     printf("First screen menu selected item index: %3d;\nSecond screen returned value after enter: %3d\n", selectedMenuItem, valueEmptyMenu);//Вывод отформатированной строки, ничего необычного
+
+    Game event;
+
 }
 
