@@ -23,6 +23,6 @@ Automat::Automat(){
 Automat::~Automat(){
 
 }
-void Automat::attack(){
+void Automat::attack(Character *character){
     cout << "TRA-TA-TA" << endl;
 }

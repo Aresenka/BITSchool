@@ -10,6 +10,6 @@ class Hero: public Character{
     public:
         Hero();
         virtual ~Hero();
-        void attack(Weapon *weapon) override;
+        void attack(Weapon *weapon, Character *character) override;
         void defense(Extremity *extremity) override;
 };

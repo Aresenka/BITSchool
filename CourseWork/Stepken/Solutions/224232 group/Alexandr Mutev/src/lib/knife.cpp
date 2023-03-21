@@ -24,6 +24,6 @@ Knife::~Knife(){
 
 }
 
-void Knife::attack(){
+void Knife::attack(Character *character){
     cout << "VZZOOH" << endl;
 }

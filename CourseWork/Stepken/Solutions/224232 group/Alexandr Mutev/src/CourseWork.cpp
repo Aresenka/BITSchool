@@ -62,7 +62,7 @@ int main()
     Body body;
     Legs legs;
 
-    hero.attack(&knife);
+    hero.attack(&knife, &fantomas_1);
     hero.defense(&head);
 
     cout << fantomas_1.get_health() << endl;

@@ -23,8 +23,8 @@ Hero::~Hero(){
     
 }
 
-void Hero::attack(Weapon *weapon){
-    weapon->attack();
+void Hero::attack(Weapon *weapon, Character *character){
+    weapon->attack(Character *character);
 }
 void Hero::defense(Extremity *extremity){
     extremity->defense();

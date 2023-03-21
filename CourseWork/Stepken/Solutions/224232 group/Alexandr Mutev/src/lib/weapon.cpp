@@ -22,6 +22,8 @@ Weapon::Weapon(){
 Weapon::~Weapon(){
 
 }
-void Weapon::attack(){
+void Weapon::attack(Character *character){
     cout << "BAH" << endl;
+
+
 }

@@ -24,6 +24,6 @@ Bazooka::~Bazooka(){
 
 }
 
-void Bazooka::attack(){
+void Bazooka::attack(Character *character){
     cout << "BABAH" << endl;
 }

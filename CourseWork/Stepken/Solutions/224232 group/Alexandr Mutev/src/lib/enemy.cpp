@@ -23,8 +23,8 @@ Enemy::Enemy(){
 Enemy::~Enemy(){
 
 }
-void Enemy::attack(Weapon *weapon){
-    weapon->attack();
+void Enemy::attack(Weapon *weapon, Character *character){
+    weapon->attack(Character *character);
 }
 void Enemy::defense(Extremity *extremity){
     extremity->defense();

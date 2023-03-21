@@ -21,8 +21,9 @@ class Character{
     public:
         Character();
         virtual ~Character();
-        virtual int get_health();
-        virtual void attack(Weapon *weapon) = 0;
+        int get_health();
+        void set_health(int power);
+        virtual void attack(Weapon *weapon, Character *character) = 0;
         virtual void defense(Extremity *extremity) = 0;
 
 };
