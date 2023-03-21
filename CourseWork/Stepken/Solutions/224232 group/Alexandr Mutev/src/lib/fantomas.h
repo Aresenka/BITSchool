@@ -6,11 +6,8 @@ using namespace std;
 
 class Fantomas: public Enemy{
     private:
-    
+        int health = 35;
     public:
         Fantomas();
         virtual  ~Fantomas();
-        int get_health() override;
-        void attack(Weapon *weapon) override;
-        void defense(Extremity *extremity) override;
 };

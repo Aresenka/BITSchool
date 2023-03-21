@@ -23,3 +23,9 @@ Enemy::Enemy(){
 Enemy::~Enemy(){
 
 }
+void Enemy::attack(Weapon *weapon){
+    weapon->attack();
+}
+void Enemy::defense(Extremity *extremity){
+    extremity->defense();
+}

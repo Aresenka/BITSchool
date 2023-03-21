@@ -25,12 +25,3 @@ Joker::~Joker(){
     
 }
 
-int Joker::get_health(){
-    return health;
-}
-void Joker::attack(Weapon *weapon){
-    weapon->attack();
-}
-void Joker::defense(Extremity *extremity){
-    extremity->defense();
-}

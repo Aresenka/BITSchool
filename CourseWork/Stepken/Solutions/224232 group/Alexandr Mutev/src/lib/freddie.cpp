@@ -24,13 +24,3 @@ Freddie::Freddie(){
 Freddie::~Freddie(){
     
 }
-
-int Freddie::get_health(){
-    return health;
-}
-void Freddie::attack(Weapon *weapon){
-    weapon->attack();
-}
-void Freddie::defense(Extremity *extremity){
-    extremity->defense();
-}

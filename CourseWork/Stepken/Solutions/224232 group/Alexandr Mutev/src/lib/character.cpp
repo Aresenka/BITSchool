@@ -22,3 +22,6 @@ Character::Character(){
 Character::~Character(){
 
 }
+int Character::get_health(){
+    return health;
+}

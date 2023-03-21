@@ -16,12 +16,12 @@ using namespace std;
 
 class Character{
     protected:
-        int health;
+        int health = 30;
 
     public:
         Character();
         virtual ~Character();
-        virtual int get_health() = 0;
+        virtual int get_health();
         virtual void attack(Weapon *weapon) = 0;
         virtual void defense(Extremity *extremity) = 0;
 

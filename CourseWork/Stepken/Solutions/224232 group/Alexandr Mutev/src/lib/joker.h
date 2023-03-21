@@ -10,7 +10,4 @@ class Joker: public Enemy{
     public:
         Joker();
         virtual ~Joker();
-        int get_health() override;
-        void attack(Weapon *weapon) override;
-        void defense(Extremity *extremity) override;
 };

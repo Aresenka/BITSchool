@@ -23,9 +23,6 @@ Hero::~Hero(){
     
 }
 
-int Hero::get_health(){
-    return health;
-}
 void Hero::attack(Weapon *weapon){
     weapon->attack();
 }
