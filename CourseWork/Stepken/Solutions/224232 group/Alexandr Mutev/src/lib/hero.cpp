@@ -14,6 +14,12 @@
 #include "automat.h"
 #include "bazooka.h"
 
+#include "character.h"
+#include "enemy.h"
+#include "fantomas.h"
+#include "freddie.h"
+#include "joker.h"
+
 using namespace std;
 
 Hero::Hero(){
