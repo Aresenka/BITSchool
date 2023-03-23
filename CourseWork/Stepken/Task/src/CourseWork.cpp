@@ -21,13 +21,13 @@ int main()
     int selectedMenuItem = test.drawMenu(); //После этого будет возвращён индекс выбранного пункта меню
 
 
-    test.setText("I am a new text, no menu items, see?");//Меняем текст на новый
+    test.setText("Hello! I am a new text, no menu items, see?");//Меняем текст на новый
     test.setMenuItems({});//Можно поменять сразу все пункты меню! А удалять по одному - нельзя.
     test.setEnterPlaceholder("Press the Enter button when you brave enough!");//Если меню пустое - вместо него будет выведена заглушка с указанным текстом
 
     int valueEmptyMenu = test.drawMenu();//Всё ещё ждём, пока игрок нажмёт Enter и возвращается -1, так как в меню нет ни одного пункта
 
-    test.clear();//Можно очистить экран!
+    test.clearScreen();//Можно очистить экран!
     printf("First screen menu selected item index: %3d;\nSecond screen returned value after enter: %3d\n", selectedMenuItem, valueEmptyMenu);//Вывод отформатированной строки, ничего необычного
 }
 

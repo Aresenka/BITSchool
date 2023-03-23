@@ -19,7 +19,7 @@ class Screen
     public:
         Screen(vector<string> options, int menuPosition);
 
-        void clear();
+        void clearScreen();
         int drawMenu();
         void setText(string text);
         void setMenuItems(vector<string>);
