@@ -11,19 +11,42 @@ Game::Game(){
 Game::~Game(){
 
 }
+int Game::start_game(){
+    string welcome_text = "Stepken\nAlexander Mutev's production"; //Текст может быть с любым количеством строк
+    vector<string> welcome_screen_options = {"New game", "Exit"};//Пунктов меню может и не быть вовсе!
+    Screen welcome_screen(welcome_screen_options, 30);//Инициализируем экран для отрисовки игры
 
+    welcome_screen.setText(welcome_text);
+    int welcome_screen_menu_item = welcome_screen.drawMenu();
+    switch (welcome_screen_menu_item){
+        case 0:
+            cout << endl;
+            event();
+            break;
+        case 1:
+            cout << endl;
+            return 1;
+            break;
+        default:
+            return 0;
+            break;
+    }
+}
 
 int Game::event(){
     Hero hero;
     Enemy enemy;
     int hero_target_attack;
     int hero_target_defense;
+    string choice_attack_target = "Where do you hit?";
+    string choice_defense_target = "That you will defend?";
+    vector<string>choice_target_options = {"Head", "Body", "Legs"};
+    Screen event_screen(choice_target_options, 30);
     
     while(enemy.get_health() > 0){
-        cout << "Where do you hit?" << endl;
-        // меню куда бить
-        cout << "hero бьет ";
-        cin >> hero_target_attack;
+
+        event_screen.setText(choice_attack_target);
+        hero_target_attack = event_screen.drawMenu();
         enemy.defense_target();
         enemy.set_health(hero_target_attack, enemy.defense_target());
 
@@ -31,11 +54,8 @@ int Game::event(){
             cout << "You win" << endl;
             return 1;
         }
-
-        cout << "That you will defend?" << endl;
-        //меню что защищать
-        cout << "hero защищает ";
-        cin >> hero_target_defense;
+        event_screen.setText(choice_defense_target);
+        hero_target_defense = event_screen.drawMenu();
         enemy.attack_target();
         hero.set_health(enemy.attack_target(), hero_target_defense);
 

@@ -3,6 +3,7 @@
 
 #include "hero.h"
 #include "enemy.h"
+#include "screen.h"
 
 using namespace std;
 
@@ -12,5 +13,6 @@ class Game{
     public:
         Game();
         virtual ~Game();
+        int start_game();
         int event();
 };

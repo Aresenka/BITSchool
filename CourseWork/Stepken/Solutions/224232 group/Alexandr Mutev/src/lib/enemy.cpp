@@ -14,8 +14,8 @@ Enemy::~Enemy(){
 }
 int Enemy::target(){
     srand(time(NULL));
-    int min = 1;
-    int max = 3;
+    int min = 0;
+    int max = 2;
 
     return (min + rand() % (max - min + 1));
 }

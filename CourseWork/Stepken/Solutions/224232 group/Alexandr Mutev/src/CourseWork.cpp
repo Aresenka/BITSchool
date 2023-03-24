@@ -6,7 +6,6 @@
 #include <ncurses.h>
 
 #include "lib/screen.h"
-
 #include "lib/game.h"
 
 using namespace std;
@@ -17,7 +16,7 @@ int main()
     // Screen test(testOptions, 30);//Инициализируем экран для отрисовки игры
 
     // test.setText(testText);//Добавляем в него текст (если требуется)
-    // test.addMenuItem("I am test item!");//Можно добавлять пункты меню в любое время!
+    // // test.addMenuItem("I am test item!");//Можно добавлять пункты меню в любое время!
     // test.setMenuPointer(" >> ");//По умолчанию указатель на текущий пункт меню - символ ">", но можно установить свой!
 
     // //После отрисовки меню, экран будет ждать, пока игрок выберет один из пунктов меню и нажмёт Enter
@@ -34,9 +33,9 @@ int main()
     // printf("First screen menu selected item index: %3d;\nSecond screen returned value after enter: %3d\n", selectedMenuItem, valueEmptyMenu);//Вывод отформатированной строки, ничего необычного
 
     Game game;
-    game.event();
+    game.start_game();
 
     
-
+    return 0;
 }
 
