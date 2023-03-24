@@ -7,24 +7,6 @@
 
 #include "lib/screen.h"
 
-#include "lib/character.h"
-#include "lib/enemy.h"
-#include "lib/joker.h"
-#include "lib/fantomas.h"
-#include "lib/freddie.h"
-#include "lib/hero.h"
-
-#include "lib/extremity.h"
-#include "lib/head.h"
-#include "lib/body.h"
-#include "lib/legs.h"
-
-#include "lib/weapon.h"
-#include "lib/knife.h"
-#include "lib/gun.h"
-#include "lib/automat.h"
-#include "lib/bazooka.h"
-
 #include "lib/game.h"
 
 using namespace std;
@@ -51,22 +33,8 @@ int main()
     // test.clear();//Можно очистить экран!
     // printf("First screen menu selected item index: %3d;\nSecond screen returned value after enter: %3d\n", selectedMenuItem, valueEmptyMenu);//Вывод отформатированной строки, ничего необычного
 
-    Hero hero;
-    Fantomas fantomas_1;
-
-    Knife knife;
-    Bazooka bazooka;
-
-    Extremity extremity;
-    Head head;
-    Body body;
-    Legs legs;
-
-    hero.attack(&knife, &fantomas_1);
-    hero.defense(&head);
-
-    cout << fantomas_1.get_health() << endl;
-    cout << hero.get_health() << endl;
+    Game game;
+    game.event();
 
     
 
