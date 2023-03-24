@@ -1,5 +1,5 @@
 #include <iostream>
-#include <character.h>
+#include "character.h"
 
 using namespace std;
 
@@ -9,5 +9,7 @@ class Enemy: public Character{
     public:
         Enemy();
         virtual ~Enemy();
-
+        int target();
+        int attack_target();
+        int defense_target();
 };

@@ -12,5 +12,5 @@ class Game{
     public:
         Game();
         virtual ~Game();
-        void event();
+        int event();
 };
