@@ -5,13 +5,11 @@ using namespace std;
 
 class Character{
     protected:
-        int health = 30;
-        int attack_points;
-        int defend_point;
+        int health;
 
     public:
         Character();
-        virtual ~Character();
+        ~Character();
         int get_health();
         void set_health(int power);
 

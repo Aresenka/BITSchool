@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "character.h"
 
 using namespace std;
@@ -7,7 +6,7 @@ using namespace std;
 //public
 
 Character::Character(){
-
+    this->health = health;
 }
 Character::~Character(){
 

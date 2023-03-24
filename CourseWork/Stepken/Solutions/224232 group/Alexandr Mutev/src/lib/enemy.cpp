@@ -1,13 +1,11 @@
 #include <iostream>
-
-#include "enemy.h"
+#include "character.h"
+#include <enemy.h>
 
 using namespace std;
 
-//public
-
 Enemy::Enemy(){
-
+    this->health = health;
 }
 Enemy::~Enemy(){
 
