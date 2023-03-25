@@ -53,15 +53,16 @@ Screen::Screen(vector<string> items, int menuPosition) : items(items) {
     this->menuPosition = menuPosition;
 }
 
-void Screen::clear() {
+void Screen::clearScreen() {
     system("clear");
+    clear();
 }
 
 int Screen::drawMenu() {
     initscr();
     noecho();
     cbreak();
-    clear();
+    clearScreen();
     writeText();
     items.draw(menuPosition);
 

@@ -4,6 +4,7 @@
 #include "hero.h"
 #include "enemy.h"
 #include "screen.h"
+#include "playing_field.h"
 
 using namespace std;
 

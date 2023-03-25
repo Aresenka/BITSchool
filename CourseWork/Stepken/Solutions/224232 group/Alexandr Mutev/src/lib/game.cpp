@@ -12,9 +12,10 @@ Game::~Game(){
 
 }
 int Game::start_game(){
-    string welcome_text = "Stepken\nAlexander Mutev's production"; //Текст может быть с любым количеством строк
-    vector<string> welcome_screen_options = {"New game", "Exit"};//Пунктов меню может и не быть вовсе!
-    Screen welcome_screen(welcome_screen_options, 30);//Инициализируем экран для отрисовки игры
+    Playing_field text;
+    string welcome_text = text.text(); 
+    vector<string> welcome_screen_options = {"New game", "Exit"};
+    Screen welcome_screen(welcome_screen_options, 30);
 
     welcome_screen.setText(welcome_text);
     int welcome_screen_menu_item = welcome_screen.drawMenu();
