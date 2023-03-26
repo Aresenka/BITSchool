@@ -12,12 +12,12 @@ Game::~Game(){
 
 }
 int Game::start_game(){
-    Playing_field text;
-    string welcome_text = text.text(); 
+    Playing_field start_screen;
+    string start_screen_contents = start_screen.welcome_field(); 
     vector<string> welcome_screen_options = {"New game", "Exit"};
     Screen welcome_screen(welcome_screen_options, 30);
 
-    welcome_screen.setText(welcome_text);
+    welcome_screen.setText(start_screen_contents);
     int welcome_screen_menu_item = welcome_screen.drawMenu();
     switch (welcome_screen_menu_item){
         case 0:
@@ -37,31 +37,38 @@ int Game::start_game(){
 int Game::event(){
     Hero hero;
     Enemy enemy;
+
     int hero_target_attack;
     int hero_target_defense;
-    string choice_attack_target = "Where do you hit?";
-    string choice_defense_target = "That you will defend?";
+    Playing_field health_screen;
+    string hero_health = health_screen.health_to_str(hero); //TODO переделай
+    string enemy_health = health_screen.health_to_str(enemy);
     vector<string>choice_target_options = {"Head", "Body", "Legs"};
     Screen event_screen(choice_target_options, 30);
     
+    
     while(enemy.get_health() > 0){
 
-        event_screen.setText(choice_attack_target);
+        event_screen.setText(health_screen.health_board(hero_health, enemy_health));
         hero_target_attack = event_screen.drawMenu();
         enemy.defense_target();
         enemy.set_health(hero_target_attack, enemy.defense_target());
+        hero_health = health_screen.health_to_str(hero);
+        enemy_health = health_screen.health_to_str(enemy);
 
         if(enemy.get_health() < 1){     //если enemy.health < 1 победа
-            cout << "You win" << endl;
+            cout << endl << "You win" << endl;
             return 1;
         }
-        event_screen.setText(choice_defense_target);
+        event_screen.setText(health_screen.health_board(hero_health, enemy_health));
         hero_target_defense = event_screen.drawMenu();
         enemy.attack_target();
         hero.set_health(enemy.attack_target(), hero_target_defense);
+        hero_health = health_screen.health_to_str(hero);
+        enemy_health = health_screen.health_to_str(enemy);
 
         if(hero.get_health() < 1){     //если hero.health < 1 победа
-            cout << "You lose" << endl;
+            cout << endl << "You lose" << endl;
             return 1;
         }
     }
