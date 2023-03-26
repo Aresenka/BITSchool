@@ -15,7 +15,6 @@ class Character{
         void set_health(int target_attack, int target_defence);
         int get_power();
         void set_power(int defense);
-        
 
 
 };

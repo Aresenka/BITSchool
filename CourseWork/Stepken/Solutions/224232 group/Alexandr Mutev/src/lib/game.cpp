@@ -15,7 +15,7 @@ int Game::start_game(){
     Playing_field start_screen;
     string start_screen_contents = start_screen.welcome_field(); 
     vector<string> welcome_screen_options = {"New game", "Exit"};
-    Screen welcome_screen(welcome_screen_options, 30);
+    Screen welcome_screen(welcome_screen_options, 19);
 
     welcome_screen.setText(start_screen_contents);
     int welcome_screen_menu_item = welcome_screen.drawMenu();
@@ -31,25 +31,24 @@ int Game::start_game(){
         default:
             return 0;
             break;
+        
     }
 }
 
 int Game::event(){
     Hero hero;
     Enemy enemy;
-
-    int hero_target_attack;
-    int hero_target_defense;
     Playing_field health_screen;
-    string hero_health = health_screen.health_to_str(hero); //TODO переделай
-    string enemy_health = health_screen.health_to_str(enemy);
-    vector<string>choice_target_options = {"Head", "Body", "Legs"};
-    Screen event_screen(choice_target_options, 30);
+    hero_health = health_screen.health_to_str(hero); //TODO переделай
+    enemy_health = health_screen.health_to_str(enemy);
+    choice_target_options = {"Head", "Body", "Legs"};
+    Screen event_screen(choice_target_options, 45);
+    attack_text = "Where you hit?"; 
     
     
     while(enemy.get_health() > 0){
 
-        event_screen.setText(health_screen.health_board(hero_health, enemy_health));
+        event_screen.setText(health_screen.event_field(attack_text));//<-
         hero_target_attack = event_screen.drawMenu();
         enemy.defense_target();
         enemy.set_health(hero_target_attack, enemy.defense_target());
