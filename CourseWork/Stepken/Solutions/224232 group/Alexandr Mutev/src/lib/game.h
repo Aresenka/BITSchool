@@ -10,15 +10,17 @@ using namespace std;
 
 class Game{
     private:
-
-    public:
-        int hero_target_attack;
-        int hero_target_defense;
         string hero_health;
         string enemy_health;
-        vector<string>choice_target_options;
+        int hero_target_attack;
+        int hero_target_defense;
+        int enemy_target_attack;
+        int enemy_target_defense;
         string attack_text;
         string defense_text;
+    public:
+        vector<string>choice_target_options;
+
         
         Game();
         virtual ~Game();

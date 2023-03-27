@@ -5,7 +5,7 @@ using namespace std;
 
 class Character{
     protected:
-        int health = 30;
+        int health = 10;
         int power = 5;
 
     public:

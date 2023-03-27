@@ -42,18 +42,20 @@ int Game::event(){
     hero_health = health_screen.health_to_str(hero); //TODO переделай
     enemy_health = health_screen.health_to_str(enemy);
     choice_target_options = {"Head", "Body", "Legs"};
-    Screen event_screen(choice_target_options, 45);
+    Screen event_screen(choice_target_options, 50);
     attack_text = "Where you hit?"; 
     
     
     while(enemy.get_health() > 0){
 
-        event_screen.setText(health_screen.event_field(attack_text));//<-
+        event_screen.setText(health_screen.event_field(attack_text, hero_health, enemy_health));//<-
         hero_target_attack = event_screen.drawMenu();
-        enemy.defense_target();
+        enemy_target_defense = enemy.defense_target();
+
         enemy.set_health(hero_target_attack, enemy.defense_target());
         hero_health = health_screen.health_to_str(hero);
         enemy_health = health_screen.health_to_str(enemy);
+        // health_screen.health_board(health_screen.health_to_str(hero), health_screen.health_to_str(enemy));
 
         if(enemy.get_health() < 1){     //если enemy.health < 1 победа
             cout << endl << "You win" << endl;
