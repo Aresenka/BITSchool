@@ -35,17 +35,20 @@ int Game::start_game(){
         
     }
 }
-
+int Game::event_process(Enemy &enemy){
+    return 0;
+}
 int Game::event(){
     Hero hero;
-    Enemy enemy;
+    Invader enemy;
     Playing_field health_screen;
-    hero_health = health_screen.health_to_str(hero); //TODO переделай
-    enemy_health = health_screen.health_to_str(enemy);
     choice_target_options = {"Head", "Body", "Legs"};
     Screen event_screen(choice_target_options, 50);
     attack_text = "Where you hit?"; 
     defense_text = "What will you protect?";
+
+    hero_health = health_screen.health_to_str(hero);
+    enemy_health = health_screen.health_to_str(enemy);
     
     while(enemy.get_health() > 0){
 

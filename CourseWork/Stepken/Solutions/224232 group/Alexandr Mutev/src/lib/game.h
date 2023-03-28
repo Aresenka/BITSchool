@@ -28,5 +28,6 @@ class Game{
         Game();
         virtual ~Game();
         int start_game();
+        int event_process(Enemy &enemy);
         int event();
 };
