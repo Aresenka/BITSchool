@@ -28,6 +28,6 @@ class Game{
         Game();
         virtual ~Game();
         int start_game();
-        int event_process(Enemy &enemy);
+        int event_process(Hero &hero, Enemy &enemy, Screen &event_screen, Playing_field &health_screen, string attack_text, string defense_text, string hero_health, string enemy_health);
         int event();
 };

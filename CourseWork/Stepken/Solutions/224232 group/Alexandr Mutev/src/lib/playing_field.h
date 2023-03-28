@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include "character.h"
-#include "game.h"
 
 using namespace std;
 

@@ -34,25 +34,13 @@ int Game::start_game(){
             break;
         
     }
-}
-int Game::event_process(Enemy &enemy){
     return 0;
 }
-int Game::event(){
-    Hero hero;
-    Invader enemy;
-    Playing_field health_screen;
-    choice_target_options = {"Head", "Body", "Legs"};
-    Screen event_screen(choice_target_options, 50);
-    attack_text = "Where you hit?"; 
-    defense_text = "What will you protect?";
+int Game::event_process(Hero &hero, Enemy &enemy, Screen &event_screen, Playing_field &health_screen, string attack_text, string defense_text, string hero_health, string enemy_health){
 
-    hero_health = health_screen.health_to_str(hero);
-    enemy_health = health_screen.health_to_str(enemy);
-    
     while(enemy.get_health() > 0){
 
-        event_screen.setText(health_screen.event_field(attack_text, hero_health, enemy_health));//<-
+        event_screen.setText(health_screen.event_field(attack_text, hero_health, enemy_health));
         hero_target_attack = event_screen.drawMenu();
         enemy_target_defense = enemy.defense_target();
 
@@ -76,6 +64,27 @@ int Game::event(){
             return 1;
         }
     }
+    return 0;
+}
+int Game::event(){
+    choice_target_options = {"Head", "Body", "Legs"};
+    attack_text = "Where you hit?"; 
+    defense_text = "What will you protect?";
+
+    Screen event_screen(choice_target_options, 50);
+    Hero hero;
+    Invader invader;
+    Playing_field health_screen;
+
+    hero_health = health_screen.health_to_str(hero);
+    enemy_health = health_screen.health_to_str(invader);
+
+    Game round_1_invader;
+
+    round_1_invader.event_process(hero, invader, event_screen, health_screen, attack_text, defense_text, hero_health, enemy_health);
+    Game round_2_pacman;
+
+    
 
     return 0;
 
