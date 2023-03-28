@@ -10,4 +10,5 @@ class Invader: public Enemy{
     public:
         Invader();
         virtual ~Invader();
+        string screen_characters();
 };

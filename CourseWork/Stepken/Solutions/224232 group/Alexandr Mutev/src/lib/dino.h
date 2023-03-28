@@ -10,4 +10,5 @@ class Dino: public Enemy{
     public:
         Dino();
         virtual ~Dino();
+        string screen_characters();
 };

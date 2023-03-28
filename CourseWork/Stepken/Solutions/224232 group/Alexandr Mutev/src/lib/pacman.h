@@ -10,5 +10,6 @@ class Pacman: public Enemy{
     public:
         Pacman();
         virtual ~Pacman();
+        string screen_characters();
 
 };
