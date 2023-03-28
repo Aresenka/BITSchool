@@ -3,6 +3,9 @@
 
 #include "hero.h"
 #include "enemy.h"
+#include "dino.h"
+#include "pacman.h"
+#include "invader.h"
 #include "screen.h"
 #include "playing_field.h"
 

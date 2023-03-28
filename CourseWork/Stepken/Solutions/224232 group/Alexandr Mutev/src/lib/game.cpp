@@ -22,6 +22,7 @@ int Game::start_game(){
     switch (welcome_screen_menu_item){
         case 0:
             cout << endl;
+            
             event();
             break;
         case 1:
@@ -55,13 +56,13 @@ int Game::event(){
         enemy.set_health(hero_target_attack, enemy.defense_target());
         hero_health = health_screen.health_to_str(hero);
         enemy_health = health_screen.health_to_str(enemy);
-        // health_screen.health_board(health_screen.health_to_str(hero), health_screen.health_to_str(enemy));
+        defense_text = "What will you protect?";
 
         if(enemy.get_health() < 1){     //если enemy.health < 1 победа
             cout << endl << "You win" << endl;
             return 1;
         }
-        event_screen.setText(health_screen.health_board(hero_health, enemy_health));
+        event_screen.setText(health_screen.event_field(attack_text, hero_health, enemy_health));
         hero_target_defense = event_screen.drawMenu();
         enemy.attack_target();
         hero.set_health(enemy.attack_target(), hero_target_defense);
