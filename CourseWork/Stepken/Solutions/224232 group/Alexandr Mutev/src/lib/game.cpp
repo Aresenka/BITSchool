@@ -11,12 +11,6 @@ Game::Game(){
 Game::~Game(){
 
 }
-int Game::get_count(){
-    return count;
-}
-void Game::set_count(){
-    count = count + 1;
-}
 int Game::new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_screen){
     switch (choice){
         case 0:
@@ -69,7 +63,7 @@ int Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
         enemy_health = health_screen.health_to_str(enemy);
 
         if(enemy.get_health() < 1){     //если enemy.health < 1 победа
-            win_event(health_screen, hero);
+            win_event(health_screen);
             return 1;
         }
         event_screen.setText(health_screen.event_field(defense_text, hero_health, enemy_health, enemy));
@@ -86,16 +80,28 @@ int Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
     }
     return 0;
 }
-void Game::win_event(Playing_field &health_screen, Hero &hero){
+void Game::win_event(Playing_field &health_screen){
     Pacman pacman;
     Dino dino;
+    Hero hero;
+        count++;
     Playing_field win_screen;
+    hero.health_recovery();
     string win_screen_contents = win_screen.welcome_field();
     vector<string> win_screen_options = {"Next round", "Exit"};
     Screen win_screen_menu(win_screen_options, 19);
 
     win_screen_menu.setText(win_screen_contents);
     int win_screen_menu_item = win_screen_menu.drawMenu();
-    new_event(win_screen_menu_item, hero, pacman, health_screen);
+    if(count == 1){
+        new_event(win_screen_menu_item, hero, pacman, health_screen);
+    }
+    if(count == 2){
+        new_event(win_screen_menu_item, hero, dino, health_screen);
+    }
+    if(count ==3){
+        start_game();
+    }
+    
 }
 

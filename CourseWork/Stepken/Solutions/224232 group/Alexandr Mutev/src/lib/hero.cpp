@@ -12,3 +12,6 @@ Hero::Hero(){
 Hero::~Hero(){
 
 }
+void Hero::health_recovery(){
+    health = Character::health;
+}

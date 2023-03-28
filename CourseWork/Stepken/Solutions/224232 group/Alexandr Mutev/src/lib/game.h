@@ -21,18 +21,17 @@ class Game{
         int enemy_target_defense;
         string attack_text;
         string defense_text;
-        int count = 0;
+
     public:
         vector<string>choice_target_options;
+        int count = 0;
 
         
         Game();
         virtual ~Game();
-        int get_count();
-        void set_count();
         int new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_screen);
         int start_game();
         int event(Hero &hero, Enemy &enemy, Playing_field &health_screen);
-        void win_event(Playing_field &health_screen, Hero &hero);
+        void win_event(Playing_field &health_screen);
 
 };
