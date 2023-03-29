@@ -93,14 +93,15 @@ void Game::win_event(Playing_field &health_screen){
 
     win_screen_menu.setText(win_screen_contents);
     int win_screen_menu_item = win_screen_menu.drawMenu();
-    if(count == 1){
+    switch (count){
+    case 1:
         new_event(win_screen_menu_item, hero, pacman, health_screen);
-    }
-    if(count == 2){
+        break;
+    case 2:
         new_event(win_screen_menu_item, hero, dino, health_screen);
-    }
-    if(count ==3){
-        start_game();
+        break;
+    default: start_game();
+        break;
     }
     
 }
