@@ -14,7 +14,7 @@
 using namespace std;
 int main()
 {
-    string testText = "Welcome to my wonderful game KICK HIS ASS\nAre you ready? (Press enter if you are)"; //Текст может быть с любым количеством строк
+    string testText = "Welcome to my wonderful game KICK HIS ASS\nAre you ready? (Press ""ENTER"" if you are)"; //Текст может быть с любым количеством строк
     vector<string> testOptions = {"first", "second", "third"};//Пунктов меню может и не быть вовсе!
     Screen test(testOptions, 30);//Инициализируем экран для отрисовки игры
 
@@ -26,7 +26,7 @@ int main()
     int selectedMenuItem = test.drawMenu(); //После этого будет возвращён индекс выбранного пункта меню
 
 
-    test.setText("I am a new text, no menu items, see?");//Меняем текст на новый
+    test.setText("Tut legendao o tom kak ti doljen olodet` GG");//Меняем текст на новый
     test.setMenuItems({});//Можно поменять сразу все пункты меню! А удалять по одному - нельзя.
     test.setEnterPlaceholder("Press the Enter button when you brave enough!");//Если меню пустое - вместо него будет выведена заглушка с указанным текстом
 
