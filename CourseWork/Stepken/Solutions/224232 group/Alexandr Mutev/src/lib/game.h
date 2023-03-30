@@ -29,9 +29,9 @@ class Game{
         
         Game();
         virtual ~Game();
-        int new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_screen);
+        void new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_screen);
         int start_game();
-        int event(Hero &hero, Enemy &enemy, Playing_field &health_screen);
+        void event(Hero &hero, Enemy &enemy, Playing_field &health_screen);
         void win_event(Playing_field &health_screen);
         void game_over();
         void lose_event();

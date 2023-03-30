@@ -11,22 +11,16 @@ Game::Game(){
 Game::~Game(){
 
 }
-int Game::new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_screen){
+void Game::new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_screen){
     switch (choice){
         case 0:
-            cout << endl;
-            
             event(hero, enemy, health_screen);
             break;
         case 1:
-            cout << endl;
-            return 1;
             break;
         default:
-            return 0;
             break;
     }
-    return 0;
 }
 int Game::start_game(){
     count = 0;
@@ -43,7 +37,7 @@ int Game::start_game(){
     new_event(welcome_screen_menu_item, hero, invader, health_screen);
     return 0;
 }
-int Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
+void Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
     choice_target_options = {"Head", "Body", "Legs"};
     attack_text = "Where you hit?"; 
     defense_text = "What will you protect?";
@@ -63,13 +57,11 @@ int Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
         hero_health = health_screen.health_to_str(hero);
         enemy_health = health_screen.health_to_str(enemy);
 
-        if(enemy.get_health() < 1 && count < 3){     //если enemy.health < 1 победа
+        if(enemy.get_health() < 1 && count < 3){     
             win_event(health_screen);
-            return 1;
         }
-        if(enemy.get_health() < 1 && count > 2){     //если enemy.health < 1 победа
+        if(enemy.get_health() < 1 && count > 2){     
             game_over();
-            return 1;
         }
         event_screen.setText(health_screen.event_field(defense_text, hero_health, enemy_health, enemy));
         hero_target_defense = event_screen.drawMenu();
@@ -80,10 +72,8 @@ int Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
 
         if(hero.get_health() < 1){     //если hero.health < 1 победа
             lose_event();
-            return 1;
         }
     }
-    return 0;
 }
 void Game::win_event(Playing_field &health_screen){
     Pacman pacman;
