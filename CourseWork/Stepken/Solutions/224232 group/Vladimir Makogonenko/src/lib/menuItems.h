@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <ncurses.h>
 using namespace std;
 
 class MenuItems
