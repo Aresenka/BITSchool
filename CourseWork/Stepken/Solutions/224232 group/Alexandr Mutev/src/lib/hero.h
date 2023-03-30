@@ -12,6 +12,5 @@ class Hero: public Character{
     public:
         Hero();
         virtual ~Hero();
-        void health_recovery();
 
 };

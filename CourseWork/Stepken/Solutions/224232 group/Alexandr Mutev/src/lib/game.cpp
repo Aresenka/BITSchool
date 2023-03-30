@@ -72,7 +72,6 @@ void Game::win_event(Playing_field &health_screen){
     Pacman pacman;
     Dino dino;
     Hero hero;
-    hero.health_recovery();
     Screen win_screen_menu(win_screen_options, 20);
 
     win_screen_menu.setText(playing_field.plug(playing_field.screen_you_win()));
