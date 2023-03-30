@@ -11,6 +11,7 @@ Game::Game(){
 Game::~Game(){
 
 }
+
 void Game::new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_screen){
     switch (choice){
         case 0:
@@ -27,11 +28,9 @@ void Game::start_game(){
     count = 0;
     Hero hero;
     Invader invader;
-    Playing_field health_screen;
-    Playing_field start_screen;
     Screen welcome_screen(screen_options_new_game, 19);
 
-    welcome_screen.setText(start_screen.welcome_field());
+    welcome_screen.setText(playing_field.welcome_field());
     new_event(welcome_screen.drawMenu(), hero, invader, health_screen);
 }
 void Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
@@ -73,11 +72,10 @@ void Game::win_event(Playing_field &health_screen){
     Pacman pacman;
     Dino dino;
     Hero hero;
-    Playing_field win_screen;
     hero.health_recovery();
     Screen win_screen_menu(win_screen_options, 20);
 
-    win_screen_menu.setText(win_screen.plug(win_screen.screen_you_win()));
+    win_screen_menu.setText(playing_field.plug(playing_field.screen_you_win()));
     if(count == 1){
         new_event(win_screen_menu.drawMenu(), hero, pacman, health_screen);
     }
@@ -87,9 +85,8 @@ void Game::win_event(Playing_field &health_screen){
 }
 void Game::game_over(){
     Screen game_over_screen_menu(screen_options_new_game, 20);
-    Playing_field game_over_screen;
 
-    game_over_screen_menu.setText(game_over_screen.plug(game_over_screen.screen_you_win()));
+    game_over_screen_menu.setText(playing_field.plug(playing_field.screen_you_win()));
     switch(game_over_screen_menu.drawMenu()){
         case 0:
             start_game();
@@ -103,9 +100,8 @@ void Game::game_over(){
 }
 void Game::lose_event(){
     Screen lose_event_screen_menu(screen_options_new_game, 20);
-    Playing_field lose_event_screen;
 
-    lose_event_screen_menu.setText(lose_event_screen.plug(lose_event_screen.screen_you_lose()));
+    lose_event_screen_menu.setText(playing_field.plug(playing_field.screen_you_lose()));
     switch(lose_event_screen_menu.drawMenu()){
         case 0:
             start_game();

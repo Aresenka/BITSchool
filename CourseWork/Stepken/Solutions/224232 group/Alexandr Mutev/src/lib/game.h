@@ -25,7 +25,8 @@ class Game{
         vector<string> win_screen_options = {"Next round", "Exit"};
         vector<string>choice_target_options = {"Head", "Body", "Legs"};
         int count;
-        // Playing_field playing_field;
+        Playing_field playing_field;
+        Playing_field health_screen;
     public:
         Game();
         virtual ~Game();
@@ -35,6 +36,4 @@ class Game{
         void win_event(Playing_field &health_screen);
         void game_over();
         void lose_event();
-        
-
 };
