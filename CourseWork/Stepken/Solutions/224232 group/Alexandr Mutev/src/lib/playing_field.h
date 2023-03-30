@@ -23,5 +23,6 @@ class Playing_field{
         string screen_characters(Enemy &enemy);
         string screen_you_win();
         string screen_you_lose();
+        string plug(string res);
         
 };

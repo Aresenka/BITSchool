@@ -24,7 +24,7 @@ class Game{
 
     public:
         vector<string>choice_target_options;
-        int count = 0;
+        int count;
 
         
         Game();
@@ -33,5 +33,7 @@ class Game{
         int start_game();
         int event(Hero &hero, Enemy &enemy, Playing_field &health_screen);
         void win_event(Playing_field &health_screen);
+        void game_over();
+        void lose_event();
 
 };

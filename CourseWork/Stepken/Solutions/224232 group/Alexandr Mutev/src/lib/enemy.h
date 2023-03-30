@@ -14,4 +14,5 @@ class Enemy: public Character{
         int attack_target();
         int defense_target();
         virtual string screen_characters() = 0;
+        
 };

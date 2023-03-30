@@ -29,8 +29,9 @@ int Game::new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_
     return 0;
 }
 int Game::start_game(){
+    count = 0;
     Hero hero;
-    Invader invader;
+    Invader invader; // TODO DELITE
     Playing_field health_screen;
     Playing_field start_screen;
     string start_screen_contents = start_screen.welcome_field(); 
@@ -62,8 +63,12 @@ int Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
         hero_health = health_screen.health_to_str(hero);
         enemy_health = health_screen.health_to_str(enemy);
 
-        if(enemy.get_health() < 1){     //если enemy.health < 1 победа
+        if(enemy.get_health() < 1 && count < 3){     //если enemy.health < 1 победа
             win_event(health_screen);
+            return 1;
+        }
+        if(enemy.get_health() < 1 && count > 2){     //если enemy.health < 1 победа
+            game_over();
             return 1;
         }
         event_screen.setText(health_screen.event_field(defense_text, hero_health, enemy_health, enemy));
@@ -74,7 +79,7 @@ int Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
         enemy_health = health_screen.health_to_str(enemy);
 
         if(hero.get_health() < 1){     //если hero.health < 1 победа
-            cout << endl << "You lose" << endl;
+            lose_event();
             return 1;
         }
     }
@@ -87,9 +92,9 @@ void Game::win_event(Playing_field &health_screen){
         count++;
     Playing_field win_screen;
     hero.health_recovery();
-    string win_screen_contents = win_screen.welcome_field();
+    string win_screen_contents = win_screen.plug(win_screen.screen_you_win());
     vector<string> win_screen_options = {"Next round", "Exit"};
-    Screen win_screen_menu(win_screen_options, 19);
+    Screen win_screen_menu(win_screen_options, 20);
 
     win_screen_menu.setText(win_screen_contents);
     int win_screen_menu_item = win_screen_menu.drawMenu();
@@ -100,9 +105,56 @@ void Game::win_event(Playing_field &health_screen){
     case 2:
         new_event(win_screen_menu_item, hero, dino, health_screen);
         break;
+    case 3:
+        lose_event();
+        
+        break;
     default: start_game();
         break;
+
     }
-    
+
+}
+void Game::game_over(){
+    vector<string> game_over_screen_options = {"New game", "Exit"};
+    Screen game_over_screen_menu(game_over_screen_options, 20);
+    Playing_field game_over_screen;
+    string game_over_contents = game_over_screen.plug(game_over_screen.screen_you_win());
+
+    game_over_screen_menu.setText(game_over_contents);
+    int game_over_screen_menu_item = game_over_screen_menu.drawMenu();
+    switch(game_over_screen_menu_item){
+        case 0:
+            start_game();
+            break;
+        case 1:
+            cout << endl;
+            break;
+        default:
+            break;
+    }
+
+
+}
+void Game::lose_event(){
+    vector<string> lose_event_screen_options = {"New game", "Exit"};
+    Screen lose_event_screen_menu(lose_event_screen_options, 20);
+    Playing_field lose_event_screen;
+    string lose_event_contents = lose_event_screen.plug(lose_event_screen.screen_you_lose());
+
+    lose_event_screen_menu.setText(lose_event_contents);
+    int lose_event_screen_menu_item = lose_event_screen_menu.drawMenu();
+    switch(lose_event_screen_menu_item){
+        case 0:
+            start_game();
+            break;
+        case 1:
+            cout << endl;
+            break;
+        default:
+            break;
+    }
+
+
 }
 
