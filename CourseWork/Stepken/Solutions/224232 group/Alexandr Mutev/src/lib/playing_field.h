@@ -17,7 +17,6 @@ class Playing_field{
         string event_field(string question, string hero_health, string enemy_hearth, Enemy &enemy);
         string health_to_str(Character &ch);
         string health_board(string hero_health, string enemy_hearth);
-        string player_moves_board();
         string logo();
         string line();
         string screen_characters(Enemy &enemy);
