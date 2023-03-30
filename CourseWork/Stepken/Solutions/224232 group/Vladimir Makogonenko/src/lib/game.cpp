@@ -6,17 +6,13 @@ using namespace std;
 int Game::new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_screen){
     switch (choice){
         case 0:
-            cout << endl;
             
             event(hero, enemy, health_screen);
             break;
         case 1:
-            cout << endl;
             return 1;
-            break;
         default:
             return 0;
-            break;
     }
     return 0;
 }
@@ -39,7 +35,7 @@ int Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
     attack_text = "Where you hit?"; 
     defense_text = "What will you protect?";
 
-    Screen event_screen(choice_target_options, 50);
+    Screen event_screen(choice_target_options, 20);
 
     hero_health = health_screen.health_to_str(hero);
     enemy_health = health_screen.health_to_str(enemy);
