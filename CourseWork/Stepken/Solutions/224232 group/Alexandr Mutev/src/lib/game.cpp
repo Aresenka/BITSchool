@@ -17,12 +17,13 @@ void Game::new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health
             event(hero, enemy, health_screen);
             break;
         case 1:
+            exit(0);
             break;
         default:
             break;
     }
 }
-int Game::start_game(){
+void Game::start_game(){
     count = 0;
     Hero hero;
     Invader invader; // TODO DELITE
@@ -35,7 +36,6 @@ int Game::start_game(){
     welcome_screen.setText(start_screen_contents);
     int welcome_screen_menu_item = welcome_screen.drawMenu();
     new_event(welcome_screen_menu_item, hero, invader, health_screen);
-    return 0;
 }
 void Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
     choice_target_options = {"Head", "Body", "Legs"};
@@ -57,11 +57,11 @@ void Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
         hero_health = health_screen.health_to_str(hero);
         enemy_health = health_screen.health_to_str(enemy);
 
-        if(enemy.get_health() < 1 && count < 3){     
+        if(enemy.get_health() < 1){
+            if(count == 2){
+                game_over();
+            }     
             win_event(health_screen);
-        }
-        if(enemy.get_health() < 1 && count > 2){     
-            game_over();
         }
         event_screen.setText(health_screen.event_field(defense_text, hero_health, enemy_health, enemy));
         hero_target_defense = event_screen.drawMenu();
@@ -74,12 +74,13 @@ void Game::event(Hero &hero, Enemy &enemy, Playing_field &health_screen){
             lose_event();
         }
     }
+
 }
 void Game::win_event(Playing_field &health_screen){
+    count++;
     Pacman pacman;
     Dino dino;
     Hero hero;
-        count++;
     Playing_field win_screen;
     hero.health_recovery();
     string win_screen_contents = win_screen.plug(win_screen.screen_you_win());
@@ -88,22 +89,15 @@ void Game::win_event(Playing_field &health_screen){
 
     win_screen_menu.setText(win_screen_contents);
     int win_screen_menu_item = win_screen_menu.drawMenu();
-    switch (count){
-    case 1:
+    if(count == 1){
         new_event(win_screen_menu_item, hero, pacman, health_screen);
-        break;
-    case 2:
-        new_event(win_screen_menu_item, hero, dino, health_screen);
-        break;
-    case 3:
-        lose_event();
-        
-        break;
-    default: start_game();
-        break;
-
     }
-
+    if(count == 2){
+        new_event(win_screen_menu_item, hero, dino, health_screen);
+    }
+    // if(count == 3){
+    //     exit(0);
+    // }
 }
 void Game::game_over(){
     vector<string> game_over_screen_options = {"New game", "Exit"};
@@ -118,7 +112,7 @@ void Game::game_over(){
             start_game();
             break;
         case 1:
-            cout << endl;
+            exit(0);
             break;
         default:
             break;
@@ -139,7 +133,7 @@ void Game::lose_event(){
             start_game();
             break;
         case 1:
-            cout << endl;
+            exit(0);
             break;
         default:
             break;

@@ -30,7 +30,7 @@ class Game{
         Game();
         virtual ~Game();
         void new_event(int choice, Hero &hero, Enemy &enemy, Playing_field &health_screen);
-        int start_game();
+        void start_game();
         void event(Hero &hero, Enemy &enemy, Playing_field &health_screen);
         void win_event(Playing_field &health_screen);
         void game_over();
